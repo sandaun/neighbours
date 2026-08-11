@@ -74,7 +74,16 @@ L'objectiu és convertir el prototip navegable actual (https://gimtic.com/comuni
 4. **Mode fosc des del dia 1** — és gairebé gratuït amb NativeWind i el glass hi destaca especialment.
 5. **Accessibilitat:** contrast WCAG AA (compte amb el morat sobre vidre), Dynamic Type / mides de font del sistema respectades.
 
-### 3.3 Identitat
+### 3.3 Implementació del vidre (decisió validada — primera iteració)
+
+Après a la primera prova real del producte (agost 2026):
+
+1. **La tab bar ha de ser nativa.** Els `Tabs` JavaScript de React Navigation són un rectangle sòlid: **mai tindran vidre**. S'usa **`NativeTabs` d'expo-router** (`unstable-native-tabs`), que renderitza el `UITabBarController` real → Liquid Glass automàtic a iOS 26+, translucidesa clàssica a iOS <26 i barra Material nativa a Android.
+2. **Icones de pestanya per plataforma:** `NativeTabs` no accepta components (lucide): SF Symbols a iOS (`house.fill`, `wrench.fill`…), recurs vectorial/imatge a Android.
+3. **Capçaleres sota la status bar:** el bloc morat de `ScreenHeader` s'estén per darrere de la status bar (look natiu) i només el *text* respecta l'inset (`useSafeAreaInsets().top` dins del component, mai `SafeAreaView` envoltant la pantalla). Status bar en clar (`expo-status-bar style="light"`) mentre hi hagi capçalera morada.
+4. **Modals i FAB amb vidre** (`@expo/ui` + modificador `glassEffect`) queden per al sprint 12 (poliment visual), com ja marcava el pla.
+
+### 3.4 Identitat
 
 Mantenir l'estil del prototip (morat, tipografia serif als titulars, targetes arrodonides) perquè ja és reconeixible, i elevar-lo amb els materials natius de cada plataforma.
 

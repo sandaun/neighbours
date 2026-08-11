@@ -109,7 +109,7 @@ Escala de 4px: `4, 8, 12, 16, 20, 24, 32`. Padding estàndard de targeta: 16. Ga
 
 | Superfície | iOS 26+ | iOS < 26 | Android |
 |---|---|---|---|
-| Tabbar inferior | **Liquid Glass** (component natiu de pestanyes via `@expo/ui`) | Blur translúcid (`expo-blur`) | Material 3, superfície + elevació |
+| Tabbar inferior | **Liquid Glass** automàtic: `NativeTabs` d'expo-router → `UITabBarController` natiu | Barra nativa translúcida | Barra inferior nativa Material (mateix `NativeTabs`) |
 | Modals (detall incidència) | Efecte de vidre sobre el contingut | Blur + ombra `shadowModal` | Targeta M3 + scrim |
 | FAB "+" | Vidre tintat `primary` | `primary` pla + `shadow1` | `primary` + elevació M3 |
 | Targetes | `surface` + `radius-lg` (sense vidre) | igual | igual |
