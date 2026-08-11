@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -8,17 +9,19 @@ function Row({ children }: { children: React.ReactNode }) {
 }
 
 export default function DesignSystemShowcase() {
+  const { t } = useTranslation();
+
   return (
     <SafeAreaView className="flex-1 bg-bg dark:bg-bg-dark" edges={['top']}>
       <ScrollView contentContainerClassName="px-5 pb-24">
         <Text className="mt-4 font-display text-[28px] leading-[34px] text-ink dark:text-ink-dark">
-          Design System
+          {t('showcase.title')}
         </Text>
         <Text className="font-body text-[12px] leading-[16px] text-ink-soft dark:text-ink-dark-soft">
-          Mostra de components i tokens · GimTic
+          {t('showcase.subtitle')}
         </Text>
 
-        <SectionHeader title="Tipografia" />
+        <SectionHeader title={t('showcase.sections.typography')} />
         <Card className="gap-1">
           <Text className="font-display text-[28px] leading-[34px] text-ink dark:text-ink-dark">
             Display · Playfair 700
@@ -27,103 +30,99 @@ export default function DesignSystemShowcase() {
             Títol · Playfair 600
           </Text>
           <Text className="font-body text-[15px] leading-[22px] text-ink dark:text-ink-dark">
-            Cos · Plus Jakarta Sans 400 — text principal de targetes i llistats.
+            Body · Plus Jakarta Sans 400
           </Text>
           <Text className="font-body-semi text-[15px] leading-[22px] text-ink dark:text-ink-dark">
-            Cos fort · Jakarta 600
+            Body strong · Jakarta 600
           </Text>
           <Text className="font-label text-[13px] leading-[18px] text-ink dark:text-ink-dark">
-            Etiqueta · Montserrat 600
+            Label · Montserrat 600
           </Text>
           <Text className="font-body text-[12px] leading-[16px] text-ink-soft dark:text-ink-dark-soft">
-            Caption · Jakarta 500 — Reportada fa 2 dies
+            Caption · Jakarta 500 — {t('incidents.reportedDaysAgo', { count: 2 })}
           </Text>
         </Card>
 
-        <SectionHeader title="Botons" />
+        <SectionHeader title={t('showcase.sections.buttons')} />
         <Card className="gap-3">
-          <Button onPress={() => {}}>Votar a favor (primary)</Button>
+          <Button onPress={() => {}}>{t('showcase.buttons.voteFor')}</Button>
           <Button variant="outline" onPress={() => {}}>
-            Votar en contra (outline)
+            {t('showcase.buttons.voteAgainst')}
           </Button>
           <Button variant="danger" onPress={() => {}}>
-            Eliminar (danger)
+            {t('showcase.buttons.delete')}
           </Button>
           <Button variant="ghost" onPress={() => {}}>
-            Ghost
+            {t('showcase.buttons.ghost')}
           </Button>
           <Row>
             <View className="flex-1">
               <Button loading onPress={() => {}}>
-                Carregant
+                {t('showcase.buttons.loading')}
               </Button>
             </View>
             <View className="flex-1">
               <Button disabled onPress={() => {}}>
-                Desactivat
+                {t('showcase.buttons.disabled')}
               </Button>
             </View>
           </Row>
         </Card>
 
-        <SectionHeader title="Badges d'estat" />
+        <SectionHeader title={t('showcase.sections.badges')} />
         <Card>
           <Row>
-            <StatusBadge status="received" label="Rebuda" />
-            <StatusBadge status="in-progress" label="En gestió" />
-            <StatusBadge status="resolved" label="Resolta" />
+            <StatusBadge status="received" label={t('incidents.status.received')} />
+            <StatusBadge status="in-progress" label={t('incidents.status.inProgress')} />
+            <StatusBadge status="resolved" label={t('incidents.status.resolved')} />
           </Row>
         </Card>
 
-        <SectionHeader title="Xips" />
+        <SectionHeader title={t('showcase.sections.chips')} />
         <Card>
           <Row>
             <Chip selected onPress={() => {}}>
-              Fontaneria
+              {t('incidents.categories.plumbing')}
             </Chip>
-            <Chip onPress={() => {}}>
-              Electricitat
-            </Chip>
-            <Chip onPress={() => {}}>
-              Ascensor
-            </Chip>
+            <Chip onPress={() => {}}>{t('incidents.categories.electrical')}</Chip>
+            <Chip onPress={() => {}}>{t('incidents.categories.elevator')}</Chip>
           </Row>
         </Card>
 
-        <SectionHeader title="Targeta d'exemple (incidència)" />
+        <SectionHeader title={t('showcase.sections.incidentCard')} />
         <Card variant="elevated" className="gap-2">
-          <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center justify-between gap-2">
             <Text className="font-display-semi text-[20px] leading-[26px] text-ink dark:text-ink-dark">
-              Avaria a l'ascensor
+              {t('showcase.incident.title')}
             </Text>
-            <StatusBadge status="in-progress" label="En gestió" />
+            <StatusBadge status="in-progress" label={t('incidents.status.inProgress')} />
           </View>
           <Text className="font-body text-[15px] leading-[22px] text-ink-soft dark:text-ink-dark-soft">
-            L'ascensor del vestíbul no respon als botons de la planta baixa des de dimarts.
+            {t('showcase.incident.description')}
           </Text>
           <Text className="font-body text-[12px] leading-[16px] text-ink-muted dark:text-ink-dark-soft">
-            Reportada fa 2 dies
+            {t('incidents.reportedDaysAgo', { count: 2 })}
           </Text>
         </Card>
 
-        <SectionHeader title="Avatars i ítems de llista" />
+        <SectionHeader title={t('showcase.sections.lists')} />
         <Card className="gap-2" variant="default">
           <ListItem
-            title="Marta Vidal"
-            subtitle="Presidenta de la comunitat"
+            title={t('showcase.neighbour.name')}
+            subtitle={t('showcase.neighbour.role')}
             leading={<Avatar initials="MV" />}
             chevron
             onPress={() => {}}
           />
           <ListItem
-            title="Acta de la junta d'abril"
-            subtitle="PDF · 1,2 MB"
+            title={t('showcase.document.title')}
+            subtitle={t('showcase.document.meta')}
             chevron
             onPress={() => {}}
           />
         </Card>
 
-        <SectionHeader title="Colors" />
+        <SectionHeader title={t('showcase.sections.colors')} />
         <Card>
           <Row>
             {[

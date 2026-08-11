@@ -17,6 +17,45 @@
       "received": "Rebuda",
       "inProgress": "En gestió",
       "resolved": "Resolta"
+    },
+    "categories": {
+      "plumbing": "Fontaneria",
+      "electrical": "Electricitat",
+      "elevator": "Ascensor"
+    },
+    "reportedDaysAgo": "Reportada fa {{count}} dies"
+  },
+  "showcase": {
+    "title": "Design System",
+    "subtitle": "Mostra de components i tokens · GimTic",
+    "sections": {
+      "typography": "Tipografia",
+      "buttons": "Botons",
+      "badges": "Badges d'estat",
+      "chips": "Xips",
+      "incidentCard": "Targeta d'exemple (incidència)",
+      "lists": "Avatars i ítems de llista",
+      "colors": "Colors"
+    },
+    "buttons": {
+      "voteFor": "Votar a favor (primary)",
+      "voteAgainst": "Votar en contra (outline)",
+      "delete": "Eliminar (danger)",
+      "ghost": "Ghost",
+      "loading": "Carregant",
+      "disabled": "Desactivat"
+    },
+    "incident": {
+      "title": "Avaria a l'ascensor",
+      "description": "L'ascensor del vestíbul no respon als botons de la planta baixa des de dimarts."
+    },
+    "neighbour": {
+      "name": "Marta Vidal",
+      "role": "Presidenta de la comunitat"
+    },
+    "document": {
+      "title": "Acta de la junta d'abril",
+      "meta": "PDF · 1,2 MB"
     }
   }
 }

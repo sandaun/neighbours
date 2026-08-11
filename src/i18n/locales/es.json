@@ -17,6 +17,45 @@
       "received": "Recibida",
       "inProgress": "En gestión",
       "resolved": "Resuelta"
+    },
+    "categories": {
+      "plumbing": "Fontanería",
+      "electrical": "Electricidad",
+      "elevator": "Ascensor"
+    },
+    "reportedDaysAgo": "Reportada hace {{count}} días"
+  },
+  "showcase": {
+    "title": "Design System",
+    "subtitle": "Muestra de componentes y tokens · GimTic",
+    "sections": {
+      "typography": "Tipografía",
+      "buttons": "Botones",
+      "badges": "Badges de estado",
+      "chips": "Chips",
+      "incidentCard": "Tarjeta de ejemplo (incidencia)",
+      "lists": "Avatares e ítems de lista",
+      "colors": "Colores"
+    },
+    "buttons": {
+      "voteFor": "Votar a favor (primary)",
+      "voteAgainst": "Votar en contra (outline)",
+      "delete": "Eliminar (danger)",
+      "ghost": "Ghost",
+      "loading": "Cargando",
+      "disabled": "Desactivado"
+    },
+    "incident": {
+      "title": "Avería en el ascensor",
+      "description": "El ascensor del vestíbulo no responde a los botones de la planta baja desde el martes."
+    },
+    "neighbour": {
+      "name": "Marta Vidal",
+      "role": "Presidenta de la comunidad"
+    },
+    "document": {
+      "title": "Acta de la junta de abril",
+      "meta": "PDF · 1,2 MB"
     }
   }
 }
