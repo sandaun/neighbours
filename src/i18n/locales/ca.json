@@ -25,6 +25,33 @@
     },
     "reportedDaysAgo": "Reportada fa {{count}} dies"
   },
+  "home": {
+    "overline": "La meva comunitat",
+    "communityName": "Comunitat Jardí",
+    "subtitle": "Carrer de la Marina 42, Barcelona",
+    "sections": {
+      "recentIncidents": "Incidències recents",
+      "upcomingEvents": "Pròxims esdeveniments"
+    },
+    "incident2": {
+      "title": "Goteig a l'aparcament"
+    },
+    "event1": {
+      "title": "Junta ordinària",
+      "meta": "Divendres 22 · 19:00 · Saló comunitari"
+    }
+  },
+  "empty": {
+    "incidents": "Encara no hi ha incidències",
+    "documents": "Encara no hi ha documents",
+    "accounts": "Encara no hi ha moviments",
+    "comingSoon": "Aquest mòdul arriba en una propera iteració."
+  },
+  "more": {
+    "notifications": "Notificacions",
+    "language": "Idioma",
+    "privacy": "Privacitat i dades"
+  },
   "showcase": {
     "title": "Design System",
     "subtitle": "Mostra de components i tokens · GimTic",

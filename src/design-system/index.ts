@@ -2,6 +2,8 @@ export { Avatar } from './Avatar';
 export { Button } from './Button';
 export { Card } from './Card';
 export { Chip } from './Chip';
+export { EmptyState } from './EmptyState';
 export { ListItem } from './ListItem';
+export { ScreenHeader } from './ScreenHeader';
 export { SectionHeader } from './SectionHeader';
 export { StatusBadge, type IncidentStatus } from './StatusBadge';
