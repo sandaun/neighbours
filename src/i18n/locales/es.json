@@ -1,0 +1,22 @@
+{
+  "tabs": {
+    "home": "Inicio",
+    "incidents": "Incidencias",
+    "documents": "Documentos",
+    "accounts": "Cuentas",
+    "more": "Más"
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "retry": "Reintentar",
+    "loading": "Cargando…"
+  },
+  "incidents": {
+    "status": {
+      "received": "Recibida",
+      "inProgress": "En gestión",
+      "resolved": "Resuelta"
+    }
+  }
+}

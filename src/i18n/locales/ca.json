@@ -1,0 +1,22 @@
+{
+  "tabs": {
+    "home": "Inici",
+    "incidents": "Incidències",
+    "documents": "Documents",
+    "accounts": "Comptes",
+    "more": "Més"
+  },
+  "common": {
+    "cancel": "Cancel·la",
+    "save": "Desa",
+    "retry": "Torna-ho a provar",
+    "loading": "Carregant…"
+  },
+  "incidents": {
+    "status": {
+      "received": "Rebuda",
+      "inProgress": "En gestió",
+      "resolved": "Resolta"
+    }
+  }
+}
