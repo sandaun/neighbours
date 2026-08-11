@@ -26,9 +26,8 @@
     "reportedDaysAgo": "Reportada fa {{count}} dies"
   },
   "home": {
-    "overline": "La meva comunitat",
-    "communityName": "Comunitat Jardí",
-    "subtitle": "Carrer de la Marina 42, Barcelona",
+    "overline": "Comunitat",
+    "communityName": "Carrer del Mar 14",
     "sections": {
       "recentIncidents": "Incidències recents",
       "upcomingEvents": "Pròxims esdeveniments"
@@ -48,9 +47,21 @@
     "comingSoon": "Aquest mòdul arriba en una propera iteració."
   },
   "more": {
+    "title": "Més apartaments",
     "notifications": "Notificacions",
     "language": "Idioma",
-    "privacy": "Privacitat i dades"
+    "privacy": "Privacitat i dades",
+    "modules": {
+      "voting": "Votació",
+      "bookings": "Reserves",
+      "directory": "Directori",
+      "calendar": "Calendari",
+      "board": "Tauló",
+      "profile": "Perfil",
+      "emergencies": "Urgències",
+      "receipts": "Rebutus",
+      "access": "Accessos"
+    }
   },
   "showcase": {
     "title": "Design System",

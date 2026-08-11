@@ -26,9 +26,8 @@
     "reportedDaysAgo": "Reportada hace {{count}} días"
   },
   "home": {
-    "overline": "Mi comunidad",
-    "communityName": "Comunidad Jardín",
-    "subtitle": "Carrer de la Marina 42, Barcelona",
+    "overline": "Comunidad",
+    "communityName": "Carrer del Mar 14",
     "sections": {
       "recentIncidents": "Incidencias recientes",
       "upcomingEvents": "Próximos eventos"
@@ -48,9 +47,21 @@
     "comingSoon": "Este módulo llega en una próxima iteración."
   },
   "more": {
+    "title": "Más apartados",
     "notifications": "Notificaciones",
     "language": "Idioma",
-    "privacy": "Privacidad y datos"
+    "privacy": "Privacidad y datos",
+    "modules": {
+      "voting": "Votación",
+      "bookings": "Reservas",
+      "directory": "Directorio",
+      "calendar": "Calendario",
+      "board": "Tablón",
+      "profile": "Perfil",
+      "emergencies": "Urgencias",
+      "receipts": "Recibos",
+      "access": "Accesos"
+    }
   },
   "showcase": {
     "title": "Design System",
