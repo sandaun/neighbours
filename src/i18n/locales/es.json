@@ -47,19 +47,25 @@
     "comingSoon": "Este módulo llega en una próxima iteración."
   },
   "more": {
-    "title": "Más apartados",
-    "notifications": "Notificaciones",
-    "language": "Idioma",
-    "privacy": "Privacidad y datos",
-    "modules": {
-      "voting": "Votación",
+    "title": "Más",
+    "subtitle": "Todos los servicios de tu comunidad, en un solo lugar.",
+    "openHint": "Abre {{name}}",
+    "sections": {
+      "participation": "Participación",
+      "services": "Servicios de la comunidad",
+      "settings": "Cuenta y preferencias"
+    },
+    "destinations": {
+      "voting": "Votaciones",
       "bookings": "Reservas",
       "directory": "Directorio",
       "calendar": "Calendario",
       "board": "Tablón",
       "profile": "Perfil",
+      "notifications": "Notificaciones",
+      "language": "Idioma",
+      "privacy": "Privacidad y datos",
       "emergencies": "Urgencias",
-      "receipts": "Recibos",
       "access": "Accesos"
     }
   },

@@ -47,19 +47,25 @@
     "comingSoon": "Aquest mòdul arriba en una propera iteració."
   },
   "more": {
-    "title": "Més apartaments",
-    "notifications": "Notificacions",
-    "language": "Idioma",
-    "privacy": "Privacitat i dades",
-    "modules": {
-      "voting": "Votació",
+    "title": "Més",
+    "subtitle": "Tots els serveis de la teva comunitat, en un sol lloc.",
+    "openHint": "Obre {{name}}",
+    "sections": {
+      "participation": "Participació",
+      "services": "Serveis de la comunitat",
+      "settings": "Compte i preferències"
+    },
+    "destinations": {
+      "voting": "Votacions",
       "bookings": "Reserves",
       "directory": "Directori",
       "calendar": "Calendari",
       "board": "Tauló",
       "profile": "Perfil",
+      "notifications": "Notificacions",
+      "language": "Idioma",
+      "privacy": "Privacitat i dades",
       "emergencies": "Urgències",
-      "receipts": "Rebutus",
       "access": "Accessos"
     }
   },

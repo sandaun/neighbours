@@ -1,12 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { ScrollView, Text, View } from 'react-native';
 
-import { useTrackLastTab } from '@/components/mes-sheet';
 import { Card, ListItem, ScreenHeader, SectionHeader, StatusBadge } from '@/design-system';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
-  useTrackLastTab('/');
 
   return (
     <View className="flex-1 bg-bg dark:bg-bg-dark">

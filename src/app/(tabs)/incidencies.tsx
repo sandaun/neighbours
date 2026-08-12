@@ -3,11 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
 import { EmptyState, ScreenHeader } from '@/design-system';
-import { useTrackLastTab } from '@/components/mes-sheet';
 
 export default function IncidentsScreen() {
   const { t } = useTranslation();
-  useTrackLastTab('/incidencies');
   return (
     <View className="flex-1 bg-bg dark:bg-bg-dark">
       <ScreenHeader title={t('tabs.incidents')} />
