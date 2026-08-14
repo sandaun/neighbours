@@ -8,7 +8,7 @@ export default function IncidentsScreen() {
   const { t } = useTranslation();
   return (
     <View className="flex-1 bg-bg dark:bg-bg-dark">
-      <ScreenHeader title={t('tabs.incidents')} />
+      <ScreenHeader title={t('tabs.incidents')} variant="section" />
       <EmptyState
         icon={<Wrench color="#803EF6" size={28} />}
         title={t('empty.incidents')}

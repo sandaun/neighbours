@@ -8,7 +8,7 @@ export default function AccountsScreen() {
   const { t } = useTranslation();
   return (
     <View className="flex-1 bg-bg dark:bg-bg-dark">
-      <ScreenHeader title={t('tabs.accounts')} />
+      <ScreenHeader title={t('tabs.accounts')} variant="section" />
       <EmptyState
         icon={<Wallet color="#803EF6" size={28} />}
         title={t('empty.accounts')}

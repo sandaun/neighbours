@@ -1,6 +1,5 @@
 import { Tabs } from 'expo-router';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
-import { StatusBar } from 'expo-status-bar';
 import { CreditCard, FileText, Home, LayoutGrid, MessageSquareWarning } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
@@ -46,46 +45,40 @@ export default function TabsLayout() {
 
   if (Platform.OS === 'ios') {
     return (
-      <>
-        <StatusBar style="light" />
-        <NativeTabs tintColor={colors.primary}>
-          {TABS.map((tab) => (
-            <NativeTabs.Trigger key={tab.name} name={tab.name}>
-              <NativeTabs.Trigger.Label>{t(tab.labelKey)}</NativeTabs.Trigger.Label>
-              <NativeTabs.Trigger.Icon sf={tab.sf} />
-            </NativeTabs.Trigger>
-          ))}
-        </NativeTabs>
-      </>
+      <NativeTabs tintColor={colors.primary}>
+        {TABS.map((tab) => (
+          <NativeTabs.Trigger key={tab.name} name={tab.name}>
+            <NativeTabs.Trigger.Label>{t(tab.labelKey)}</NativeTabs.Trigger.Label>
+            <NativeTabs.Trigger.Icon sf={tab.sf} />
+          </NativeTabs.Trigger>
+        ))}
+      </NativeTabs>
     );
   }
 
   return (
-    <>
-      <StatusBar style="light" />
-      <Tabs
-        screenOptions={{
-          headerShown: false,
-          tabBarActiveTintColor: colors.primary,
-          tabBarInactiveTintColor: colors.muted,
-          tabBarStyle: {
-            backgroundColor: colors.surface,
-            borderTopColor: colors.outline,
-          },
-          tabBarLabelStyle: { fontFamily: 'Montserrat_600SemiBold', fontSize: 11 },
-        }}
-      >
-        {TABS.map((tab) => (
-          <Tabs.Screen
-            key={tab.name}
-            name={tab.name}
-            options={{
-              title: t(tab.labelKey),
-              tabBarIcon: ({ color }) => <tab.icon color={color} size={24} strokeWidth={2} />,
-            }}
-          />
-        ))}
-      </Tabs>
-    </>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.muted,
+        tabBarStyle: {
+          backgroundColor: colors.surface,
+          borderTopColor: colors.outline,
+        },
+        tabBarLabelStyle: { fontFamily: 'Montserrat_600SemiBold', fontSize: 11 },
+      }}
+    >
+      {TABS.map((tab) => (
+        <Tabs.Screen
+          key={tab.name}
+          name={tab.name}
+          options={{
+            title: t(tab.labelKey),
+            tabBarIcon: ({ color }) => <tab.icon color={color} size={24} strokeWidth={2} />,
+          }}
+        />
+      ))}
+    </Tabs>
   );
 }

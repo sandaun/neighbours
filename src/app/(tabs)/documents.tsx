@@ -8,7 +8,7 @@ export default function DocumentsScreen() {
   const { t } = useTranslation();
   return (
     <View className="flex-1 bg-bg dark:bg-bg-dark">
-      <ScreenHeader title={t('tabs.documents')} />
+      <ScreenHeader title={t('tabs.documents')} variant="section" />
       <EmptyState
         icon={<FileText color="#803EF6" size={28} />}
         title={t('empty.documents')}

@@ -1,8 +1,9 @@
-import { router, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 
-import { EmptyState, ScreenHeader } from '@/design-system';
+import { EmptyState } from '@/design-system';
 
 const DESTINATION_KEYS = new Set([
   'voting',
@@ -20,26 +21,18 @@ const DESTINATION_KEYS = new Set([
 
 export default function MoreDestinationScreen() {
   const { t } = useTranslation();
+  const colorScheme = useColorScheme();
   const { module } = useLocalSearchParams<{ module?: string | string[] }>();
   const key = typeof module === 'string' && DESTINATION_KEYS.has(module) ? module : null;
   const title = key ? t(`more.destinations.${key}`) : t('tabs.more');
 
-  function goBack() {
-    if (router.canGoBack()) {
-      router.back();
-      return;
-    }
-
-    router.replace('/mes');
-  }
-
   return (
-    <View className="flex-1 bg-bg dark:bg-bg-dark">
-      <ScreenHeader
-        backAction={{ label: t('tabs.more'), onPress: goBack }}
-        title={title}
-      />
-      <EmptyState subtitle={t('empty.comingSoon')} title={title} />
-    </View>
+    <>
+      <Stack.Screen options={{ title }} />
+      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+      <View className="flex-1 bg-bg dark:bg-bg-dark">
+        <EmptyState subtitle={t('empty.comingSoon')} title={title} />
+      </View>
+    </>
   );
 }
