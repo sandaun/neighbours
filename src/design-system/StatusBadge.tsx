@@ -9,15 +9,15 @@ const badgeStyles: Record<IncidentStatus, string> = {
 };
 
 const dotStyles: Record<IncidentStatus, string> = {
-  received: 'bg-primary',
+  received: 'bg-primary dark:bg-primary-darkmode',
   'in-progress': 'bg-tertiary',
-  resolved: 'bg-secondary-txt',
+  resolved: 'bg-secondary-txt dark:bg-secondary',
 };
 
 const labelStyles: Record<IncidentStatus, string> = {
   received: 'text-ink dark:text-ink-dark',
-  'in-progress': 'text-tertiary-txt',
-  resolved: 'text-secondary-txt',
+  'in-progress': 'text-tertiary-txt dark:text-tertiary',
+  resolved: 'text-secondary-txt dark:text-secondary',
 };
 
 /** Badge d'estat d'incidència: rebuda / en gestió / resolta. */
