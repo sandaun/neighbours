@@ -54,10 +54,7 @@ export function ScreenHeader({ overline, title, subtitle, variant = 'hero' }: Sc
   return (
     <>
       {isFocused ? <StatusBar style={statusBarStyle} /> : null}
-      <View
-        className="rounded-b-2xl bg-primary px-5 pb-6"
-        style={{ paddingTop: insets.top + 16 }}
-      >
+      <View className="rounded-b-2xl bg-primary px-5 pb-6" style={{ paddingTop: insets.top + 16 }}>
         {overline ? (
           <Text className="font-label text-[11px] uppercase leading-[14px] tracking-[1.2px] text-primary-on/70">
             {overline}

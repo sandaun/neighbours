@@ -10,7 +10,8 @@ type ButtonProps = Omit<PressableProps, 'children'> & {
 
 const containerStyles: Record<ButtonVariant, string> = {
   primary: 'bg-primary active:bg-primary-dark',
-  outline: 'bg-transparent border border-outline active:bg-surface-hi dark:border-outline-dark dark:active:bg-surface-dark-hi',
+  outline:
+    'bg-transparent border border-outline active:bg-surface-hi dark:border-outline-dark dark:active:bg-surface-dark-hi',
   danger: 'bg-danger active:bg-danger-dark',
   ghost: 'bg-transparent active:bg-surface-hi dark:active:bg-surface-dark-hi',
 };
@@ -39,7 +40,9 @@ export function Button({
       {...props}
     >
       {loading ? (
-        <ActivityIndicator color={variant === 'primary' || variant === 'danger' ? '#FFFFFF' : '#803EF6'} />
+        <ActivityIndicator
+          color={variant === 'primary' || variant === 'danger' ? '#FFFFFF' : '#803EF6'}
+        />
       ) : (
         <Text className={`font-label text-[13px] leading-[18px] ${labelStyles[variant]}`}>
           {children}

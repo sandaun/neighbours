@@ -7,7 +7,12 @@ import { Platform } from 'react-native';
 import { useTheme } from '@/hooks/use-theme';
 
 const TABS = [
-  { name: 'index', labelKey: 'tabs.home', sf: { default: 'house', selected: 'house.fill' }, icon: Home },
+  {
+    name: 'index',
+    labelKey: 'tabs.home',
+    sf: { default: 'house', selected: 'house.fill' },
+    icon: Home,
+  },
   {
     name: 'incidencies',
     labelKey: 'tabs.incidents',
