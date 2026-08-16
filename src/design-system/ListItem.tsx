@@ -18,12 +18,13 @@ export function ListItem({
   leading,
   chevron = false,
   trailing,
+  className,
   ...props
 }: ListItemProps) {
   return (
     <Pressable
       accessibilityRole="button"
-      className="flex-row items-center gap-3 rounded-md bg-surface px-4 py-3 active:bg-surface-hi dark:bg-surface-dark dark:active:bg-surface-dark-hi"
+      className={`flex-row items-center gap-3 rounded-md bg-surface px-4 py-3 active:bg-surface-hi dark:bg-surface-dark dark:active:bg-surface-dark-hi ${className ?? ''}`}
       {...props}
     >
       {leading}

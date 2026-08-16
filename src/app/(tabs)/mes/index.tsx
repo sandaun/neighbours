@@ -93,6 +93,7 @@ function DestinationRow({ destination }: { destination: Destination }) {
     <ListItem
       accessibilityHint={t('more.openHint', { name: title })}
       chevron
+      className="rounded-lg shadow-md shadow-ink/10 elevation-1"
       leading={<MoreIcon danger={destination.danger} icon={destination.icon} />}
       onPress={() =>
         router.push({
