@@ -110,7 +110,7 @@ export default function MoreScreen() {
   return (
     <View className="flex-1 bg-bg dark:bg-bg-dark">
       <ScreenHeader subtitle={t('more.subtitle')} title={t('more.title')} variant="section" />
-      <ScrollView contentContainerClassName="px-5 pb-12">
+      <ScrollView contentContainerClassName="px-5 pb-12" contentInsetAdjustmentBehavior="automatic">
         <SectionHeader title={t('more.sections.participation')} />
         <View className="flex-row flex-wrap justify-between gap-y-3">
           {PARTICIPATION_DESTINATIONS.map((destination) => (
