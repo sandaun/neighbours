@@ -12,7 +12,14 @@
     "retry": "Reintentar",
     "loading": "Cargando…"
   },
+  "errors": {
+    "loadTitle": "No hemos podido cargar los datos",
+    "loadSubtitle": "Vuelve a intentarlo dentro de unos instantes.",
+    "notFoundTitle": "Este apartado no existe",
+    "notFoundSubtitle": "Vuelve a Más y selecciona otra opción."
+  },
   "incidents": {
+    "subtitle": "Sigue las incidencias de la comunidad y su estado.",
     "status": {
       "received": "Recibida",
       "inProgress": "En gestión",
@@ -23,14 +30,22 @@
       "electrical": "Electricidad",
       "elevator": "Ascensor"
     },
-    "reportedDaysAgo": "Reportada hace {{count}} días"
+    "reportedDaysAgo": "Reportada hace {{count}} días",
+    "reportedOn": "Reportada el {{date}}",
+    "filters": {
+      "all": "Todas"
+    },
+    "sections": {
+      "all": "Todas las incidencias"
+    }
   },
   "home": {
     "overline": "Comunidad",
     "communityName": "Carrer del Mar 14",
     "sections": {
       "recentIncidents": "Incidencias recientes",
-      "upcomingEvents": "Próximos eventos"
+      "upcomingEvents": "Próximos eventos",
+      "board": "Tablón"
     },
     "incident2": {
       "title": "Goteo en el aparcamiento"
@@ -38,13 +53,38 @@
     "event1": {
       "title": "Junta ordinaria",
       "meta": "Viernes 22 · 19:00 · Salón comunitario"
+    },
+    "boardComments_one": "{{count}} comentario",
+    "boardComments_other": "{{count}} comentarios"
+  },
+  "documents": {
+    "subtitle": "Actas, seguros y normativa de la comunidad.",
+    "secureNotice": "Los documentos son privados y solo están disponibles para los miembros de la comunidad.",
+    "sections": {
+      "all": "Documentos recientes"
+    }
+  },
+  "accounts": {
+    "subtitle": "Cuotas, derramas e histórico de recibos.",
+    "balance": "Saldo actual",
+    "upToDate": "Estás al corriente de pago",
+    "nextCharge": "Próximo cargo",
+    "sections": {
+      "receipts": "Recibos y cargos"
+    },
+    "status": {
+      "paid": "Pagado",
+      "scheduled": "Programado"
     }
   },
   "empty": {
     "incidents": "Aún no hay incidencias",
     "documents": "Aún no hay documentos",
     "accounts": "Aún no hay movimientos",
-    "comingSoon": "Este módulo llega en una próxima iteración."
+    "comingSoon": "Este módulo llega en una próxima iteración.",
+    "incidentsSubtitle": "Cuando se comunique una, aparecerá aquí.",
+    "documentsSubtitle": "Los documentos publicados aparecerán aquí.",
+    "accountsSubtitle": "Los recibos y cargos aparecerán aquí."
   },
   "more": {
     "title": "Más",
@@ -67,6 +107,88 @@
       "privacy": "Privacidad y datos",
       "emergencies": "Urgencias",
       "access": "Accesos"
+    },
+    "modules": {
+      "sections": {
+        "active": "En curso",
+        "recent": "Actividad reciente",
+        "latest": "Últimas publicaciones",
+        "availableSpaces": "Espacios disponibles",
+        "august": "Agosto 2026",
+        "maintenance": "Contactos principales",
+        "activeAccess": "Accesos activos",
+        "compatibility": "Compatibilidad de la finca",
+        "emergencyContacts": "Contactos de urgencia",
+        "myProperty": "Mis propiedades",
+        "contactDetails": "Datos de contacto",
+        "preferences": "Preferencias",
+        "appLanguage": "Idioma de la aplicación",
+        "yourData": "Tus datos"
+      },
+      "badges": {
+        "pendingVote": "Pendiente de voto",
+        "approved": "Aprobada",
+        "maintenance": "Mantenimiento",
+        "lostAndFound": "Objetos perdidos",
+        "available": "Disponible",
+        "administration": "Administración",
+        "elevator": "Ascensor",
+        "plumbing": "Fontanería",
+        "active": "Activo",
+        "compatible": "Compatible",
+        "notCompatible": "No compatible",
+        "call": "Llamar",
+        "alwaysOpen": "24 h",
+        "onCall": "Guardia",
+        "verified": "Verificado",
+        "enabled": "Activas",
+        "highlightsOnly": "Destacadas",
+        "selected": "Seleccionado"
+      },
+      "voting": {
+        "description": "Participa en las decisiones de la comunidad y consulta sus resultados.",
+        "highlight": "Votaciones activas"
+      },
+      "board": {
+        "description": "Novedades, avisos y conversaciones entre las personas de la comunidad.",
+        "highlight": "Publicaciones nuevas"
+      },
+      "bookings": {
+        "description": "Consulta la disponibilidad de los espacios comunes antes de reservar.",
+        "highlight": "Espacios reservables"
+      },
+      "calendar": {
+        "description": "Todos los eventos y trabajos programados de la finca.",
+        "highlight": "Próximos eventos"
+      },
+      "directory": {
+        "description": "Empresas, mantenedores y contactos útiles de la comunidad.",
+        "highlight": "Contactos disponibles"
+      },
+      "access": {
+        "description": "Gestiona accesos temporales para visitas y servicios autorizados.",
+        "highlight": "Accesos activos"
+      },
+      "emergencies": {
+        "description": "Contactos prioritarios para actuar rápidamente ante una urgencia.",
+        "highlight": "Servicio disponible"
+      },
+      "profile": {
+        "description": "Consulta tus datos y las unidades vinculadas a la cuenta.",
+        "highlight": "Titular de la cuenta"
+      },
+      "notifications": {
+        "description": "Decide qué avisos quieres recibir en el dispositivo.",
+        "highlight": "Canales activos"
+      },
+      "language": {
+        "description": "Selecciona el idioma de la interfaz de la aplicación.",
+        "highlight": "Idioma actual"
+      },
+      "privacy": {
+        "description": "Consulta y controla cómo se tratan tus datos personales.",
+        "highlight": "Datos personales"
+      }
     }
   },
   "showcase": {

@@ -16,11 +16,12 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 
+import type { MoreModuleKey } from '@/data';
 import { ListItem, ScreenHeader, SectionHeader } from '@/design-system';
 import { useTheme } from '@/hooks/use-theme';
 
 type Destination = {
-  key: string;
+  key: MoreModuleKey;
   icon: LucideIcon;
   danger?: boolean;
 };

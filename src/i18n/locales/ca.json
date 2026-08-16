@@ -12,7 +12,14 @@
     "retry": "Torna-ho a provar",
     "loading": "Carregant…"
   },
+  "errors": {
+    "loadTitle": "No hem pogut carregar les dades",
+    "loadSubtitle": "Torna-ho a provar d'aquí a uns instants.",
+    "notFoundTitle": "Aquest apartat no existeix",
+    "notFoundSubtitle": "Torna a Més i selecciona una altra opció."
+  },
   "incidents": {
+    "subtitle": "Segueix les incidències de la comunitat i el seu estat.",
     "status": {
       "received": "Rebuda",
       "inProgress": "En gestió",
@@ -23,14 +30,22 @@
       "electrical": "Electricitat",
       "elevator": "Ascensor"
     },
-    "reportedDaysAgo": "Reportada fa {{count}} dies"
+    "reportedDaysAgo": "Reportada fa {{count}} dies",
+    "reportedOn": "Reportada el {{date}}",
+    "filters": {
+      "all": "Totes"
+    },
+    "sections": {
+      "all": "Totes les incidències"
+    }
   },
   "home": {
     "overline": "Comunitat",
     "communityName": "Carrer del Mar 14",
     "sections": {
       "recentIncidents": "Incidències recents",
-      "upcomingEvents": "Pròxims esdeveniments"
+      "upcomingEvents": "Pròxims esdeveniments",
+      "board": "Tauló"
     },
     "incident2": {
       "title": "Goteig a l'aparcament"
@@ -38,13 +53,38 @@
     "event1": {
       "title": "Junta ordinària",
       "meta": "Divendres 22 · 19:00 · Saló comunitari"
+    },
+    "boardComments_one": "{{count}} comentari",
+    "boardComments_other": "{{count}} comentaris"
+  },
+  "documents": {
+    "subtitle": "Actes, assegurances i normativa de la comunitat.",
+    "secureNotice": "Els documents són privats i només estan disponibles per als membres de la comunitat.",
+    "sections": {
+      "all": "Documents recents"
+    }
+  },
+  "accounts": {
+    "subtitle": "Quotes, derrames i històric de rebuts.",
+    "balance": "Saldo actual",
+    "upToDate": "Estàs al corrent de pagament",
+    "nextCharge": "Proper càrrec",
+    "sections": {
+      "receipts": "Rebuts i càrrecs"
+    },
+    "status": {
+      "paid": "Pagat",
+      "scheduled": "Programat"
     }
   },
   "empty": {
     "incidents": "Encara no hi ha incidències",
     "documents": "Encara no hi ha documents",
     "accounts": "Encara no hi ha moviments",
-    "comingSoon": "Aquest mòdul arriba en una propera iteració."
+    "comingSoon": "Aquest mòdul arriba en una propera iteració.",
+    "incidentsSubtitle": "Quan se'n comuniqui una, apareixerà aquí.",
+    "documentsSubtitle": "Els documents publicats apareixeran aquí.",
+    "accountsSubtitle": "Els rebuts i càrrecs apareixeran aquí."
   },
   "more": {
     "title": "Més",
@@ -67,6 +107,88 @@
       "privacy": "Privacitat i dades",
       "emergencies": "Urgències",
       "access": "Accessos"
+    },
+    "modules": {
+      "sections": {
+        "active": "En curs",
+        "recent": "Activitat recent",
+        "latest": "Últimes publicacions",
+        "availableSpaces": "Espais disponibles",
+        "august": "Agost 2026",
+        "maintenance": "Contactes principals",
+        "activeAccess": "Accessos actius",
+        "compatibility": "Compatibilitat de la finca",
+        "emergencyContacts": "Contactes d'urgència",
+        "myProperty": "Les meves propietats",
+        "contactDetails": "Dades de contacte",
+        "preferences": "Preferències",
+        "appLanguage": "Idioma de l'aplicació",
+        "yourData": "Les teves dades"
+      },
+      "badges": {
+        "pendingVote": "Pendent de vot",
+        "approved": "Aprovada",
+        "maintenance": "Manteniment",
+        "lostAndFound": "Objectes perduts",
+        "available": "Disponible",
+        "administration": "Administració",
+        "elevator": "Ascensor",
+        "plumbing": "Fontaneria",
+        "active": "Actiu",
+        "compatible": "Compatible",
+        "notCompatible": "No compatible",
+        "call": "Trucar",
+        "alwaysOpen": "24 h",
+        "onCall": "Guàrdia",
+        "verified": "Verificat",
+        "enabled": "Actives",
+        "highlightsOnly": "Destacades",
+        "selected": "Seleccionat"
+      },
+      "voting": {
+        "description": "Participa en les decisions de la comunitat i consulta'n els resultats.",
+        "highlight": "Votacions actives"
+      },
+      "board": {
+        "description": "Novetats, avisos i converses entre les persones de la comunitat.",
+        "highlight": "Publicacions noves"
+      },
+      "bookings": {
+        "description": "Consulta la disponibilitat dels espais comuns abans de reservar.",
+        "highlight": "Espais reservables"
+      },
+      "calendar": {
+        "description": "Tots els esdeveniments i treballs programats de la finca.",
+        "highlight": "Propers esdeveniments"
+      },
+      "directory": {
+        "description": "Empreses, mantenidors i contactes útils de la comunitat.",
+        "highlight": "Contactes disponibles"
+      },
+      "access": {
+        "description": "Gestiona accessos temporals per a visites i serveis autoritzats.",
+        "highlight": "Accessos actius"
+      },
+      "emergencies": {
+        "description": "Contactes prioritaris per actuar ràpid davant d'una urgència.",
+        "highlight": "Servei disponible"
+      },
+      "profile": {
+        "description": "Consulta les teves dades i les unitats vinculades al compte.",
+        "highlight": "Titular del compte"
+      },
+      "notifications": {
+        "description": "Decideix quins avisos vols rebre al dispositiu.",
+        "highlight": "Canals actius"
+      },
+      "language": {
+        "description": "Selecciona l'idioma de la interfície de l'aplicació.",
+        "highlight": "Idioma actual"
+      },
+      "privacy": {
+        "description": "Consulta i controla com es tracten les teves dades personals.",
+        "highlight": "Dades personals"
+      }
     }
   },
   "showcase": {
