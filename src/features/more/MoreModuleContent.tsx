@@ -19,6 +19,8 @@ import type { ModuleItemTone, MoreModuleData, MoreModuleKey } from '@/data';
 import { Card, SectionHeader } from '@/design-system';
 import { useTheme } from '@/hooks/use-theme';
 
+import { CalendarModuleContent } from './CalendarModuleContent';
+
 const MODULE_ICONS: Record<MoreModuleKey, LucideIcon> = {
   voting: Vote,
   board: MessageSquare,
@@ -63,6 +65,10 @@ export function MoreModuleContent({ data }: { data: MoreModuleData }) {
   const highlightTone = data.highlight.tone ?? 'default';
   const HighlightIcon = MODULE_ICONS[data.key];
   const highlightIconColor = highlightTone === 'danger' ? colors.danger : colors.primary;
+
+  if (data.key === 'calendar') {
+    return <CalendarModuleContent data={data} />;
+  }
 
   return (
     <ScrollView contentContainerClassName="px-5 pb-12" contentInsetAdjustmentBehavior="automatic">

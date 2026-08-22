@@ -82,6 +82,8 @@ export type ModuleItem = {
   title: string;
   subtitle?: string;
   meta?: string;
+  startsAt?: string;
+  endsAt?: string;
   badgeKey?: string;
   tone?: ModuleItemTone;
 };

@@ -159,7 +159,21 @@
       },
       "calendar": {
         "description": "Tots els esdeveniments i treballs programats de la finca.",
-        "highlight": "Propers esdeveniments"
+        "highlight": "Propers esdeveniments",
+        "previousMonth": "Mes anterior",
+        "nextMonth": "Mes següent",
+        "today": "Avui",
+        "eventsForDay": "Esdeveniments del dia",
+        "noEvents": "No hi ha esdeveniments programats per a aquest dia.",
+        "weekdays": {
+          "monday": "Dl",
+          "tuesday": "Dt",
+          "wednesday": "Dc",
+          "thursday": "Dj",
+          "friday": "Dv",
+          "saturday": "Ds",
+          "sunday": "Dg"
+        }
       },
       "directory": {
         "description": "Empreses, mantenidors i contactes útils de la comunitat.",

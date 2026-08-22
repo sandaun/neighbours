@@ -159,7 +159,21 @@
       },
       "calendar": {
         "description": "Todos los eventos y trabajos programados de la finca.",
-        "highlight": "Próximos eventos"
+        "highlight": "Próximos eventos",
+        "previousMonth": "Mes anterior",
+        "nextMonth": "Mes siguiente",
+        "today": "Hoy",
+        "eventsForDay": "Eventos del día",
+        "noEvents": "No hay eventos programados para este día.",
+        "weekdays": {
+          "monday": "L",
+          "tuesday": "M",
+          "wednesday": "X",
+          "thursday": "J",
+          "friday": "V",
+          "saturday": "S",
+          "sunday": "D"
+        }
       },
       "directory": {
         "description": "Empresas, mantenedores y contactos útiles de la comunidad.",
