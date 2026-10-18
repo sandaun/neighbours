@@ -1,4 +1,4 @@
-import { createClient, processLock, type SupabaseClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 import type { Database } from '@/data/database.types';
 import { appConfig } from '@/lib/app-config';
@@ -18,7 +18,6 @@ export function getSupabase(): SupabaseClient<Database> {
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: false,
-      lock: processLock,
     },
   });
   return client;
