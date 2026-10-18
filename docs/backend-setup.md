@@ -21,6 +21,21 @@ SQL editor. A manual SQL-editor application does not record migration history:
 reconcile the history before a later CLI push so it does not run the same file
 again. Do not reset an existing remote database.
 
+If authenticated CLI access is available, the standard history repair is:
+
+```sh
+npx --yes supabase@2.121.0 migration repair 20261018100713 --status applied --linked --project-ref ttrgbzqedarelznbdiye
+```
+
+When CLI credentials are unavailable, `supabase/operations/record_resident_mvp.sql`
+provides a one-time dashboard alternative after the deployment is verified. It
+creates the CLI's private history table and records version `20261018100713`,
+name `resident_mvp`, and all 44 original SQL statements as metadata. It does not
+execute the stored application SQL or change its deployed migration. It grants
+clients nothing and revokes their access to the bookkeeping schema/table.
+Re-running the operation updates the same version; it never truncates history.
+This file is outside `supabase/migrations/` so it is not a new application migration.
+
 For local verification with Docker running:
 
 ```sh
@@ -37,17 +52,30 @@ column grants, forged reporter/status/date/ownership, photo paths, PDF namespace
 revocation, and anonymous access. An SQL error aborts the test; assertions are
 explicitly enabled. Do not run fixtures separately from the transaction.
 
+Supabase Storage may retain its default UPDATE/DELETE grants. With no matching
+RLS policy those operations safely affect zero rows, rather than raising a grant
+error. The suite checks both outcomes and requires no mutation; it also accepts
+either an empty anonymous Storage SELECT or an explicit permission error.
+
 After applying remotely, run security/performance advisors and the transactional
 test against that project, then verify an invited resident on a real device.
 Regenerate `src/data/database.types.ts` against the migrated schema with the CLI
 `gen types typescript` command. The checked-in type snapshot supports the initial
 implementation; regeneration should preserve the screen-facing types.
 
-Implementation verification in this worktree: migration and SQL test passed in
-temporary PGlite (PostgreSQL WASM), using minimal Auth/Storage schema fixtures.
-This verifies actual Postgres constraints, grants, and RLS behavior. It does not
-verify Supabase Auth delivery, Storage HTTP behavior, production advisors, or the
-Docker stack. Docker was unavailable during implementation.
+On 18 October 2026 the coordinator applied the migration to
+`ttrgbzqedarelznbdiye` through the dashboard and ran the transactional RLS suite
+successfully against the real Supabase database. Post-deployment inspection found
+all eight application tables with RLS enabled, both buckets private, and zero Auth
+users/communities remaining after the test transaction rolled back. The manually
+applied migration initially had no CLI history table; the history operation above
+is the required repair before a later CLI push.
+
+The migration and SQL tests also passed in temporary PGlite (PostgreSQL WASM),
+using minimal Auth/Storage fixtures, both with and without default Storage DML
+grants. This isolated check covers constraints, grants, and RLS behavior. Neither
+SQL test verifies email delivery, Storage HTTP uploads/signed URL responses, or a
+real resident's mobile session. Docker was unavailable for a local full stack.
 
 ## Configure invite-only email OTP
 
@@ -152,3 +180,5 @@ administrative table writes, storage replacements, or storage deletes are grante
 - [Private file URLs](https://supabase.com/docs/guides/storage/serving/downloads)
 - [SMTP](https://supabase.com/docs/guides/auth/auth-smtp)
 - [Expo SDK 57 reference](https://docs.expo.dev/versions/v57.0.0/)
+- [CLI 2.121.0 migration history source](https://github.com/supabase/cli/blob/v2.121.0/apps/cli/src/command-internal/migration-history.ts)
+- [CLI 2.121.0 repair handler](https://github.com/supabase/cli/blob/v2.121.0/apps/cli/src/commands/migration/repair/repair.handler.ts)
