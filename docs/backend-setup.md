@@ -10,9 +10,12 @@ in Expo public environment variables or application code.
 
 ## Apply and verify
 
-The migration is `supabase/migrations/20261018100713_resident_mvp.sql`. It creates
+The base migration is `supabase/migrations/20261018100713_resident_mvp.sql`. It creates
 eight tables, explicit client grants, row policies, and private buckets. It has
 no demo seed and contains no Auth users or email delivery calls.
+The follow-up `20261018102837_restrict_rls_event_trigger_execution.sql` only
+removes client execution privileges from the hosted bootstrap event-trigger
+function, when that function exists and returns `event_trigger`.
 
 With the Supabase CLI authenticated and linked to the intended project, inspect
 the proposed changes with `supabase db push --dry-run` before `supabase db push`.
@@ -32,7 +35,8 @@ provides a one-time dashboard alternative after the deployment is verified. It
 creates the CLI's private history table and records version `20261018100713`,
 name `resident_mvp`, and all 44 original SQL statements as metadata. It does not
 execute the stored application SQL or change its deployed migration. It grants
-clients nothing and revokes their access to the bookkeeping schema/table.
+clients nothing, enables RLS on the bookkeeping table, and revokes their access
+to the bookkeeping schema/table.
 Re-running the operation updates the same version; it never truncates history.
 This file is outside `supabase/migrations/` so it is not a new application migration.
 
@@ -68,14 +72,28 @@ On 18 October 2026 the coordinator applied the migration to
 successfully against the real Supabase database. Post-deployment inspection found
 all eight application tables with RLS enabled, both buckets private, and zero Auth
 users/communities remaining after the test transaction rolled back. The manually
-applied migration initially had no CLI history table; the history operation above
-is the required repair before a later CLI push.
+applied migration initially had no CLI history table. The coordinator then
+completed the history repair: version `20261018100713`, name `resident_mvp`, and
+44 statements are recorded. Both anonymous and authenticated roles have neither
+schema usage nor history-table SELECT privileges. The private history table also
+has RLS enabled; the owner used by the CLI retains access.
+
+The follow-up migration was applied and recorded atomically as version
+`20261018102837`, bringing the history count to two. Remote verification confirmed
+`public.rls_auto_enable()` execution is denied to `anon` and `authenticated`,
+retained for `service_role`, and its existing `ensure_rls` event trigger remains
+enabled (`O`). The function body, owner, and trigger definition were unchanged.
+The base migration was not edited after deployment.
 
 The migration and SQL tests also passed in temporary PGlite (PostgreSQL WASM),
 using minimal Auth/Storage fixtures, both with and without default Storage DML
 grants. This isolated check covers constraints, grants, and RLS behavior. Neither
 SQL test verifies email delivery, Storage HTTP uploads/signed URL responses, or a
-real resident's mobile session. Docker was unavailable for a local full stack.
+real resident's mobile session. A separate isolated PostgreSQL event-trigger test
+confirmed the follow-up skips an absent function, rejects an unexpected return
+type, preserves service-role access, and leaves automatic RLS activation working
+after client EXECUTE privileges are revoked. Docker was unavailable for a local
+full stack.
 
 ## Configure invite-only email OTP
 
@@ -93,6 +111,14 @@ hosted dashboard:
    The app calls `signInWithOtp` with `shouldCreateUser: false` and cannot create
    an account or assign access itself. Administrative invitation emails are a
    separate operation; do not send them implicitly while setting up tables.
+
+Current hosted status: public signup is disabled. Custom SMTP is still pending;
+the dashboard currently locks email-template editing until SMTP is configured.
+No invitation or OTP emails have been sent, and no live Auth users, communities,
+or memberships have been provisioned. Email-code delivery, the first resident's
+native sign-in/session flow, and actual private-file HTTP operations remain to be
+verified after SMTP and the first pilot membership are configured. The passing
+SQL suite and demo smoke test do not establish those live user flows.
 
 ## Provision a community
 
@@ -170,9 +196,12 @@ until expiry after membership revocation.
 ## Security model and references
 
 All public tables have RLS. `community_members` selects only `auth.uid()`'s own
-rows, so other table policies can query membership without recursion. No
-`SECURITY DEFINER` functions, public RPCs, user-metadata authorization, or
-privileged app credentials are needed. No browser/mobile membership writes,
+rows, so other table policies can query membership without recursion. The
+application introduces no `SECURITY DEFINER` helpers, public RPCs, user-metadata
+authorization, or privileged app credentials. The pre-existing hosted
+`SECURITY DEFINER` bootstrap event-trigger function keeps its operator/service
+access and has no client EXECUTE access after the follow-up migration.
+No browser/mobile membership writes,
 administrative table writes, storage replacements, or storage deletes are granted.
 
 - [Supabase RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)
