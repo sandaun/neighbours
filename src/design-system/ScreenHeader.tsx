@@ -10,17 +10,26 @@ type ScreenHeaderProps = {
   title: string;
   subtitle?: string;
   variant?: 'hero' | 'section';
+  /** A contained header leaves the screen's safe area outside its surface. */
+  embedded?: boolean;
 };
 
 /**
  * Branded hero for Home and a quieter content header for primary sections.
  */
-export function ScreenHeader({ overline, title, subtitle, variant = 'hero' }: ScreenHeaderProps) {
+export function ScreenHeader({
+  overline,
+  title,
+  subtitle,
+  variant = 'hero',
+  embedded = false,
+}: ScreenHeaderProps) {
   const insets = useSafeAreaInsets();
   const colorScheme = useColorScheme();
   const [isFocused, setIsFocused] = useState(false);
   const isHero = variant === 'hero';
-  const statusBarStyle: StatusBarStyle = isHero || colorScheme === 'dark' ? 'light' : 'dark';
+  const statusBarStyle: StatusBarStyle =
+    (isHero && !embedded) || colorScheme === 'dark' ? 'light' : 'dark';
 
   useFocusEffect(
     useCallback(() => {
@@ -54,7 +63,10 @@ export function ScreenHeader({ overline, title, subtitle, variant = 'hero' }: Sc
   return (
     <>
       {isFocused ? <StatusBar style={statusBarStyle} /> : null}
-      <View className="rounded-b-2xl bg-primary px-5 pb-6" style={{ paddingTop: insets.top + 16 }}>
+      <View
+        className="rounded-b-2xl bg-primary px-5 pb-6"
+        style={{ paddingTop: (embedded ? 0 : insets.top) + 16 }}
+      >
         {overline ? (
           <Text className="font-label text-[11px] uppercase leading-[14px] tracking-[1.2px] text-primary-on/70">
             {overline}

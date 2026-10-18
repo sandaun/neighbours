@@ -55,12 +55,13 @@ export default function LoginScreen() {
             justifyContent: 'center',
             alignItems: 'center',
             paddingHorizontal: 20,
-            paddingTop: 24,
+            paddingTop: insets.top + 24,
             paddingBottom: insets.bottom + 24,
           }}
         >
           <Card className="overflow-hidden" style={{ width: '100%', maxWidth: 480, padding: 0 }}>
             <ScreenHeader
+              embedded
               overline="Neighbours"
               title={t('auth.title')}
               subtitle={t('auth.subtitle')}
