@@ -55,14 +55,19 @@
       "meta": "Viernes 22 · 19:00 · Salón comunitario"
     },
     "boardComments_one": "{{count}} comentario",
-    "boardComments_other": "{{count}} comentarios"
+    "boardComments_other": "{{count}} comentarios",
+    "noEvents": "Todavía no hay eventos programados.",
+    "noBoardPosts": "Todavía no hay publicaciones."
   },
   "documents": {
     "subtitle": "Actas, seguros y normativa de la comunidad.",
     "secureNotice": "Los documentos son privados y solo están disponibles para los miembros de la comunidad.",
     "sections": {
       "all": "Documentos recientes"
-    }
+    },
+    "openPdf": "Abrir el PDF",
+    "demoNoFile": "Documento de muestra sin archivo adjunto.",
+    "openError": "No hemos podido abrir el documento. Inténtalo de nuevo y permite abrir ventanas."
   },
   "accounts": {
     "subtitle": "Cuotas, derramas e histórico de recibos.",
@@ -75,7 +80,9 @@
     "status": {
       "paid": "Pagado",
       "scheduled": "Programado"
-    }
+    },
+    "noScheduledCharge": "Ningún cargo programado",
+    "balanceInfo": "Saldo informado por la administración"
   },
   "empty": {
     "incidents": "Aún no hay incidencias",

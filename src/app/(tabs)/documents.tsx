@@ -1,10 +1,11 @@
 import { FileText, ShieldCheck } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, Text, View } from 'react-native';
+import { RefreshControl, ScrollView, Text, View } from 'react-native';
 
 import { appDataSource } from '@/data';
 import {
   Card,
+  Button,
   EmptyState,
   ErrorState,
   LoadingState,
@@ -12,6 +13,8 @@ import {
   SectionHeader,
 } from '@/design-system';
 import { useDataResource } from '@/hooks/use-data-resource';
+import { PdfButton } from '@/features/documents/PdfButton';
+import { isDemoMode } from '@/lib/app-config';
 import { useTheme } from '@/hooks/use-theme';
 import { formatShortDate } from '@/utils/formatters';
 
@@ -28,10 +31,22 @@ export default function DocumentsScreen() {
         title={t('tabs.documents')}
         variant="section"
       />
-      <ScrollView contentContainerClassName="px-5 pb-12" contentInsetAdjustmentBehavior="automatic">
+      <ScrollView
+        contentContainerClassName="px-5 pb-12"
+        contentInsetAdjustmentBehavior="automatic"
+        refreshControl={
+          <RefreshControl
+            refreshing={resource.refreshing && resource.status !== 'loading'}
+            onRefresh={resource.reload}
+          />
+        }
+      >
         {resource.status === 'loading' ? <LoadingState label={t('common.loading')} /> : null}
         {resource.status === 'error' ? (
-          <ErrorState subtitle={t('errors.loadSubtitle')} title={t('errors.loadTitle')} />
+          <View>
+            <ErrorState subtitle={t('errors.loadSubtitle')} title={t('errors.loadTitle')} />
+            <Button onPress={resource.reload}>{t('common.retry')}</Button>
+          </View>
         ) : null}
         {resource.status === 'success' && resource.data.length === 0 ? (
           <EmptyState
@@ -51,19 +66,25 @@ export default function DocumentsScreen() {
             <SectionHeader title={t('documents.sections.all')} />
             <View className="gap-3">
               {resource.data.map((document) => (
-                <Card className="flex-row items-center gap-3" key={document.id}>
-                  <View className="h-11 w-11 items-center justify-center rounded-full bg-surface-hi dark:bg-surface-dark-hi">
-                    <FileText color={colors.primary} size={21} />
+                <Card className="gap-4" key={document.id}>
+                  <View className="flex-row items-center gap-3">
+                    <View className="h-11 w-11 items-center justify-center rounded-full bg-surface-hi dark:bg-surface-dark-hi">
+                      <FileText color={colors.primary} size={21} />
+                    </View>
+                    <View className="flex-1">
+                      <Text className="font-body-semi text-[15px] leading-[21px] text-ink dark:text-ink-dark">
+                        {document.title}
+                      </Text>
+                      <Text className="mt-0.5 font-body text-[11px] leading-[15px] text-ink-muted dark:text-ink-dark-soft">
+                        {document.fileType} · {document.fileSize} ·{' '}
+                        {formatShortDate(document.updatedAt, locale)}
+                      </Text>
+                    </View>
                   </View>
-                  <View className="flex-1">
-                    <Text className="font-body-semi text-[15px] leading-[21px] text-ink dark:text-ink-dark">
-                      {document.title}
-                    </Text>
-                    <Text className="mt-0.5 font-body text-[11px] leading-[15px] text-ink-muted dark:text-ink-dark-soft">
-                      {document.fileType} · {document.fileSize} ·{' '}
-                      {formatShortDate(document.updatedAt, locale)}
-                    </Text>
-                  </View>
+                  <PdfButton
+                    available={!isDemoMode}
+                    getUrl={() => appDataSource.getDocumentUrl(document.id)}
+                  />
                 </Card>
               ))}
             </View>

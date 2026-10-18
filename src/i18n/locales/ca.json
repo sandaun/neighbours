@@ -55,14 +55,19 @@
       "meta": "Divendres 22 · 19:00 · Saló comunitari"
     },
     "boardComments_one": "{{count}} comentari",
-    "boardComments_other": "{{count}} comentaris"
+    "boardComments_other": "{{count}} comentaris",
+    "noEvents": "Encara no hi ha esdeveniments programats.",
+    "noBoardPosts": "Encara no hi ha publicacions."
   },
   "documents": {
     "subtitle": "Actes, assegurances i normativa de la comunitat.",
     "secureNotice": "Els documents són privats i només estan disponibles per als membres de la comunitat.",
     "sections": {
       "all": "Documents recents"
-    }
+    },
+    "openPdf": "Obre el PDF",
+    "demoNoFile": "Document de mostra sense fitxer adjunt.",
+    "openError": "No hem pogut obrir el document. Torna-ho a provar i permet l’obertura de finestres."
   },
   "accounts": {
     "subtitle": "Quotes, derrames i històric de rebuts.",
@@ -75,7 +80,9 @@
     "status": {
       "paid": "Pagat",
       "scheduled": "Programat"
-    }
+    },
+    "noScheduledCharge": "Cap càrrec programat",
+    "balanceInfo": "Saldo informat per l’administració"
   },
   "empty": {
     "incidents": "Encara no hi ha incidències",

@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { ScrollView, Text, View } from 'react-native';
+import { RefreshControl, ScrollView, Text, View } from 'react-native';
 
 import { appDataSource } from '@/data';
 import {
   Avatar,
+  Button,
   Card,
   ErrorState,
   ListItem,
@@ -25,10 +26,22 @@ export default function HomeScreen() {
   return (
     <View className="flex-1 bg-bg dark:bg-bg-dark">
       <ScreenHeader overline={t('home.overline')} title={communityName} />
-      <ScrollView contentContainerClassName="px-5 pb-8" contentInsetAdjustmentBehavior="automatic">
+      <ScrollView
+        contentContainerClassName="px-5 pb-8"
+        contentInsetAdjustmentBehavior="automatic"
+        refreshControl={
+          <RefreshControl
+            refreshing={resource.refreshing && resource.status !== 'loading'}
+            onRefresh={resource.reload}
+          />
+        }
+      >
         {resource.status === 'loading' ? <LoadingState label={t('common.loading')} /> : null}
         {resource.status === 'error' ? (
-          <ErrorState subtitle={t('errors.loadSubtitle')} title={t('errors.loadTitle')} />
+          <View>
+            <ErrorState subtitle={t('errors.loadSubtitle')} title={t('errors.loadTitle')} />
+            <Button onPress={resource.reload}>{t('common.retry')}</Button>
+          </View>
         ) : null}
         {resource.status === 'success' ? (
           <>
@@ -40,6 +53,11 @@ export default function HomeScreen() {
             </View>
 
             <SectionHeader title={t('home.sections.upcomingEvents')} />
+            {resource.data.events.length === 0 ? (
+              <Text className="font-body text-[13px] text-ink-soft dark:text-ink-dark-soft">
+                {t('home.noEvents')}
+              </Text>
+            ) : null}
             {resource.data.events.map((event) => (
               <Card key={event.id}>
                 <ListItem
@@ -50,6 +68,11 @@ export default function HomeScreen() {
             ))}
 
             <SectionHeader title={t('home.sections.board')} />
+            {resource.data.boardPosts.length === 0 ? (
+              <Text className="font-body text-[13px] text-ink-soft dark:text-ink-dark-soft">
+                {t('home.noBoardPosts')}
+              </Text>
+            ) : null}
             {resource.data.boardPosts.map((post) => (
               <Card className="gap-3" key={post.id}>
                 <View className="flex-row items-center gap-3">

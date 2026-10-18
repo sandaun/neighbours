@@ -34,6 +34,9 @@ coverage/
 *.pem
 
 # local env files
+.env
+.env.*
+!.env.example
 .env*.local
 
 # typescript
