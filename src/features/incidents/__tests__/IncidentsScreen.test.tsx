@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
+import { router } from 'expo-router';
 
 import type { Incident } from '@/data/types';
 
@@ -29,6 +30,13 @@ const mockIncidents: Incident[] = [
   },
 ];
 jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
+jest.mock('lucide-react-native', () => ({ Plus: () => null }));
+jest.mock('@/hooks/use-theme', () => ({
+  useTheme: () => ({ primary: '#803EF6', onPrimary: '#FFFFFF' }),
+}));
+jest.mock('react-native-safe-area-context', () => ({
+  useSafeAreaInsets: () => ({ top: 0, right: 0, bottom: 34, left: 0 }),
+}));
 jest.mock('react-i18next', () => ({ useTranslation: () => ({ t: (key: string) => key }) }));
 jest.mock('@/data', () => ({ appDataSource: { getIncidents: jest.fn() } }));
 jest.mock('@/hooks/use-data-resource', () => ({
@@ -67,4 +75,10 @@ test('filters displayed incidents by selected status and returns to all', async 
   await fireEvent.press(screen.getByRole('button', { name: 'incidents.filters.all' }));
   expect(screen.getByText('Received leak')).toBeTruthy();
   expect(screen.getByText('Working on lights')).toBeTruthy();
+});
+
+test('opens incident creation from the accessible floating action', async () => {
+  await render(<IncidentsScreen />);
+  await fireEvent.press(screen.getByRole('button', { name: 'incidentFlow.create' }));
+  expect(router.push).toHaveBeenCalledWith('/incidents/new');
 });

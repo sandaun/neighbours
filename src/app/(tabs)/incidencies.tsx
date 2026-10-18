@@ -1,7 +1,10 @@
+import { GlassView, isGlassEffectAPIAvailable, isLiquidGlassAvailable } from 'expo-glass-effect';
 import { router } from 'expo-router';
+import { Plus } from 'lucide-react-native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RefreshControl, ScrollView, View } from 'react-native';
+import { Platform, Pressable, RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { appDataSource, type IncidentStatus } from '@/data';
 import {
@@ -15,9 +18,16 @@ import {
 } from '@/design-system';
 import { IncidentCard } from '@/features/incidents/IncidentCard';
 import { useDataResource } from '@/hooks/use-data-resource';
+import { useTheme } from '@/hooks/use-theme';
+
+const supportsGlass =
+  Platform.OS === 'ios' && isLiquidGlassAvailable() && isGlassEffectAPIAvailable();
 
 export default function IncidentsScreen() {
   const { t } = useTranslation();
+  const colors = useTheme();
+  const insets = useSafeAreaInsets();
+  const buttonBottom = Platform.OS === 'ios' ? insets.bottom + 16 : 16;
   const resource = useDataResource(appDataSource.getIncidents);
   const [filter, setFilter] = useState<IncidentStatus | 'all'>('all');
   const incidents =
@@ -33,13 +43,13 @@ export default function IncidentsScreen() {
         variant="section"
       />
       <ScrollView
-        contentContainerClassName="px-5 pb-12"
+        className="flex-1"
+        contentContainerClassName="px-5 pb-24"
         contentInsetAdjustmentBehavior="automatic"
         refreshControl={
           <RefreshControl refreshing={resource.refreshing} onRefresh={resource.reload} />
         }
       >
-        <Button onPress={() => router.push('/incidents/new')}>{t('incidentFlow.create')}</Button>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -85,6 +95,23 @@ export default function IncidentsScreen() {
           </>
         ) : null}
       </ScrollView>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={t('incidentFlow.create')}
+        onPress={() => router.push('/incidents/new')}
+        className="absolute right-5 h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg shadow-primary/35 elevation-4 active:bg-primary-dark"
+        style={{ bottom: buttonBottom }}
+      >
+        {supportsGlass ? (
+          <GlassView
+            pointerEvents="none"
+            isInteractive
+            tintColor={colors.primary}
+            style={[StyleSheet.absoluteFill, { borderRadius: 28 }]}
+          />
+        ) : null}
+        <Plus color={colors.onPrimary} size={28} strokeWidth={2} pointerEvents="none" />
+      </Pressable>
     </View>
   );
 }
