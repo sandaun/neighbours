@@ -18,6 +18,8 @@ end;
 $$;
 create schema if not exists supabase_migrations;
 create table if not exists supabase_migrations.schema_migrations (version text not null primary key);
+-- Defense in depth for internal bookkeeping; CLI operations run as the owner.
+alter table supabase_migrations.schema_migrations enable row level security;
 alter table supabase_migrations.schema_migrations add column if not exists statements text[];
 alter table supabase_migrations.schema_migrations add column if not exists name text;
 -- This internal schema has no client API. Preserve owner access and grant clients nothing.
