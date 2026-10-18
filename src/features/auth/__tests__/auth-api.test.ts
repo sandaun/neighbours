@@ -1,4 +1,4 @@
-import { loadMembership, sendEmailCode, verifyEmailCode } from '../auth-api';
+import { loadMembership, signInWithPassword } from '../auth-api';
 import { getSupabase } from '@/lib/supabase';
 
 jest.mock('@/lib/supabase', () => ({ getSupabase: jest.fn() }));
@@ -10,7 +10,7 @@ const query = {
   maybeSingle: jest.fn(),
 };
 const client = {
-  auth: { signInWithOtp: jest.fn(), verifyOtp: jest.fn() },
+  auth: { signInWithPassword: jest.fn() },
   from: jest.fn(() => query),
 };
 
@@ -19,26 +19,20 @@ beforeEach(() => {
   jest.mocked(getSupabase).mockReturnValue(client as unknown as ReturnType<typeof getSupabase>);
 });
 
-test('requests an email code without public signup', async () => {
-  client.auth.signInWithOtp.mockResolvedValue({ error: null });
-  await sendEmailCode('  Neighbour@Example.com ');
-  expect(client.auth.signInWithOtp).toHaveBeenCalledWith({
+test('signs in an existing user and preserves the exact password', async () => {
+  client.auth.signInWithPassword.mockResolvedValue({ error: null });
+  await signInWithPassword('  Neighbour@Example.com ', ' Test password ');
+  expect(client.auth.signInWithPassword).toHaveBeenCalledWith({
     email: 'neighbour@example.com',
-    options: { shouldCreateUser: false },
+    password: ' Test password ',
   });
 });
 
-test('verifies the email OTP and propagates an expired code', async () => {
-  client.auth.verifyOtp
-    .mockResolvedValueOnce({ error: null })
-    .mockResolvedValueOnce({ error: new Error('Expired token') });
-  await verifyEmailCode('Neighbour@Example.com', ' 123456 ');
-  expect(client.auth.verifyOtp).toHaveBeenCalledWith({
-    email: 'neighbour@example.com',
-    token: '123456',
-    type: 'email',
-  });
-  await expect(verifyEmailCode('neighbour@example.com', '999999')).rejects.toThrow('Expired token');
+test('propagates sign-in errors', async () => {
+  client.auth.signInWithPassword.mockResolvedValue({ error: new Error('Invalid credentials') });
+  await expect(signInWithPassword('neighbour@example.com', 'Wrong password')).rejects.toThrow(
+    'Invalid credentials'
+  );
 });
 
 test('selects one membership deterministically and maps its community and unit', async () => {

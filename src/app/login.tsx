@@ -1,7 +1,15 @@
-import { KeyRound, Mail, ShieldCheck } from 'lucide-react-native';
-import { useState } from 'react';
+import { Eye, EyeOff, KeyRound, ShieldCheck } from 'lucide-react-native';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button, Card, ScreenHeader } from '@/design-system';
@@ -14,30 +22,27 @@ export default function LoginScreen() {
   const insets = useSafeAreaInsets();
   const auth = useAuth();
   const [email, setEmail] = useState('');
-  const [requestedEmail, setRequestedEmail] = useState<string | null>(null);
-  const [code, setCode] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const passwordInput = useRef<TextInput>(null);
+  const submitting = useRef(false);
   const inputStyle =
     'min-h-[52px] rounded-md border border-outline bg-bg px-4 py-3 font-body text-[15px] text-ink dark:border-outline-dark dark:bg-bg-dark dark:text-ink-dark';
-  const valid = requestedEmail
-    ? /^\d{6,10}$/.test(code.trim())
-    : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) && password.length > 0;
 
   async function submit() {
-    if (busy || !valid) return;
+    if (submitting.current || !valid) return;
+    submitting.current = true;
     setBusy(true);
     setError(null);
     try {
-      if (requestedEmail) await auth.verifyCode(requestedEmail, code);
-      else {
-        const normalized = email.trim().toLowerCase();
-        await auth.sendCode(normalized);
-        setRequestedEmail(normalized);
-      }
+      await auth.signIn(email.trim().toLowerCase(), password);
     } catch {
-      setError(t(requestedEmail ? 'auth.invalidCode' : 'auth.sendError'));
+      setError(t('auth.signInError'));
     } finally {
+      submitting.current = false;
       setBusy(false);
     }
   }
@@ -69,75 +74,85 @@ export default function LoginScreen() {
             <View className="gap-6 p-5">
               <View className="flex-row items-center gap-3">
                 <View className="h-11 w-11 items-center justify-center rounded-md bg-surface-hi dark:bg-surface-dark-hi">
-                  {requestedEmail ? (
-                    <KeyRound color={colors.primary} size={21} strokeWidth={1.8} />
-                  ) : (
-                    <Mail color={colors.primary} size={21} strokeWidth={1.8} />
-                  )}
+                  <KeyRound color={colors.primary} size={21} strokeWidth={1.8} />
                 </View>
                 <Text
                   accessibilityRole="header"
                   className="flex-1 font-body-semi text-[16px] leading-[23px] text-ink dark:text-ink-dark"
                 >
-                  {t(requestedEmail ? 'auth.codeTitle' : 'auth.accessTitle')}
+                  {t('auth.accessTitle')}
                 </Text>
               </View>
               <View className="gap-4">
-                {requestedEmail ? (
-                  <>
-                    <Text className="font-body text-[14px] leading-[21px] text-ink-soft dark:text-ink-dark-soft">
-                      {t('auth.codeSent', { email: requestedEmail })}
-                    </Text>
-                    <View className="gap-2">
-                      <Text
-                        nativeID="code-label"
-                        className="font-label text-[12px] leading-[18px] text-ink dark:text-ink-dark"
-                      >
-                        {t('auth.code')}
-                      </Text>
-                      <TextInput
-                        accessibilityLabel={t('auth.code')}
-                        accessibilityLabelledBy="code-label"
-                        className={inputStyle}
-                        keyboardType="number-pad"
-                        autoComplete="one-time-code"
-                        textContentType="oneTimeCode"
-                        maxLength={10}
-                        value={code}
-                        onChangeText={setCode}
-                        editable={!busy}
-                        placeholderTextColor={colors.muted}
-                        placeholder={t('auth.codePlaceholder')}
-                        onSubmitEditing={() => void submit()}
-                      />
-                    </View>
-                  </>
-                ) : (
-                  <View className="gap-2">
-                    <Text
-                      nativeID="email-label"
-                      className="font-label text-[12px] leading-[18px] text-ink dark:text-ink-dark"
-                    >
-                      {t('auth.email')}
-                    </Text>
+                <View className="gap-2">
+                  <Text
+                    nativeID="email-label"
+                    className="font-label text-[12px] leading-[18px] text-ink dark:text-ink-dark"
+                  >
+                    {t('auth.email')}
+                  </Text>
+                  <TextInput
+                    accessibilityLabel={t('auth.email')}
+                    accessibilityLabelledBy="email-label"
+                    className={inputStyle}
+                    keyboardType="email-address"
+                    autoComplete="email"
+                    textContentType="emailAddress"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    returnKeyType="next"
+                    submitBehavior="submit"
+                    value={email}
+                    onChangeText={setEmail}
+                    editable={!busy}
+                    placeholderTextColor={colors.muted}
+                    placeholder={t('auth.emailPlaceholder')}
+                    onSubmitEditing={() => passwordInput.current?.focus()}
+                  />
+                </View>
+                <View className="gap-2">
+                  <Text
+                    nativeID="password-label"
+                    className="font-label text-[12px] leading-[18px] text-ink dark:text-ink-dark"
+                  >
+                    {t('auth.password')}
+                  </Text>
+                  <View>
                     <TextInput
-                      accessibilityLabel={t('auth.email')}
-                      accessibilityLabelledBy="email-label"
-                      className={inputStyle}
-                      keyboardType="email-address"
-                      autoComplete="email"
-                      textContentType="emailAddress"
+                      ref={passwordInput}
+                      accessibilityLabel={t('auth.password')}
+                      accessibilityLabelledBy="password-label"
+                      className={`${inputStyle} pr-14`}
+                      secureTextEntry={!showPassword}
+                      autoComplete="current-password"
+                      textContentType="password"
                       autoCapitalize="none"
                       autoCorrect={false}
-                      value={email}
-                      onChangeText={setEmail}
+                      returnKeyType="go"
+                      value={password}
+                      onChangeText={setPassword}
                       editable={!busy}
                       placeholderTextColor={colors.muted}
-                      placeholder={t('auth.emailPlaceholder')}
+                      placeholder={t('auth.passwordPlaceholder')}
                       onSubmitEditing={() => void submit()}
                     />
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel={t(
+                        showPassword ? 'auth.hidePassword' : 'auth.showPassword'
+                      )}
+                      disabled={busy}
+                      className="absolute bottom-0 right-1 top-0 w-11 items-center justify-center rounded-md active:bg-surface-hi dark:active:bg-surface-dark-hi"
+                      onPress={() => setShowPassword((value) => !value)}
+                    >
+                      {showPassword ? (
+                        <EyeOff color={colors.muted} size={20} />
+                      ) : (
+                        <Eye color={colors.muted} size={20} />
+                      )}
+                    </Pressable>
                   </View>
-                )}
+                </View>
                 {error ? (
                   <Text
                     accessibilityRole="alert"
@@ -147,26 +162,13 @@ export default function LoginScreen() {
                   </Text>
                 ) : null}
                 <Button disabled={!valid} loading={busy} onPress={() => void submit()}>
-                  {t(requestedEmail ? 'auth.verify' : 'auth.sendCode')}
+                  {t('auth.signIn')}
                 </Button>
-                {requestedEmail ? (
-                  <Button
-                    variant="ghost"
-                    disabled={busy}
-                    onPress={() => {
-                      setRequestedEmail(null);
-                      setCode('');
-                      setError(null);
-                    }}
-                  >
-                    {t('auth.changeEmail')}
-                  </Button>
-                ) : null}
               </View>
               <View className="flex-row items-start gap-3 border-t border-outline pt-5 dark:border-outline-dark">
                 <ShieldCheck color={colors.muted} size={18} strokeWidth={1.8} />
                 <Text className="flex-1 font-body text-[12px] leading-[18px] text-ink-soft dark:text-ink-dark-soft">
-                  {t('auth.inviteOnly')}
+                  {t('auth.managedAccess')}
                 </Text>
               </View>
             </View>

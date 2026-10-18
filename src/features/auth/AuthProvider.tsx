@@ -2,7 +2,7 @@ import type { Session } from '@supabase/supabase-js';
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 import { AppState, Platform } from 'react-native';
 
-import { loadMembership, type Membership, sendEmailCode, verifyEmailCode } from './auth-api';
+import { loadMembership, type Membership, signInWithPassword } from './auth-api';
 import { usePersistedLanguage } from './use-persisted-language';
 import { isDemoMode } from '@/lib/app-config';
 import { getSupabase } from '@/lib/supabase';
@@ -15,8 +15,7 @@ type AuthContextValue = {
   error: Error | null;
   retry(): void;
   signOut(): Promise<void>;
-  sendCode(email: string): Promise<void>;
-  verifyCode(email: string, token: string): Promise<void>;
+  signIn(email: string, password: string): Promise<void>;
 };
 type MembershipState = { userId: string; membership: Membership | null; error: Error | null };
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -154,8 +153,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         error,
         retry,
         signOut,
-        sendCode: sendEmailCode,
-        verifyCode: verifyEmailCode,
+        signIn: signInWithPassword,
       }}
     >
       {children}

@@ -1,7 +1,7 @@
 # Neighbours
 
 Resident community app built with Expo SDK 57, React Native, TypeScript, and the
-existing NativeWind design system. The MVP covers invitation-only access,
+existing NativeWind design system. The MVP covers manually provisioned email/password access,
 incidents, private documents, receipts, a read-only calendar, profile, and language.
 Administration is manual through Supabase; there is no administrator website.
 
@@ -37,7 +37,7 @@ Local environment files are ignored by Git.
 ## Backend and pilot setup
 
 Follow [the backend setup guide](docs/backend-setup.md) to apply the migration,
-configure email OTP, provision existing users and memberships, upload PDFs, and
+create confirmed password users and memberships, upload PDFs, and
 operate incidents. The checked-in Supabase config describes local development;
 hosted Auth settings must be configured separately.
 
@@ -63,18 +63,26 @@ fixtures must not be provisioned as production residents.
 
 The shared implementation contract is in [docs/mvp-contract.md](docs/mvp-contract.md).
 
-Verified on 18 October 2026: all 70 Jest tests, formatting, lint, and TypeScript
+Initial verification on 18 October 2026: all 70 Jest tests, formatting, lint, and TypeScript
 passed; production bundles exported for iOS, Android, and web. Browser checks
 covered guarded routes, the bounded login, demo incident creation/detail/list
 refresh/filtering, and Catalan/Spanish switching. Native picker behavior and a
 real resident's end-to-end session remain unverified until the pilot is provisioned.
 
+After the password-login update, all 77 tests, formatting, lint, TypeScript, and
+iOS/Android/web exports passed. The email/password screen was visually checked in
+the iOS simulator. The hosted password endpoint rejected a deliberately invalid
+test login with `invalid_credentials`; successful resident access and session
+restoration still require a provisioned account and membership.
+
 The hosted project has both migrations recorded, eight RLS-protected app tables,
 and two private buckets. Security Advisor reports no errors or warnings.
 Performance Advisor reports no errors or warnings; its six informational unused
 index suggestions are expected for a newly empty database. Hosted signup is
-disabled. SMTP and an OTP email template, the first community/unit, and an invited
-resident still need provisioning; no resident emails have been sent.
+disabled. The first community/unit and a manually created, confirmed resident account
+still need provisioning. Password access does not require SMTP; automatic
+invitations and password recovery by email are deferred. No resident emails
+have been sent.
 
 The dependency audit reports 78 existing advisories (17 moderate, 60 high, one
 critical). Every flagged installed package/version was already present in the

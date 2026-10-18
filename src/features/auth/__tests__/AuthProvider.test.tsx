@@ -10,8 +10,7 @@ jest.mock('@/lib/app-config', () => ({ isDemoMode: false }));
 jest.mock('@/lib/supabase', () => ({ getSupabase: jest.fn() }));
 jest.mock('../auth-api', () => ({
   loadMembership: jest.fn(),
-  sendEmailCode: jest.fn(),
-  verifyEmailCode: jest.fn(),
+  signInWithPassword: jest.fn(),
 }));
 jest.mock('../use-persisted-language', () => ({ usePersistedLanguage: jest.fn() }));
 

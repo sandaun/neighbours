@@ -10,19 +10,10 @@ export type Membership = {
   role: 'resident' | 'admin';
 };
 
-export async function sendEmailCode(email: string) {
-  const { error } = await getSupabase().auth.signInWithOtp({
+export async function signInWithPassword(email: string, password: string) {
+  const { error } = await getSupabase().auth.signInWithPassword({
     email: email.trim().toLowerCase(),
-    options: { shouldCreateUser: false },
-  });
-  if (error) throw error;
-}
-
-export async function verifyEmailCode(email: string, token: string) {
-  const { error } = await getSupabase().auth.verifyOtp({
-    email: email.trim().toLowerCase(),
-    token: token.trim(),
-    type: 'email',
+    password,
   });
   if (error) throw error;
 }

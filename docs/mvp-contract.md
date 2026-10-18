@@ -10,8 +10,9 @@ or door integrations in this iteration. Preserve the existing visual system.
   URL nor key is supplied; incomplete/invalid live configuration must fail visibly.
 - `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` are public
   client configuration. Never put a secret/service role key in the app.
-- Live mode uses invite-only email OTP (`shouldCreateUser: false`), an existing
-  Auth user, and a preassigned membership. No public signup or membership writes.
+- Live mode uses email/password sign-in for manually provisioned Auth users with
+  a preassigned membership. No public signup or client membership writes.
+  Sessions persist securely on mobile; password sign-in does not send email.
 - One active community/unit per resident for this MVP. Select the earliest
   membership deterministically; do not silently aggregate different communities.
 - Auth client is `getSupabase()` from `@/lib/supabase`; returns a configured typed

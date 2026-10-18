@@ -1,11 +1,12 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 
 import LoginScreen from '@/app/login';
 import { useAuth } from '@/features/auth/AuthProvider';
 
 jest.mock('lucide-react-native', () => ({
   KeyRound: () => null,
-  Mail: () => null,
+  Eye: () => null,
+  EyeOff: () => null,
   ShieldCheck: () => null,
 }));
 jest.mock('@/features/auth/AuthProvider', () => ({ useAuth: jest.fn() }));
@@ -18,13 +19,11 @@ jest.mock('react-native-safe-area-context', () => ({
   useSafeAreaInsets: () => ({ top: 0, bottom: 0, left: 0, right: 0 }),
 }));
 
-const sendCode = jest.fn();
-const verifyCode = jest.fn();
+const signIn = jest.fn();
 
 beforeEach(() => {
   jest.clearAllMocks();
-  sendCode.mockResolvedValue(undefined);
-  verifyCode.mockResolvedValue(undefined);
+  signIn.mockResolvedValue(undefined);
   jest.mocked(useAuth).mockReturnValue({
     session: null,
     membership: null,
@@ -32,37 +31,70 @@ beforeEach(() => {
     error: null,
     retry: jest.fn(),
     signOut: jest.fn(),
-    sendCode,
-    verifyCode,
+    signIn,
   });
 });
 
-test('requests an invitation code and verifies it with the same email', async () => {
+test('requires a valid email and password, then submits both without trimming the password', async () => {
   await render(<LoginScreen />);
   expect(
-    screen.getByRole('button', { name: 'auth.sendCode' }).props.accessibilityState.disabled
+    screen.getByRole('button', { name: 'auth.signIn' }).props.accessibilityState.disabled
   ).toBe(true);
   await fireEvent.changeText(screen.getByLabelText('auth.email'), '  Neighbour@Example.com ');
-  await fireEvent.press(screen.getByRole('button', { name: 'auth.sendCode' }));
-  expect(sendCode).toHaveBeenCalledWith('neighbour@example.com');
-  expect(screen.getByRole('header', { name: 'auth.codeTitle' })).toBeTruthy();
-  expect(screen.queryByLabelText('auth.email')).toBeNull();
-  await fireEvent.changeText(screen.getByLabelText('auth.code'), '12345678');
-  await fireEvent.press(screen.getByRole('button', { name: 'auth.verify' }));
-  expect(verifyCode).toHaveBeenCalledWith('neighbour@example.com', '12345678');
+  expect(
+    screen.getByRole('button', { name: 'auth.signIn' }).props.accessibilityState.disabled
+  ).toBe(true);
+  await fireEvent.changeText(screen.getByLabelText('auth.password'), ' Test password ');
+  await fireEvent.press(screen.getByRole('button', { name: 'auth.signIn' }));
+  expect(signIn).toHaveBeenCalledWith('neighbour@example.com', ' Test password ');
 });
 
-test('keeps the code form after a verification error and allows changing email', async () => {
-  verifyCode.mockRejectedValueOnce(new Error('Expired OTP'));
+test('keeps the form after a sign-in error and allows retry', async () => {
+  signIn.mockRejectedValueOnce(new Error('Invalid credentials'));
   await render(<LoginScreen />);
   await fireEvent.changeText(screen.getByLabelText('auth.email'), 'resident@example.com');
-  await fireEvent.press(screen.getByRole('button', { name: 'auth.sendCode' }));
-  await fireEvent.changeText(screen.getByLabelText('auth.code'), '123456');
-  await fireEvent.press(screen.getByRole('button', { name: 'auth.verify' }));
-  expect(screen.getByRole('alert').props.children).toBe('auth.invalidCode');
-  expect(screen.getByLabelText('auth.code')).toBeTruthy();
-  await fireEvent.press(screen.getByRole('button', { name: 'auth.changeEmail' }));
+  await fireEvent.changeText(screen.getByLabelText('auth.password'), 'Wrong password');
+  await fireEvent.press(screen.getByRole('button', { name: 'auth.signIn' }));
+  expect(screen.getByRole('alert').props.children).toBe('auth.signInError');
   expect(screen.getByLabelText('auth.email').props.value).toBe('resident@example.com');
-  expect(screen.queryByLabelText('auth.code')).toBeNull();
+  await fireEvent.changeText(screen.getByLabelText('auth.password'), 'Correct password');
+  await fireEvent.press(screen.getByRole('button', { name: 'auth.signIn' }));
+  expect(signIn).toHaveBeenLastCalledWith('resident@example.com', 'Correct password');
   expect(screen.queryByRole('alert')).toBeNull();
+});
+
+test('conceals the password by default and supports showing and hiding it', async () => {
+  await render(<LoginScreen />);
+  expect(screen.getByLabelText('auth.password').props.secureTextEntry).toBe(true);
+  await fireEvent.press(screen.getByRole('button', { name: 'auth.showPassword' }));
+  expect(screen.getByLabelText('auth.password').props.secureTextEntry).toBe(false);
+  await fireEvent.press(screen.getByRole('button', { name: 'auth.hidePassword' }));
+  expect(screen.getByLabelText('auth.password').props.secureTextEntry).toBe(true);
+});
+
+test('rejects keyboard submission with an invalid email', async () => {
+  await render(<LoginScreen />);
+  await fireEvent.changeText(screen.getByLabelText('auth.email'), 'invalid');
+  await fireEvent.changeText(screen.getByLabelText('auth.password'), 'Test password');
+  await fireEvent(screen.getByLabelText('auth.password'), 'submitEditing');
+  expect(signIn).not.toHaveBeenCalled();
+});
+
+test('prevents duplicate submissions while sign-in is pending', async () => {
+  let finish!: () => void;
+  signIn.mockImplementationOnce(
+    () =>
+      new Promise<void>((resolve) => {
+        finish = resolve;
+      })
+  );
+  await render(<LoginScreen />);
+  await fireEvent.changeText(screen.getByLabelText('auth.email'), 'resident@example.com');
+  await fireEvent.changeText(screen.getByLabelText('auth.password'), 'Test password');
+  await fireEvent.press(screen.getByRole('button', { name: 'auth.signIn' }));
+  await fireEvent(screen.getByLabelText('auth.password'), 'submitEditing');
+  expect(signIn).toHaveBeenCalledTimes(1);
+  expect(screen.getByLabelText('auth.password').props.editable).toBe(false);
+  finish();
+  await waitFor(() => expect(screen.getByLabelText('auth.password').props.editable).toBe(true));
 });

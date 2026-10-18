@@ -1,16 +1,8 @@
 {
   "auth": {
     "title": "La teva comunitat, a prop",
-    "subtitle": "Entra amb el correu amb què t’han convidat a la comunitat.",
+    "subtitle": "Entra amb el teu correu i contrasenya.",
     "email": "Correu electrònic",
-    "code": "Codi de verificació",
-    "sendCode": "Rebre un codi",
-    "verify": "Entrar",
-    "codeSent": "Si {{email}} té accés, rebràs un codi. Introdueix-lo aquí.",
-    "changeEmail": "Canviar el correu o demanar un altre codi",
-    "inviteOnly": "Accés només per invitació. Si encara no en tens, contacta amb l’administrador de la comunitat.",
-    "sendError": "No hem pogut demanar el codi. Comprova la connexió i el correu de la invitació, i espera un minut abans de tornar-ho a provar.",
-    "invalidCode": "El codi no és vàlid, ha caducat o no hi ha connexió. Comprova’l o demana’n un altre.",
     "loading": "Comprovant l’accés…",
     "errorTitle": "No hem pogut comprovar l’accés",
     "errorBody": "Comprova la connexió i torna-ho a provar.",
@@ -28,8 +20,13 @@
     "demoMode": "Demostració · dades de mostra",
     "configErrorBody": "La connexió amb el servei encara no està configurada correctament. Contacta amb la persona responsable de l’aplicació.",
     "accessTitle": "Accés a la comunitat",
-    "codeTitle": "Comprova el correu",
     "emailPlaceholder": "nom@exemple.cat",
-    "codePlaceholder": "Introdueix el codi"
+    "password": "Contrasenya",
+    "passwordPlaceholder": "Introdueix la contrasenya",
+    "signIn": "Entrar",
+    "showPassword": "Mostra la contrasenya",
+    "hidePassword": "Amaga la contrasenya",
+    "managedAccess": "L’administrador de la comunitat et facilita l’accés. Si no tens compte o has oblidat la contrasenya, contacta-hi.",
+    "signInError": "No hem pogut iniciar la sessió. Comprova el correu, la contrasenya i la connexió i torna-ho a provar."
   }
 }

@@ -95,30 +95,37 @@ type, preserves service-role access, and leaves automatic RLS activation working
 after client EXECUTE privileges are revoked. Docker was unavailable for a local
 full stack.
 
-## Configure invite-only email OTP
+## Configure manually provisioned password access
 
-Local `supabase/config.toml` disables public signup and anonymous sign-in. These
-settings do not automatically change the hosted project's Auth settings. In the
-hosted dashboard:
+The MVP uses email/password sign-in and persists the session on the device.
+Custom SMTP is not required to sign in with a manually provisioned, confirmed
+account. Public signup remains disabled in both local and hosted configuration.
 
-1. Disable public email signup and anonymous sign-in.
-2. Keep email authentication enabled and configure a verified custom SMTP sender
-   for a real pilot. The default email service is restricted and rate limited.
-3. Set the Magic Link email template to include `{{ .Token }}` as the visible
-   sign-in code. The resident enters this code in the app; a link alone is not
-   the implemented flow. Use a short OTP lifetime (local config: 600 seconds).
-4. Create the pilot's Auth users administratively, then assign their membership.
-   The app calls `signInWithOtp` with `shouldCreateUser: false` and cannot create
-   an account or assign access itself. Administrative invitation emails are a
-   separate operation; do not send them implicitly while setting up tables.
+In the hosted dashboard:
 
-Current hosted status: public signup is disabled. Custom SMTP is still pending;
-the dashboard currently locks email-template editing until SMTP is configured.
-No invitation or OTP emails have been sent, and no live Auth users, communities,
-or memberships have been provisioned. Email-code delivery, the first resident's
-native sign-in/session flow, and actual private-file HTTP operations remain to be
-verified after SMTP and the first pilot membership are configured. The passing
-SQL suite and demo smoke test do not establish those live user flows.
+1. Keep email authentication enabled and public signup/anonymous sign-in disabled.
+2. Open Authentication > Users > Add user > Create new user. Enter the resident's
+   email and a unique password, and enable Auto Confirm User. Use Create user,
+   rather than Send invitation, to avoid sending an email. Confirm the resident's
+   identity through the pilot's manual onboarding before confirming the account.
+3. Copy the created user's UUID and assign their community/unit membership as
+   described below. The app uses `signInWithPassword`; it cannot create an account
+   or assign access itself. Never put administrator credentials in the client.
+4. Set `EXPO_PUBLIC_DATA_MODE=supabase` in the ignored `.env.local`, then restart
+   Metro. Sign in on the simulator/device and verify session restoration after
+   restarting the app, local signout, and access to the assigned community.
+
+Until an email service is configured, account access and password recovery are
+handled by the operator through the dashboard. The login directs residents to
+contact their administrator. Automated invitations, recovery emails, and email
+codes are deferred; configure verified SMTP and the corresponding app flows
+before offering those features.
+
+At the last hosted inspection, public signup was disabled and no resident Auth
+users, communities, or memberships had been provisioned. No invitation or OTP
+emails had been sent. Successful native resident sign-in/session restoration and
+private-file HTTP operations still require the first pilot account and records.
+Passing SQL tests and demo checks do not establish those live user flows.
 
 ## Provision a community
 
