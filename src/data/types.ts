@@ -8,6 +8,33 @@ export type Incident = {
   status: IncidentStatus;
 };
 
+export const INCIDENT_CATEGORIES = ['plumbing', 'electrical', 'elevator', 'other'] as const;
+export type IncidentCategory = (typeof INCIDENT_CATEGORIES)[number];
+
+export type IncidentUpdate = {
+  id: string;
+  body: string;
+  createdAt: string;
+  authorName: string;
+  status?: IncidentStatus;
+};
+
+export type IncidentDetail = Incident & {
+  description: string;
+  category: IncidentCategory;
+  photoUrl?: string;
+  photoUploadFailed?: boolean;
+  updates: IncidentUpdate[];
+};
+
+export type CreateIncidentInput = {
+  title: string;
+  description: string;
+  location: string;
+  category: IncidentCategory;
+  photo?: { base64: string; mimeType: string };
+};
+
 export type CommunityEvent = {
   id: string;
   title: string;
@@ -50,12 +77,13 @@ export type Receipt = {
   issuedAt: string;
   period: string;
   status: ReceiptStatus;
+  hasFile?: boolean;
 };
 
 export type AccountsData = {
   balanceCents: number;
-  nextChargeAt: string;
-  nextChargeCents: number;
+  nextChargeAt: string | null;
+  nextChargeCents: number | null;
   receipts: Receipt[];
 };
 
