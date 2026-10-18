@@ -1,4 +1,5 @@
-import { appDataSource, MORE_MODULE_KEYS, isMoreModuleKey } from '@/data';
+import { MORE_MODULE_KEYS, isMoreModuleKey } from '@/data/types';
+import { mockAppDataSource as appDataSource } from '@/mocks/app-data';
 
 describe('mock app data source', () => {
   test('returns data for every primary tab', async () => {

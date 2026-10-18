@@ -1,56 +1,64 @@
-# Welcome to your Expo app 👋
+# Neighbours
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Resident community app built with Expo SDK 57, React Native, TypeScript, and the
+existing NativeWind design system. The MVP covers invitation-only access,
+incidents, private documents, receipts, a read-only calendar, profile, and language.
+Administration is manual through Supabase; there is no administrator website.
 
-## Get started
+## Run
 
-1. Install dependencies
+Use Node.js 22.13 or newer and npm:
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```sh
+npm ci
+cp .env.example .env.local
+npm start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Open the app with an Expo SDK 57 compatible client, or use `npm run web`.
+After changing public environment variables, restart Metro. Native permission
+configuration changes take effect in a new native build.
 
-### Other setup steps
+## Data modes
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+- `EXPO_PUBLIC_DATA_MODE=demo` opens the offline preview with a visible demo label.
+  Incident creation works in memory and resets when the app reloads. Demo document
+  metadata contains no PDF files; its file actions are disabled.
+- `EXPO_PUBLIC_DATA_MODE=supabase` requires the project URL and modern publishable
+  key. The app opens the login screen until a session and community membership
+  exist. Missing configuration, authentication failures, and missing membership
+  have explicit states. Live mode never falls back to demo data.
 
-## Learn more
+Only use `EXPO_PUBLIC_SUPABASE_URL` and
+`EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in the client. Secret/service role keys
+must never enter the app, `.env.example`, commits, or public environment values.
+Local environment files are ignored by Git.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Backend and pilot setup
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Follow [the backend setup guide](docs/backend-setup.md) to apply the migration,
+configure email OTP, provision existing users and memberships, upload PDFs, and
+operate incidents. The checked-in Supabase config describes local development;
+hosted Auth settings must be configured separately.
 
-## Join the community
+Incidents support bounded descriptions, optional JPEG/PNG/WebP photos up to
+5 MiB, a status filter, and administrator updates. Documents and receipt PDFs open
+through short-lived private URLs in the browser, where they can be saved. The
+MVP reads account data; it does not collect payments or connect to a bank.
 
-Join our community of developers creating universal apps.
+Voting, reservations, board publishing, door access, push notifications, and
+administrator self-service are outside this iteration. Their existing preview
+screens remain available in demo mode; live mode marks them as coming soon.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Verification
+
+```sh
+npm run validate
+npm run export
+```
+
+`validate` runs formatting, lint, TypeScript, and Jest. The backend guide describes
+transactional SQL allow/deny tests and the remaining real-device checks. Test
+fixtures must not be provisioned as production residents.
+
+The shared implementation contract is in [docs/mvp-contract.md](docs/mvp-contract.md).
