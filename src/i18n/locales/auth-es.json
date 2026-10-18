@@ -26,6 +26,10 @@
     "languageBody": "Elige el idioma de la aplicación. La preferencia se guarda en este dispositivo.",
     "languageError": "No hemos podido guardar el idioma. Vuelve a intentarlo.",
     "demoMode": "Demostración · datos de muestra",
-    "configErrorBody": "La conexión con el servicio aún no está configurada correctamente. Contacta con la persona responsable de la aplicación."
+    "configErrorBody": "La conexión con el servicio aún no está configurada correctamente. Contacta con la persona responsable de la aplicación.",
+    "accessTitle": "Acceso a la comunidad",
+    "codeTitle": "Comprueba el correo",
+    "emailPlaceholder": "nombre@ejemplo.com",
+    "codePlaceholder": "Introduce el código"
   }
 }

@@ -26,6 +26,10 @@
     "languageBody": "Tria l’idioma de l’aplicació. La preferència es desa en aquest dispositiu.",
     "languageError": "No hem pogut desar l’idioma. Torna-ho a provar.",
     "demoMode": "Demostració · dades de mostra",
-    "configErrorBody": "La connexió amb el servei encara no està configurada correctament. Contacta amb la persona responsable de l’aplicació."
+    "configErrorBody": "La connexió amb el servei encara no està configurada correctament. Contacta amb la persona responsable de l’aplicació.",
+    "accessTitle": "Accés a la comunitat",
+    "codeTitle": "Comprova el correu",
+    "emailPlaceholder": "nom@exemple.cat",
+    "codePlaceholder": "Introdueix el codi"
   }
 }
