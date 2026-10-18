@@ -21,47 +21,56 @@ export function useDataResource<T>(load: () => Promise<T>): DataResource<T> {
   const [refreshing, setRefreshing] = useState(false);
   const active = useRef(false);
   const requestId = useRef(0);
+  const previousLoad = useRef(load);
 
-  const reload = useCallback(() => {
-    if (!active.current) return;
-    const id = ++requestId.current;
-    setRefreshing(true);
-    setResource((previous) =>
-      previous.status === 'error' ? { status: 'loading', data: null, error: null } : previous
-    );
-    Promise.resolve()
-      .then(load)
-      .then(
-        (data) => {
-          if (active.current && id === requestId.current) {
-            setResource({ status: 'success', data, error: null });
+  const fetchResource = useCallback(
+    (showRefreshing: boolean) => {
+      if (!active.current) return;
+      const id = ++requestId.current;
+      setRefreshing(showRefreshing);
+      setResource((previous) =>
+        previous.status === 'error' ? { status: 'loading', data: null, error: null } : previous
+      );
+      Promise.resolve()
+        .then(load)
+        .then(
+          (data) => {
+            if (active.current && id === requestId.current) {
+              setResource({ status: 'success', data, error: null });
+            }
+          },
+          (error: unknown) => {
+            if (active.current && id === requestId.current) {
+              setResource({
+                status: 'error',
+                data: null,
+                error: error instanceof Error ? error : new Error('Unable to load data'),
+              });
+            }
           }
-        },
-        (error: unknown) => {
-          if (active.current && id === requestId.current) {
-            setResource({
-              status: 'error',
-              data: null,
-              error: error instanceof Error ? error : new Error('Unable to load data'),
-            });
-          }
-        }
-      )
-      .finally(() => {
-        if (active.current && id === requestId.current) setRefreshing(false);
-      });
-  }, [load]);
+        )
+        .finally(() => {
+          if (active.current && id === requestId.current) setRefreshing(false);
+        });
+    },
+    [load]
+  );
+
+  const reload = useCallback(() => fetchResource(true), [fetchResource]);
 
   useFocusEffect(
     useCallback(() => {
       active.current = true;
-      setResource({ status: 'loading', data: null, error: null });
-      reload();
+      if (previousLoad.current !== load) {
+        previousLoad.current = load;
+        setResource({ status: 'loading', data: null, error: null });
+      }
+      fetchResource(false);
       return () => {
         active.current = false;
         requestId.current += 1;
       };
-    }, [reload])
+    }, [fetchResource, load])
   );
 
   return { ...resource, reload, refreshing };

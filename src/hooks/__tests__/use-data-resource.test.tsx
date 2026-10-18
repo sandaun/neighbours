@@ -3,12 +3,19 @@ import { Button, Text, View } from 'react-native';
 
 import { useDataResource } from '../use-data-resource';
 
+let mockFocused = true;
+
 jest.mock('expo-router', () => ({
   useFocusEffect: (callback: () => (() => void) | void) => {
     const { useEffect } = jest.requireActual('react');
-    useEffect(callback, [callback]);
+    const focused = mockFocused;
+    useEffect(() => (focused ? callback() : undefined), [callback, focused]);
   },
 }));
+
+beforeEach(() => {
+  mockFocused = true;
+});
 
 function ResourceHarness({ load }: { load: () => Promise<string> }) {
   const resource = useDataResource(load);
@@ -32,6 +39,57 @@ function deferred<T>() {
   });
   return { promise, resolve, reject };
 }
+
+test('keeps content visible and refreshes silently when returning to the screen', async () => {
+  const refresh = deferred<string>();
+  const load = jest
+    .fn()
+    .mockResolvedValueOnce('Existing data')
+    .mockReturnValueOnce(refresh.promise);
+  const { rerender } = await render(<ResourceHarness load={load} />);
+  await waitFor(() => expect(screen.getByTestId('value')).toHaveTextContent('Existing data'));
+
+  mockFocused = false;
+  await rerender(<ResourceHarness load={load} />);
+  mockFocused = true;
+  await rerender(<ResourceHarness load={load} />);
+  await waitFor(() => expect(load).toHaveBeenCalledTimes(2));
+
+  expect(screen.getByTestId('status')).toHaveTextContent('success');
+  expect(screen.getByTestId('value')).toHaveTextContent('Existing data');
+  expect(screen.getByTestId('refreshing')).toHaveTextContent('Idle');
+  refresh.resolve('Updated data');
+  await waitFor(() => expect(screen.getByTestId('value')).toHaveTextContent('Updated data'));
+});
+
+test('shows the refresh indicator only for a manual refresh without clearing content', async () => {
+  const initial = deferred<string>();
+  const refresh = deferred<string>();
+  const load = jest.fn().mockReturnValueOnce(initial.promise).mockReturnValueOnce(refresh.promise);
+  await render(<ResourceHarness load={load} />);
+  await waitFor(() => expect(load).toHaveBeenCalledTimes(1));
+  expect(screen.getByTestId('refreshing')).toHaveTextContent('Idle');
+  initial.resolve('Existing data');
+  await waitFor(() => expect(screen.getByTestId('value')).toHaveTextContent('Existing data'));
+  await fireEvent.press(screen.getByRole('button', { name: 'Reload' }));
+  expect(screen.getByTestId('refreshing')).toHaveTextContent('Refreshing');
+  expect(screen.getByTestId('value')).toHaveTextContent('Existing data');
+  refresh.resolve('Updated data');
+  await waitFor(() => expect(screen.getByTestId('refreshing')).toHaveTextContent('Idle'));
+});
+
+test('clears previous content when the requested resource changes', async () => {
+  const next = deferred<string>();
+  const firstLoad = jest.fn().mockResolvedValue('First incident');
+  const secondLoad = jest.fn(() => next.promise);
+  const { rerender } = await render(<ResourceHarness load={firstLoad} />);
+  await waitFor(() => expect(screen.getByTestId('value')).toHaveTextContent('First incident'));
+  await rerender(<ResourceHarness load={secondLoad} />);
+  expect(screen.getByTestId('status')).toHaveTextContent('loading');
+  expect(screen.getByTestId('value')).toHaveTextContent('No data');
+  next.resolve('Second incident');
+  await waitFor(() => expect(screen.getByTestId('value')).toHaveTextContent('Second incident'));
+});
 
 test('uses the latest response when overlapping reloads finish out of order', async () => {
   const oldRequest = deferred<string>();

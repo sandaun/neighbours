@@ -492,8 +492,6 @@ const moreModules: Record<MoreModuleKey, MoreModuleData> = {
   },
 };
 
-const MOCK_DELAY_MS = 180;
-
 const incidentDetails = new Map<string, IncidentDetail>(
   incidents.map((incident) => [
     incident.id,
@@ -522,9 +520,7 @@ const incidentDetails = new Map<string, IncidentDetail>(
 let demoIncidentSequence = 0;
 
 function resolveMock<T>(value: T): Promise<T> {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(value), MOCK_DELAY_MS);
-  });
+  return Promise.resolve(value);
 }
 
 export const mockAppDataSource: AppDataSource = {
