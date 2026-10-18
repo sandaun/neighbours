@@ -4,6 +4,7 @@ import type {
   CommunityDocument,
   HomeData,
   Incident,
+  IncidentDetail,
   MoreModuleData,
   MoreModuleKey,
 } from '@/data/types';
@@ -493,6 +494,33 @@ const moreModules: Record<MoreModuleKey, MoreModuleData> = {
 
 const MOCK_DELAY_MS = 180;
 
+const incidentDetails = new Map<string, IncidentDetail>(
+  incidents.map((incident) => [
+    incident.id,
+    {
+      ...incident,
+      category: incident.id === 'incident-elevator' ? 'elevator' : 'other',
+      description: incident.title,
+      updates:
+        incident.status === 'received'
+          ? []
+          : [
+              {
+                id: `${incident.id}-update`,
+                body:
+                  incident.status === 'resolved'
+                    ? 'La reparació ha finalitzat. La incidència està resolta.'
+                    : 'Hem avisat el servei de manteniment i estem coordinant la visita.',
+                authorName: 'Administració',
+                createdAt: incident.reportedAt,
+                status: incident.status,
+              },
+            ],
+    },
+  ])
+);
+let demoIncidentSequence = 0;
+
 function resolveMock<T>(value: T): Promise<T> {
   return new Promise((resolve) => {
     setTimeout(() => resolve(value), MOCK_DELAY_MS);
@@ -502,7 +530,36 @@ function resolveMock<T>(value: T): Promise<T> {
 export const mockAppDataSource: AppDataSource = {
   getAccounts: () => resolveMock(accounts),
   getDocuments: () => resolveMock(documents),
-  getHome: () => resolveMock(home),
-  getIncidents: () => resolveMock(incidents),
+  getHome: () =>
+    resolveMock({ ...home, incidents: [...incidentDetails.values()].reverse().slice(0, 3) }),
+  getIncidents: () => resolveMock([...incidentDetails.values()].reverse()),
   getMoreModule: (key) => resolveMock(moreModules[key]),
+  getIncident: async (id) => {
+    const incident = incidentDetails.get(id);
+    if (!incident) throw new Error('Incident not found');
+    return resolveMock(incident);
+  },
+  createIncident: async (input) => {
+    const incident: IncidentDetail = {
+      id: `demo-incident-${++demoIncidentSequence}`,
+      title: input.title.trim(),
+      location: input.location.trim(),
+      description: input.description.trim(),
+      category: input.category,
+      status: 'received',
+      reportedAt: new Date().toISOString(),
+      updates: [],
+      ...(input.photo
+        ? { photoUrl: `data:${input.photo.mimeType};base64,${input.photo.base64}` }
+        : {}),
+    };
+    incidentDetails.set(incident.id, incident);
+    return resolveMock(incident);
+  },
+  getDocumentUrl: async () => {
+    throw new Error('Demo documents do not contain real files');
+  },
+  getReceiptUrl: async () => {
+    throw new Error('Demo receipts do not contain real files');
+  },
 };
