@@ -14,6 +14,24 @@ begin
 end;
 $$;
 
+-- Supabase Storage can retain default DML grants. With no matching RLS policy,
+-- UPDATE/DELETE then succeed with zero affected rows rather than raising 42501.
+create function pg_temp.assert_no_mutation(statement text) returns void language plpgsql as $$
+declare
+  affected_rows bigint;
+begin
+  begin
+    execute statement;
+    get diagnostics affected_rows = row_count;
+  exception when insufficient_privilege then
+    return;
+  end;
+  if affected_rows <> 0 then
+    raise exception 'Expected no mutation, affected % rows: %', affected_rows, statement;
+  end if;
+end;
+$$;
+
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-000000000001', 'resident-a@example.invalid'),
   ('00000000-0000-0000-0000-000000000002', 'resident-b@example.invalid'),
@@ -96,7 +114,9 @@ begin
   perform pg_temp.assert_denied($q$insert into storage.objects(bucket_id,name) values ('community-documents','10000000-0000-0000-0000-000000000001/forged.pdf')$q$);
   perform pg_temp.assert_denied($q$insert into storage.objects(bucket_id,name) values ('incident-photos','10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001/../forged.jpg')$q$);
   perform pg_temp.assert_denied($q$insert into storage.objects(bucket_id,name) values ('incident-photos','10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001/arbitrary-name.jpg')$q$);
-  perform pg_temp.assert_denied('update storage.objects set name = ''reassigned''');
+  perform pg_temp.assert_no_mutation('update storage.objects set name = ''reassigned''');
+  perform pg_temp.assert_no_mutation('delete from storage.objects');
+  assert (select count(*) = 3 from storage.objects), 'Denied storage writes preserve all visible files';
 end;
 $$;
 -- Allowed write, followed by photo upload and column-limited attach.
@@ -154,6 +174,14 @@ begin
   perform pg_temp.assert_denied('select * from public.communities');
   perform pg_temp.assert_denied('select * from public.receipts');
   perform pg_temp.assert_denied('insert into public.communities(name) values (''Anonymous'')');
+  -- Storage defaults vary across projects: either no grant or no visible rows is safe.
+  begin
+    assert (select count(*) = 0 from storage.objects), 'Anonymous users cannot read private storage';
+  exception when insufficient_privilege then
+    null;
+  end;
+  perform pg_temp.assert_no_mutation('update storage.objects set name = ''anonymous-reassignment''');
+  perform pg_temp.assert_no_mutation('delete from storage.objects');
 end;
 $$;
 reset role;
