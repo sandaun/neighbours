@@ -67,22 +67,23 @@ Initial verification on 18 October 2026: all 70 Jest tests, formatting, lint, an
 passed; production bundles exported for iOS, Android, and web. Browser checks
 covered guarded routes, the bounded login, demo incident creation/detail/list
 refresh/filtering, and Catalan/Spanish switching. Native picker behavior and a
-real resident's end-to-end session remain unverified until the pilot is provisioned.
+real resident's end-to-end session remain unverified until the pilot is exercised.
 
 After the password-login update, all 77 tests, formatting, lint, TypeScript, and
 iOS/Android/web exports passed. The email/password screen was visually checked in
 the iOS simulator. The hosted password endpoint rejected a deliberately invalid
 test login with `invalid_credentials`; successful resident access and session
-restoration still require a provisioned account and membership.
+restoration still require a real resident sign-in.
 
 The hosted project has both migrations recorded, eight RLS-protected app tables,
 and two private buckets. Security Advisor reports no errors or warnings.
 Performance Advisor reports no errors or warnings; its six informational unused
 index suggestions are expected for a newly empty database. Hosted signup is
-disabled. The first community/unit and a manually created, confirmed resident account
-still need provisioning. Password access does not require SMTP; automatic
-invitations and password recovery by email are deferred. No resident emails
-have been sent.
+disabled. The first confirmed password user, test community, apartment, and
+resident membership are now provisioned and verified. Native sign-in and real
+incident/photo/PDF flows remain to be exercised. Password access does not require
+SMTP; automatic invitations and password recovery by email are deferred. No
+resident emails have been sent.
 
 The dependency audit reports 78 existing advisories (17 moderate, 60 high, one
 critical). Every flagged installed package/version was already present in the

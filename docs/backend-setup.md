@@ -121,11 +121,13 @@ contact their administrator. Automated invitations, recovery emails, and email
 codes are deferred; configure verified SMTP and the corresponding app flows
 before offering those features.
 
-At the last hosted inspection, public signup was disabled and no resident Auth
-users, communities, or memberships had been provisioned. No invitation or OTP
-emails had been sent. Successful native resident sign-in/session restoration and
-private-file HTTP operations still require the first pilot account and records.
-Passing SQL tests and demo checks do not establish those live user flows.
+On 18 October 2026, a confirmed password user was manually created and assigned
+as a resident to the pilot community and its test apartment. The assignment was
+verified against Auth and the membership/community/unit tables. Public signup
+remains disabled and no invitation or OTP emails have been sent. Successful
+native resident sign-in/session restoration and private-file HTTP operations
+remain to be verified. The pilot starts with empty incident/document/receipt
+lists; residents can create the first incident from the app.
 
 ## Provision a community
 
