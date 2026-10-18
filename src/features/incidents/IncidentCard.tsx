@@ -1,5 +1,6 @@
+import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
 import type { Incident, IncidentStatus } from '@/data';
 import { Card, StatusBadge } from '@/design-system';
@@ -16,21 +17,29 @@ export function IncidentCard({ incident }: { incident: Incident }) {
   const locale = i18n.resolvedLanguage ?? 'ca';
 
   return (
-    <Card className="gap-2">
-      <View className="flex-row items-start justify-between gap-3">
-        <Text className="flex-1 font-display-semi text-[20px] leading-[26px] text-ink dark:text-ink-dark">
-          {incident.title}
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={incident.title}
+      accessibilityHint={t('incidentFlow.openHint')}
+      onPress={() => router.push({ pathname: '/incidents/[id]', params: { id: incident.id } })}
+      className="active:opacity-70"
+    >
+      <Card className="gap-2">
+        <View className="flex-row items-start justify-between gap-3">
+          <Text className="flex-1 font-display-semi text-[20px] leading-[26px] text-ink dark:text-ink-dark">
+            {incident.title}
+          </Text>
+          <StatusBadge status={incident.status} label={t(STATUS_LABEL_KEYS[incident.status])} />
+        </View>
+        <Text className="font-body text-[12px] leading-[16px] text-ink-soft dark:text-ink-dark-soft">
+          {incident.location}
         </Text>
-        <StatusBadge status={incident.status} label={t(STATUS_LABEL_KEYS[incident.status])} />
-      </View>
-      <Text className="font-body text-[12px] leading-[16px] text-ink-soft dark:text-ink-dark-soft">
-        {incident.location}
-      </Text>
-      <Text className="font-body text-[12px] leading-[16px] text-ink-muted dark:text-ink-dark-soft">
-        {t('incidents.reportedOn', {
-          date: formatShortDate(incident.reportedAt, locale),
-        })}
-      </Text>
-    </Card>
+        <Text className="font-body text-[12px] leading-[16px] text-ink-muted dark:text-ink-dark-soft">
+          {t('incidents.reportedOn', {
+            date: formatShortDate(incident.reportedAt, locale),
+          })}
+        </Text>
+      </Card>
+    </Pressable>
   );
 }

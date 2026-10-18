@@ -1,0 +1,43 @@
+{
+  "incidentFlow": {
+    "create": "Comunica una incidència",
+    "detail": "Detall de la incidència",
+    "openHint": "Obre el detall i l'historial",
+    "emptyFilter": "No hi ha incidències amb aquest estat",
+    "formIntro": "Explica què passa i on. L'administració podrà consultar la incidència i actualitzar-ne l'estat.",
+    "fields": {
+      "title": "Títol",
+      "location": "Ubicació",
+      "description": "Descripció",
+      "category": "Categoria",
+      "photo": "Foto (opcional)"
+    },
+    "categories": {
+      "plumbing": "Fontaneria",
+      "electrical": "Electricitat",
+      "elevator": "Ascensor",
+      "other": "Altres"
+    },
+    "validation": {
+      "title": "Escriu un títol d'entre 3 i 120 caràcters.",
+      "location": "Indica una ubicació d'entre 2 i 160 caràcters.",
+      "description": "Explica el problema amb entre 10 i 4.000 caràcters.",
+      "category": "Selecciona una categoria."
+    },
+    "addPhoto": "Afegeix una foto",
+    "changePhoto": "Canvia la foto",
+    "removePhoto": "Elimina la foto",
+    "photoPreview": "Foto de la incidència",
+    "photoHint": "Una foto de fins a 5 MB.",
+    "photoTooLarge": "La foto supera els 5 MB. Tria'n una de més petita.",
+    "photoError": "No hem pogut obrir aquesta foto. Torna-ho a provar.",
+    "submit": "Envia la incidència",
+    "submitError": "No hem pogut enviar la incidència. Revisa la connexió i torna-ho a provar.",
+    "history": "Historial d'actualitzacions",
+    "noUpdates": "La incidència s'ha rebut. Les actualitzacions de l'administració apareixeran aquí.",
+    "unavailableTitle": "No podem mostrar aquesta incidència",
+    "unavailableSubtitle": "Pot ser que ja no estigui disponible o que no hi tinguis accés. Torna-ho a provar.",
+    "photoUploadFailed": "La incidència s'ha creat, però no s'ha pogut adjuntar la foto. No cal que tornis a enviar-la.",
+    "photoLoadError": "No hem pogut carregar la foto. Estira la pantalla cap avall per tornar-ho a provar."
+  }
+}

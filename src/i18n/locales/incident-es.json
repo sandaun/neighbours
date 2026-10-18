@@ -1,0 +1,43 @@
+{
+  "incidentFlow": {
+    "create": "Comunica una incidencia",
+    "detail": "Detalle de la incidencia",
+    "openHint": "Abre el detalle y el historial",
+    "emptyFilter": "No hay incidencias con este estado",
+    "formIntro": "Explica qué ocurre y dónde. La administración podrá consultar la incidencia y actualizar su estado.",
+    "fields": {
+      "title": "Título",
+      "location": "Ubicación",
+      "description": "Descripción",
+      "category": "Categoría",
+      "photo": "Foto (opcional)"
+    },
+    "categories": {
+      "plumbing": "Fontanería",
+      "electrical": "Electricidad",
+      "elevator": "Ascensor",
+      "other": "Otros"
+    },
+    "validation": {
+      "title": "Escribe un título de entre 3 y 120 caracteres.",
+      "location": "Indica una ubicación de entre 2 y 160 caracteres.",
+      "description": "Explica el problema con entre 10 y 4.000 caracteres.",
+      "category": "Selecciona una categoría."
+    },
+    "addPhoto": "Añade una foto",
+    "changePhoto": "Cambia la foto",
+    "removePhoto": "Elimina la foto",
+    "photoPreview": "Foto de la incidencia",
+    "photoHint": "Una foto de hasta 5 MB.",
+    "photoTooLarge": "La foto supera los 5 MB. Elige una más pequeña.",
+    "photoError": "No hemos podido abrir esta foto. Inténtalo de nuevo.",
+    "submit": "Envía la incidencia",
+    "submitError": "No hemos podido enviar la incidencia. Revisa la conexión e inténtalo de nuevo.",
+    "history": "Historial de actualizaciones",
+    "noUpdates": "La incidencia se ha recibido. Las actualizaciones de la administración aparecerán aquí.",
+    "unavailableTitle": "No podemos mostrar esta incidencia",
+    "unavailableSubtitle": "Puede que ya no esté disponible o que no tengas acceso. Inténtalo de nuevo.",
+    "photoUploadFailed": "La incidencia se ha creado, pero no se ha podido adjuntar la foto. No hace falta que vuelvas a enviarla.",
+    "photoLoadError": "No hemos podido cargar la foto. Desliza la pantalla hacia abajo para volver a intentarlo."
+  }
+}
