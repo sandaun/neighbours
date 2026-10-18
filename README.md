@@ -62,3 +62,22 @@ transactional SQL allow/deny tests and the remaining real-device checks. Test
 fixtures must not be provisioned as production residents.
 
 The shared implementation contract is in [docs/mvp-contract.md](docs/mvp-contract.md).
+
+Verified on 18 October 2026: all 70 Jest tests, formatting, lint, and TypeScript
+passed; production bundles exported for iOS, Android, and web. Browser checks
+covered guarded routes, the bounded login, demo incident creation/detail/list
+refresh/filtering, and Catalan/Spanish switching. Native picker behavior and a
+real resident's end-to-end session remain unverified until the pilot is provisioned.
+
+The hosted project has both migrations recorded, eight RLS-protected app tables,
+and two private buckets. Security Advisor reports no errors or warnings.
+Performance Advisor reports no errors or warnings; its six informational unused
+index suggestions are expected for a newly empty database. Hosted signup is
+disabled. SMTP and an OTP email template, the first community/unit, and an invited
+resident still need provisioning; no resident emails have been sent.
+
+The dependency audit reports 78 existing advisories (17 moderate, 60 high, one
+critical). Every flagged installed package/version was already present in the
+baseline lockfile; none is a newly added or upgraded vulnerable package in this
+change. Dependency remediation remains a separate release task; no automatic
+major upgrades or framework downgrades were applied.
