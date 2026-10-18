@@ -10,7 +10,7 @@ export function formatShortDate(value: string, locale: string): string {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
-  }).format(new Date(value));
+  }).format(new Date(/^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T12:00:00` : value));
 }
 
 export function formatEventDate(value: string, locale: string): string {
