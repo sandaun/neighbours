@@ -1,5 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform, Text, View } from 'react-native';
 
@@ -16,6 +16,13 @@ export function PdfButton({
   const [loading, setLoading] = useState(false);
   const [failed, setFailed] = useState(false);
   const pending = useRef(false);
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   const open = async () => {
     if (pending.current) return;
@@ -23,11 +30,16 @@ export function PdfButton({
     setLoading(true);
     setFailed(false);
     // Reserve the web tab during the user gesture, before requesting a signed URL.
-    const popup = Platform.OS === 'web' ? window.open('about:blank', '_blank') : null;
-    if (popup) popup.opener = null;
+    let popup: Window | null = null;
     try {
+      popup = Platform.OS === 'web' ? window.open('about:blank', '_blank') : null;
+      if (popup) popup.opener = null;
       if (Platform.OS === 'web' && !popup) throw new Error('PDF window was blocked');
       const url = await getUrl();
+      if (!mounted.current) {
+        popup?.close();
+        return;
+      }
       if (
         !url.startsWith('https://') &&
         !url.startsWith('http://localhost:') &&
@@ -39,10 +51,10 @@ export function PdfButton({
       else await WebBrowser.openBrowserAsync(url);
     } catch {
       popup?.close();
-      setFailed(true);
+      if (mounted.current) setFailed(true);
     } finally {
       pending.current = false;
-      setLoading(false);
+      if (mounted.current) setLoading(false);
     }
   };
 
