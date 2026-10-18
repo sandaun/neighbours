@@ -19,14 +19,16 @@
     "languageError": "No hem pogut desar l’idioma. Torna-ho a provar.",
     "demoMode": "Demostració · dades de mostra",
     "configErrorBody": "La connexió amb el servei encara no està configurada correctament. Contacta amb la persona responsable de l’aplicació.",
-    "accessTitle": "Accés a la comunitat",
     "emailPlaceholder": "nom@exemple.cat",
     "password": "Contrasenya",
     "passwordPlaceholder": "Introdueix la contrasenya",
     "signIn": "Entrar",
     "showPassword": "Mostra la contrasenya",
     "hidePassword": "Amaga la contrasenya",
-    "managedAccess": "L’administrador de la comunitat et facilita l’accés. Si no tens compte o has oblidat la contrasenya, contacta-hi.",
-    "signInError": "No hem pogut iniciar la sessió. Comprova el correu, la contrasenya i la connexió i torna-ho a provar."
+    "signInError": "No hem pogut iniciar la sessió. Comprova el correu, la contrasenya i la connexió i torna-ho a provar.",
+    "titleLead": "La teva comunitat,",
+    "titleAccent": "a prop",
+    "helpTitle": "Problemes per entrar?",
+    "helpBody": "Contacta amb l’administrador de la comunitat."
   }
 }

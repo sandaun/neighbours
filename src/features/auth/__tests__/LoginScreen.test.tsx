@@ -4,10 +4,8 @@ import LoginScreen from '@/app/login';
 import { useAuth } from '@/features/auth/AuthProvider';
 
 jest.mock('lucide-react-native', () => ({
-  KeyRound: () => null,
   Eye: () => null,
   EyeOff: () => null,
-  ShieldCheck: () => null,
 }));
 jest.mock('@/features/auth/AuthProvider', () => ({ useAuth: jest.fn() }));
 jest.mock('@/hooks/use-theme', () => ({

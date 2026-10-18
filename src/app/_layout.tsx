@@ -9,6 +9,7 @@ import {
 import {
   PlayfairDisplay_600SemiBold,
   PlayfairDisplay_700Bold,
+  PlayfairDisplay_700Bold_Italic,
 } from '@expo-google-fonts/playfair-display';
 import {
   PlusJakartaSans_400Regular,
@@ -38,6 +39,7 @@ export default function RootLayout() {
     Montserrat_700Bold,
     PlayfairDisplay_600SemiBold,
     PlayfairDisplay_700Bold,
+    PlayfairDisplay_700Bold_Italic,
     PlusJakartaSans_400Regular,
     PlusJakartaSans_500Medium,
     PlusJakartaSans_600SemiBold,

@@ -19,14 +19,16 @@
     "languageError": "No hemos podido guardar el idioma. Vuelve a intentarlo.",
     "demoMode": "Demostración · datos de muestra",
     "configErrorBody": "La conexión con el servicio aún no está configurada correctamente. Contacta con la persona responsable de la aplicación.",
-    "accessTitle": "Acceso a la comunidad",
     "emailPlaceholder": "nombre@ejemplo.com",
     "password": "Contraseña",
     "passwordPlaceholder": "Introduce la contraseña",
     "signIn": "Entrar",
     "showPassword": "Mostrar contraseña",
     "hidePassword": "Ocultar contraseña",
-    "managedAccess": "El administrador de la comunidad te facilita el acceso. Si no tienes cuenta o has olvidado la contraseña, contacta con él.",
-    "signInError": "No hemos podido iniciar sesión. Comprueba el correo, la contraseña y la conexión y vuelve a intentarlo."
+    "signInError": "No hemos podido iniciar sesión. Comprueba el correo, la contraseña y la conexión y vuelve a intentarlo.",
+    "titleLead": "Tu comunidad,",
+    "titleAccent": "cerca",
+    "helpTitle": "¿Problemas para entrar?",
+    "helpBody": "Contacta con el administrador de la comunidad."
   }
 }
