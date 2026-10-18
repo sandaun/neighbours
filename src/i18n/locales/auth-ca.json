@@ -1,0 +1,31 @@
+{
+  "auth": {
+    "title": "La teva comunitat, a prop",
+    "subtitle": "Entra amb el correu amb què t’han convidat a la comunitat.",
+    "email": "Correu electrònic",
+    "code": "Codi de verificació",
+    "sendCode": "Rebre un codi",
+    "verify": "Entrar",
+    "codeSent": "Si {{email}} té accés, rebràs un codi. Introdueix-lo aquí.",
+    "changeEmail": "Canviar el correu o demanar un altre codi",
+    "inviteOnly": "Accés només per invitació. Si encara no en tens, contacta amb l’administrador de la comunitat.",
+    "sendError": "No hem pogut demanar el codi. Comprova la connexió i el correu de la invitació, i espera un minut abans de tornar-ho a provar.",
+    "invalidCode": "El codi no és vàlid, ha caducat o no hi ha connexió. Comprova’l o demana’n un altre.",
+    "loading": "Comprovant l’accés…",
+    "errorTitle": "No hem pogut comprovar l’accés",
+    "errorBody": "Comprova la connexió i torna-ho a provar.",
+    "noMembershipTitle": "Encara no tens una comunitat assignada",
+    "noMembershipBody": "Contacta amb l’administrador perquè completi l’assignació. Després torna-ho a provar.",
+    "retry": "Tornar-ho a provar",
+    "signOut": "Tancar sessió",
+    "name": "Nom",
+    "community": "Comunitat",
+    "unit": "Habitatge",
+    "notAssigned": "Sense assignar",
+    "demoProfile": "Estàs consultant la demostració. El perfil personal apareixerà quan entris amb un compte de la comunitat.",
+    "languageBody": "Tria l’idioma de l’aplicació. La preferència es desa en aquest dispositiu.",
+    "languageError": "No hem pogut desar l’idioma. Torna-ho a provar.",
+    "demoMode": "Demostració · dades de mostra",
+    "configErrorBody": "La connexió amb el servei encara no està configurada correctament. Contacta amb la persona responsable de l’aplicació."
+  }
+}

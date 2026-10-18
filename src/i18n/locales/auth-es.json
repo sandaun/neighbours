@@ -1,0 +1,31 @@
+{
+  "auth": {
+    "title": "Tu comunidad, cerca",
+    "subtitle": "Entra con el correo con el que te han invitado a la comunidad.",
+    "email": "Correo electrónico",
+    "code": "Código de verificación",
+    "sendCode": "Recibir un código",
+    "verify": "Entrar",
+    "codeSent": "Si {{email}} tiene acceso, recibirás un código. Introdúcelo aquí.",
+    "changeEmail": "Cambiar el correo o pedir otro código",
+    "inviteOnly": "Acceso solo por invitación. Si aún no tienes una, contacta con el administrador de la comunidad.",
+    "sendError": "No hemos podido pedir el código. Comprueba la conexión y el correo de la invitación, y espera un minuto antes de volver a intentarlo.",
+    "invalidCode": "El código no es válido, ha caducado o no hay conexión. Compruébalo o pide otro.",
+    "loading": "Comprobando el acceso…",
+    "errorTitle": "No hemos podido comprobar el acceso",
+    "errorBody": "Comprueba la conexión y vuelve a intentarlo.",
+    "noMembershipTitle": "Aún no tienes una comunidad asignada",
+    "noMembershipBody": "Contacta con el administrador para que complete la asignación. Después vuelve a intentarlo.",
+    "retry": "Volver a intentarlo",
+    "signOut": "Cerrar sesión",
+    "name": "Nombre",
+    "community": "Comunidad",
+    "unit": "Vivienda",
+    "notAssigned": "Sin asignar",
+    "demoProfile": "Estás consultando la demostración. El perfil personal aparecerá cuando entres con una cuenta de la comunidad.",
+    "languageBody": "Elige el idioma de la aplicación. La preferencia se guarda en este dispositivo.",
+    "languageError": "No hemos podido guardar el idioma. Vuelve a intentarlo.",
+    "demoMode": "Demostración · datos de muestra",
+    "configErrorBody": "La conexión con el servicio aún no está configurada correctamente. Contacta con la persona responsable de la aplicación."
+  }
+}
