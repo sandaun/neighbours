@@ -26,6 +26,10 @@ import { AuthNavigator } from '@/features/auth/AuthNavigator';
 
 SplashScreen.preventAutoHideAsync();
 
+export const unstable_settings = {
+  initialRouteName: '(tabs)',
+};
+
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [fontsLoaded] = useFonts({

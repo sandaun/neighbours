@@ -6,10 +6,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from './AuthProvider';
 import { Button, ErrorState, LoadingState } from '@/design-system';
 import { appConfig, isDemoMode } from '@/lib/app-config';
+import { useTheme } from '@/hooks/use-theme';
 
 export function AuthNavigator() {
   const auth = useAuth();
   const { t } = useTranslation();
+  const colors = useTheme();
   if (auth.status === 'loading')
     return (
       <SafeAreaView className="flex-1 justify-center bg-bg dark:bg-bg-dark">
@@ -48,16 +50,27 @@ export function AuthNavigator() {
           </Text>
         </View>
       ) : null}
-      <Stack key={auth.session?.user.id ?? 'demo'} screenOptions={{ headerShown: false }}>
+      <Stack
+        key={auth.session?.user.id ?? 'demo'}
+        screenOptions={{
+          contentStyle: { backgroundColor: colors.background },
+          headerBackButtonDisplayMode: 'minimal',
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: colors.background },
+          headerTintColor: colors.primary,
+          headerTitleStyle: { color: colors.text, fontFamily: 'Montserrat_600SemiBold' },
+        }}
+      >
         <Stack.Protected guard={auth.status === 'ready'}>
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="incidents" />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="incidents/new" options={{ title: t('incidentFlow.create') }} />
+          <Stack.Screen name="incidents/[id]" options={{ title: t('incidentFlow.detail') }} />
         </Stack.Protected>
         <Stack.Protected guard={auth.status === 'signed-out'}>
-          <Stack.Screen name="login" />
+          <Stack.Screen name="login" options={{ headerShown: false }} />
         </Stack.Protected>
         <Stack.Protected guard={isDemoMode}>
-          <Stack.Screen name="ds-playground" />
+          <Stack.Screen name="ds-playground" options={{ headerShown: false }} />
         </Stack.Protected>
       </Stack>
     </View>
