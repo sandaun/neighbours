@@ -69,6 +69,8 @@ function harness(reply?: (request: Request) => Reply | undefined) {
         communities: { id: COMMUNITY_ID, name: 'Community A' },
         community_events: [],
         documents: [],
+        board_posts: [],
+        directory_contacts: [],
       };
       let body = custom?.body ?? fixtures[table ?? ''] ?? {};
       const headers = init?.headers as Record<string, string> | undefined;
@@ -286,7 +288,7 @@ describe('Supabase resident data source', () => {
     expect(JSON.parse(String(sign?.init?.body))).toEqual({ expiresIn: 120 });
   });
 
-  test('home omits board fixtures, calendar uses real events, unsupported modules are empty', async () => {
+  test('home reads connected content, calendar uses real events, unsupported modules are empty', async () => {
     const { source } = harness((request) =>
       request.url.pathname.endsWith('/community_events')
         ? {
@@ -309,5 +311,128 @@ describe('Supabase resident data source', () => {
       descriptionKey: 'more.comingSoon',
       sections: [],
     });
+  });
+
+  test('home and board share published community posts with a limited home preview', async () => {
+    const { source, requests } = harness((request) =>
+      request.url.pathname.endsWith('/board_posts')
+        ? {
+            body: [
+              {
+                id: 'post-a',
+                community_id: COMMUNITY_ID,
+                title: 'Lift inspection',
+                body: 'The lift will be inspected tomorrow.',
+                author_name: 'Alex Smith',
+                topic: 'Maintenance',
+                published_at: '2026-10-20T09:00:00Z',
+              },
+            ],
+          }
+        : undefined
+    );
+    const home = await source.getHome();
+    expect(home.boardPosts[0]).toMatchObject({
+      id: 'post-a',
+      author: 'Alex Smith',
+      authorInitials: 'AS',
+      body: 'The lift will be inspected tomorrow.',
+      commentsCount: 0,
+    });
+    const board = await source.getMoreModule('board');
+    expect(board.highlight.value).toBe('1');
+    expect(board.sections[0].items[0]).toMatchObject({
+      id: home.boardPosts[0].id,
+      title: 'Lift inspection',
+      subtitle: home.boardPosts[0].body,
+      publishedAt: '2026-10-20T09:00:00Z',
+    });
+    const postRequests = requests.filter((request) =>
+      request.url.pathname.endsWith('/board_posts')
+    );
+    expect(postRequests[0].url.searchParams.get('limit')).toBe('3');
+    expect(postRequests[1].url.searchParams.has('limit')).toBe(false);
+    for (const request of postRequests) {
+      expect(request.url.searchParams.get('community_id')).toBe(`eq.${COMMUNITY_ID}`);
+      expect(request.url.searchParams.get('published_at')).toMatch(/^lte\./u);
+      expect(request.url.searchParams.get('order')).toBe('published_at.desc,id.asc');
+    }
+  });
+
+  test('directory reads ordered community contacts and tolerates missing contact fields', async () => {
+    const { source, requests } = harness((request) =>
+      request.url.pathname.endsWith('/directory_contacts')
+        ? {
+            body: [
+              {
+                id: 'contact-a',
+                community_id: COMMUNITY_ID,
+                name: 'Maintenance team',
+                service: 'Building repairs',
+                phone: null,
+                email: 'repairs@example.com',
+                hours: 'Weekdays',
+                sort_order: 0,
+              },
+            ],
+          }
+        : undefined
+    );
+    const directory = await source.getMoreModule('directory');
+    expect(directory.highlight.value).toBe('1');
+    expect(directory.sections[0].items[0]).toEqual({
+      id: 'contact-a',
+      title: 'Maintenance team',
+      subtitle: 'Building repairs',
+      meta: 'repairs@example.com · Weekdays',
+    });
+    const request = requests.find((request) =>
+      request.url.pathname.endsWith('/directory_contacts')
+    );
+    expect(request?.url.searchParams.get('community_id')).toBe(`eq.${COMMUNITY_ID}`);
+    expect(request?.url.searchParams.get('order')).toBe('sort_order.asc,name.asc,id.asc');
+  });
+
+  test.each(['board_posts', 'directory_contacts'])(
+    'does not replace failed %s reads with fixtures',
+    async (table) => {
+      const { source } = harness((request) =>
+        request.url.pathname.endsWith(`/${table}`)
+          ? { status: 403, body: { message: 'Content denied', code: '42501' } }
+          : undefined
+      );
+      await expect(
+        source.getMoreModule(table === 'board_posts' ? 'board' : 'directory')
+      ).rejects.toMatchObject({ message: 'Content denied' });
+    }
+  );
+
+  test('lists documents without attachments and refuses to sign a missing file', async () => {
+    const { source, requests } = harness((request) =>
+      request.url.pathname.endsWith('/documents')
+        ? {
+            body: [
+              {
+                id: 'document-a',
+                community_id: COMMUNITY_ID,
+                title: 'Community rules',
+                category: 'rules',
+                file_size_bytes: 0,
+                storage_path: null,
+                updated_at: '2026-10-27T10:00:00Z',
+              },
+            ],
+          }
+        : undefined
+    );
+    expect(await source.getDocuments()).toEqual([
+      expect.objectContaining({
+        id: 'document-a',
+        title: 'Community rules',
+        hasFile: false,
+      }),
+    ]);
+    await expect(source.getDocumentUrl('document-a')).rejects.toThrow('no PDF attached');
+    expect(requests.some((request) => request.url.pathname.startsWith('/storage/'))).toBe(false);
   });
 });

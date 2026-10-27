@@ -66,7 +66,7 @@
       "all": "Documents recents"
     },
     "openPdf": "Obre el PDF",
-    "demoNoFile": "Document de mostra sense fitxer adjunt.",
+    "noFile": "No hi ha cap fitxer adjunt.",
     "openError": "No hem pogut obrir el document. Torna-ho a provar i permet l’obertura de finestres."
   },
   "accounts": {
@@ -158,7 +158,7 @@
       },
       "board": {
         "description": "Novetats, avisos i converses entre les persones de la comunitat.",
-        "highlight": "Publicacions noves"
+        "highlight": "Publicacions"
       },
       "bookings": {
         "description": "Consulta la disponibilitat dels espais comuns abans de reservar.",

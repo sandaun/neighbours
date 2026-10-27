@@ -64,6 +64,7 @@ export type CommunityDocument = {
   title: string;
   category: 'minutes' | 'insurance' | 'rules';
   fileType: 'PDF';
+  hasFile?: boolean;
   fileSize: string;
   updatedAt: string;
 };
@@ -112,6 +113,7 @@ export type ModuleItem = {
   meta?: string;
   startsAt?: string;
   endsAt?: string;
+  publishedAt?: string;
   badgeKey?: string;
   tone?: ModuleItemTone;
 };

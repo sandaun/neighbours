@@ -3,7 +3,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { getSupabase } from '@/lib/supabase';
 
 import type { AppDataSource } from './app-data-source';
-import type { Database, IncidentRow } from './database.types';
+import type { BoardPostRow, Database, IncidentRow } from './database.types';
 import {
   INCIDENT_CATEGORIES,
   type CreateIncidentInput,
@@ -19,6 +19,24 @@ const PHOTO_EXTENSIONS: Record<string, string> = {
   'image/png': 'png',
   'image/webp': 'webp',
 };
+
+function toBoardPost(row: BoardPostRow) {
+  return {
+    id: row.id,
+    author: row.author_name,
+    authorInitials: row.author_name
+      .trim()
+      .split(/\s+/u)
+      .slice(0, 2)
+      .map((part) => part[0])
+      .join('')
+      .toUpperCase(),
+    body: row.body,
+    commentsCount: 0,
+    publishedAt: row.published_at,
+    topic: row.topic,
+  };
+}
 
 function toIncident(row: IncidentRow): Incident {
   return {
@@ -112,10 +130,24 @@ export function createSupabaseDataSource(
     return data;
   }
 
+  async function boardPosts(client: SupabaseClient<Database>, communityId: string, limit?: number) {
+    let query = client
+      .from('board_posts')
+      .select('*')
+      .eq('community_id', communityId)
+      .lte('published_at', new Date().toISOString())
+      .order('published_at', { ascending: false })
+      .order('id');
+    if (limit !== undefined) query = query.limit(limit);
+    const { data, error } = await query;
+    if (error) throw error;
+    return data;
+  }
+
   return {
     async getHome() {
       const { client, membership } = await context();
-      const [communityResult, incidentResult, communityEvents] = await Promise.all([
+      const [communityResult, incidentResult, communityEvents, posts] = await Promise.all([
         client.from('communities').select('*').eq('id', membership.community_id).single(),
         client
           .from('incidents')
@@ -124,6 +156,7 @@ export function createSupabaseDataSource(
           .order('reported_at', { ascending: false })
           .limit(3),
         events(client, membership.community_id),
+        boardPosts(client, membership.community_id, 3),
       ]);
       if (communityResult.error) throw communityResult.error;
       if (incidentResult.error) throw incidentResult.error;
@@ -139,7 +172,7 @@ export function createSupabaseDataSource(
             location: event.location,
             startsAt: event.starts_at,
           })),
-        boardPosts: [],
+        boardPosts: posts.map(toBoardPost),
       };
     },
 
@@ -243,6 +276,7 @@ export function createSupabaseDataSource(
         title: document.title,
         category: document.category,
         fileType: 'PDF' as const,
+        hasFile: document.storage_path !== null,
         fileSize:
           document.file_size_bytes >= 1024 * 1024
             ? `${(document.file_size_bytes / (1024 * 1024)).toFixed(1)} MB`
@@ -260,6 +294,7 @@ export function createSupabaseDataSource(
         .eq('id', id)
         .single();
       if (error) throw error;
+      if (!data.storage_path) throw new Error('This document has no PDF attached.');
       return signedUrl(client, 'community-documents', data.storage_path);
     },
 
@@ -314,7 +349,7 @@ export function createSupabaseDataSource(
     },
 
     async getMoreModule(key): Promise<MoreModuleData> {
-      if (key !== 'calendar') {
+      if (!['calendar', 'board', 'directory'].includes(key)) {
         return {
           key,
           descriptionKey: 'more.comingSoon',
@@ -323,6 +358,54 @@ export function createSupabaseDataSource(
         };
       }
       const { client, membership } = await context();
+      if (key === 'board') {
+        const posts = await boardPosts(client, membership.community_id);
+        return {
+          key,
+          descriptionKey: 'more.modules.board.description',
+          highlight: { labelKey: 'more.modules.board.highlight', value: String(posts.length) },
+          sections: [
+            {
+              id: 'latest',
+              titleKey: 'more.modules.sections.latest',
+              items: posts.map((post) => ({
+                id: post.id,
+                title: post.title,
+                subtitle: post.body,
+                meta: `${post.author_name} · ${post.topic}`,
+                publishedAt: post.published_at,
+              })),
+            },
+          ],
+        };
+      }
+      if (key === 'directory') {
+        const { data, error } = await client
+          .from('directory_contacts')
+          .select('*')
+          .eq('community_id', membership.community_id)
+          .order('sort_order')
+          .order('name')
+          .order('id');
+        if (error) throw error;
+        return {
+          key,
+          descriptionKey: 'more.modules.directory.description',
+          highlight: { labelKey: 'more.modules.directory.highlight', value: String(data.length) },
+          sections: [
+            {
+              id: 'contacts',
+              titleKey: 'more.modules.sections.maintenance',
+              items: data.map((contact) => ({
+                id: contact.id,
+                title: contact.name,
+                subtitle: contact.service,
+                meta: [contact.phone, contact.email, contact.hours].filter(Boolean).join(' · '),
+              })),
+            },
+          ],
+        };
+      }
       const communityEvents = await events(client, membership.community_id);
       return {
         key,

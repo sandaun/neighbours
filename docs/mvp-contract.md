@@ -2,7 +2,8 @@
 
 Scope: resident app, managed Supabase backend, and manual operation through the
 Supabase dashboard. No administrator website, push delivery, bookings, voting,
-or door integrations in this iteration. Preserve the existing visual system.
+or door integrations in this iteration. The community board and provider directory
+are operator-maintained, read-only resident modules. Preserve the existing visual system.
 
 ## Runtime
 
@@ -33,7 +34,8 @@ Add `getIncident(id): Promise<IncidentDetail>`,
 `createIncident(input): Promise<IncidentDetail>`,
 `getDocumentUrl(id): Promise<string>`, and `getReceiptUrl(id): Promise<string>`
 to `AppDataSource`. Export `appDataSource` through `@/data` as before. Private file
-URLs must be short lived. `Receipt.hasFile?: boolean` controls receipt PDF actions.
+URLs must be short lived. `Receipt.hasFile?: boolean` and `CommunityDocument.hasFile?: boolean` control PDF actions.
+Document metadata may exist before its private attachment is uploaded.
 `AccountsData.nextChargeAt` and `nextChargeCents` are nullable when unscheduled.
 
 ## Database contract
@@ -53,11 +55,16 @@ cents. Clients cannot assign membership, role, community, or receipt ownership.
 - `incident_updates`: `id`, `incident_id`, `body`, `author_name`, optional
   `status`, `created_at`. Dashboard operated, client read only.
 - `documents`: `id`, `community_id`, `title`, `category`
-  (`minutes`, `insurance`, `rules`), `file_size_bytes`, `storage_path`, `updated_at`.
+  (`minutes`, `insurance`, `rules`), `file_size_bytes`, nullable `storage_path`, `updated_at`.
 - `receipts`: `id`, `community_id`, `unit_id`, `concept`, `amount_cents`,
   `issued_at` (date), `period`, `status` (`paid`, `scheduled`), nullable `storage_path`.
 - `community_events`: `id`, `community_id`, `title`, `location`, `starts_at`,
   nullable `ends_at`.
+
+- `board_posts`: `id`, `community_id`, `title`, `body`, `author_name`, `topic`,
+  `published_at`. Members read published posts; all client writes are denied.
+- `directory_contacts`: `id`, `community_id`, `name`, `service`, nullable `phone`,
+  `email`, `hours`, and `sort_order`. Member-only reads; operator-managed writes.
 
 Private buckets: `incident-photos` and `community-documents`. Photo paths are
 `community_id/incident_id/filename`; document/receipt paths begin with

@@ -40,7 +40,7 @@ export default function MoreDestinationScreen() {
     );
   else if (key === 'profile') content = <ProfileContent />;
   else if (key === 'language') content = <LanguageContent />;
-  else if (!isDemoMode && key !== 'calendar')
+  else if (!isDemoMode && !['calendar', 'board', 'directory'].includes(key))
     content = <EmptyState title={title} subtitle={t('empty.comingSoon')} />;
   else content = <ModuleResource key={key} moduleKey={key} />;
 

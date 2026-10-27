@@ -1,0 +1,43 @@
+# Pilot sample content
+
+Generate metadata only using Python 3's standard library. This operation never
+creates users, uploads files, sends messages, or changes membership.
+
+```sh
+python3 scripts/sample-data/generate.py \
+  --community-id <existing-community-uuid> \
+  --unit-id <existing-unit-uuid> \
+  --reporter-id <existing-resident-uuid> \
+  --date 2026-10-27
+```
+
+The three IDs must describe one existing membership. Use the pilot community,
+not a real resident community. `--date` anchors all historical and future dates.
+The ignored `.sample-data/` output contains `manifest.json` and `seed.sql`.
+Review the manifest and SQL before applying `seed.sql` in the project's SQL
+editor. Apply the checked-in migrations first.
+
+The dataset adds 30 incidents (10 in each state), 60 incident updates, 15 document
+records, 16 receipts, 25 calendar events, 18 board posts, and 12 directory contacts.
+It uses the existing resident as incident reporter and labels board authors and
+providers as samples. Contact email addresses use `example.com`; telephone numbers
+are left empty. No additional accounts are needed.
+
+Documents and receipts have no attached files. Their PDF controls stay disabled.
+The operator can attach real private files later using the existing upload flow.
+
+IDs are deterministic for each community/unit/content key. Reapplying a generated
+seed uses `ON CONFLICT DO NOTHING`, preserving existing and operator-edited rows.
+The generator never deletes content. Regenerating with another date does not
+move already-inserted records; use a new test community/unit for a fresh timeline.
+
+The unit's next charge is initialized only if it has a zero balance and both
+charge fields are unset. Its amount equals all scheduled sample receipts due on
+the earliest scheduled date. Existing balances and charge schedules are preserved.
+
+Verification:
+
+- Run `npm run validate` for the adapters and app.
+- Run both SQL tests in `supabase/tests/`; each rolls its fixtures back.
+- Reapply `seed.sql` and verify counts are unchanged.
+- Sign in as the existing resident and inspect all populated destinations.

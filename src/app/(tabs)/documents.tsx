@@ -76,13 +76,14 @@ export default function DocumentsScreen() {
                         {document.title}
                       </Text>
                       <Text className="mt-0.5 font-body text-[11px] leading-[15px] text-ink-muted dark:text-ink-dark-soft">
-                        {document.fileType} · {document.fileSize} ·{' '}
+                        {document.fileType}
+                        {document.hasFile !== false ? ` · ${document.fileSize}` : ''} ·{' '}
                         {formatShortDate(document.updatedAt, locale)}
                       </Text>
                     </View>
                   </View>
                   <PdfButton
-                    available={!isDemoMode}
+                    available={!isDemoMode && document.hasFile === true}
                     getUrl={() => appDataSource.getDocumentUrl(document.id)}
                   />
                 </Card>

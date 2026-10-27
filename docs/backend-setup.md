@@ -194,7 +194,7 @@ until expiry after membership revocation.
   timezone-aware timestamps; `ends_at` is optional and cannot precede the start.
 - Documents, receipts, and balances are manually maintained data. `paid` records
   a known receipt state; the app does not execute payments or reconcile a bank.
-- Voting, board, reservations, directory, access, emergency contacts, notification
+- Voting, reservations, access, emergency contacts, notification
   preferences, and privacy actions return no invented live data. Their generic
   module destination is explicitly marked as coming soon.
 - For access removal, delete the membership. New database/storage requests fail
@@ -220,3 +220,37 @@ administrative table writes, storage replacements, or storage deletes are grante
 - [Expo SDK 58 reference](https://docs.expo.dev/versions/v58.0.0/)
 - [CLI 2.121.0 migration history source](https://github.com/supabase/cli/blob/v2.121.0/apps/cli/src/command-internal/migration-history.ts)
 - [CLI 2.121.0 repair handler](https://github.com/supabase/cli/blob/v2.121.0/apps/cli/src/commands/migration/repair/repair.handler.ts)
+
+
+## Community board, directory, and pilot sample content
+
+Migration `20261027222906_community_board_and_directory.sql` adds `board_posts`
+and `directory_contacts`. Members can read only their own community's content;
+future-dated posts are hidden until publication. All client writes are denied,
+including administrator accounts. Maintain these tables through the dashboard.
+The Home shows the three latest published posts from the same source as the board.
+There is no posting or commenting workflow in this iteration.
+
+Migration `20261027223735_allow_documents_without_files.sql` permits document
+metadata without a Storage object, just as receipts already support. The app
+keeps PDF actions disabled until an actual `storage_path` is assigned. A document
+without an attachment has `file_size_bytes = 0`. Attaching a file later uses the
+existing private bucket, namespace, and authorization policy.
+
+`scripts/sample-data/generate.py` generates metadata-only sample content for an
+existing pilot membership, without dependencies or credentials. See its adjacent
+README for the exact command, counts, date anchoring, and repeatability behavior.
+The generated SQL is a separate operator action, never an automatic migration or
+application startup effect. It preserves existing rows and sends no messages.
+
+`supabase/tests/community_content_rls.test.sql` verifies cross-community isolation,
+scheduled publication, read-only grants, revocation, and anonymous denial.
+
+On 27 October 2026, both content migrations were applied to the pilot project
+and recorded atomically in migration history. The metadata-only seed was first
+run twice inside a rolled-back transaction to verify repeatability, then applied
+once. The existing incident was preserved: final counts were 31 incidents,
+15 documents, 16 receipts, 25 events, 18 posts, and 12 contacts. No PDFs were
+uploaded. Both transactional SQL test suites passed against the hosted project;
+`npm run validate` passed 16 suites and 82 tests. Device rendering was not verified
+in this operation. No build or over-the-air update was published.

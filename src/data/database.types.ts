@@ -1,4 +1,4 @@
-// Schema snapshot for supabase/migrations/20261018100713_resident_mvp.sql.
+// Schema snapshot including the community board and directory migration.
 // Regenerate against the linked project after applying the migration.
 type Relationship = {
   foreignKeyName: string;
@@ -58,7 +58,7 @@ export type DocumentRow = {
   title: string;
   category: 'minutes' | 'insurance' | 'rules';
   file_size_bytes: number;
-  storage_path: string;
+  storage_path: string | null;
   updated_at: string;
 };
 export type ReceiptRow = {
@@ -79,6 +79,26 @@ export type EventRow = {
   location: string;
   starts_at: string;
   ends_at: string | null;
+};
+
+export type BoardPostRow = {
+  id: string;
+  community_id: string;
+  title: string;
+  body: string;
+  author_name: string;
+  topic: string;
+  published_at: string;
+};
+export type DirectoryContactRow = {
+  id: string;
+  community_id: string;
+  name: string;
+  service: string;
+  phone: string | null;
+  email: string | null;
+  hours: string | null;
+  sort_order: number;
 };
 
 export type Database = {
@@ -111,15 +131,14 @@ export type Database = {
         'community_id' | 'reporter_id' | 'title' | 'description' | 'location' | 'category'
       >;
       incident_updates: Table<IncidentUpdateRow, 'incident_id' | 'body' | 'author_name'>;
-      documents: Table<
-        DocumentRow,
-        'community_id' | 'title' | 'category' | 'file_size_bytes' | 'storage_path'
-      >;
+      documents: Table<DocumentRow, 'community_id' | 'title' | 'category' | 'file_size_bytes'>;
       receipts: Table<
         ReceiptRow,
         'community_id' | 'unit_id' | 'concept' | 'amount_cents' | 'issued_at' | 'period' | 'status'
       >;
       community_events: Table<EventRow, 'community_id' | 'title' | 'location' | 'starts_at'>;
+      board_posts: Table<BoardPostRow, 'community_id' | 'title' | 'body' | 'author_name' | 'topic'>;
+      directory_contacts: Table<DirectoryContactRow, 'community_id' | 'name' | 'service'>;
     };
     Views: { [_ in never]: never };
     Functions: { [_ in never]: never };

@@ -59,7 +59,7 @@ test('keeps unavailable documents disabled without a URL request', async () => {
   await userEvent.press(button);
   expect(getUrl).not.toHaveBeenCalled();
   expect(WebBrowser.openBrowserAsync).not.toHaveBeenCalled();
-  expect(screen.getByText('documents.demoNoFile')).toBeTruthy();
+  expect(screen.getByText('documents.noFile')).toBeTruthy();
 });
 
 test('does not request another URL while the first request is pending', async () => {

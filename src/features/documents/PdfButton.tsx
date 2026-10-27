@@ -65,7 +65,7 @@ export function PdfButton({
       </Button>
       {!available ? (
         <Text className="font-body text-[12px] leading-[17px] text-ink-muted dark:text-ink-dark-soft">
-          {t('documents.demoNoFile')}
+          {t('documents.noFile')}
         </Text>
       ) : null}
       {failed ? (

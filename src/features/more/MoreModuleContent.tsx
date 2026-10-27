@@ -18,6 +18,7 @@ import { ScrollView, Text, View } from 'react-native';
 import type { ModuleItemTone, MoreModuleData, MoreModuleKey } from '@/data';
 import { Card, SectionHeader } from '@/design-system';
 import { useTheme } from '@/hooks/use-theme';
+import { formatShortDate } from '@/utils/formatters';
 
 import { CalendarModuleContent } from './CalendarModuleContent';
 
@@ -60,7 +61,7 @@ function ModuleBadge({ label, tone = 'default' }: { label: string; tone?: Module
 }
 
 export function MoreModuleContent({ data }: { data: MoreModuleData }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const colors = useTheme();
   const highlightTone = data.highlight.tone ?? 'default';
   const HighlightIcon = MODULE_ICONS[data.key];
@@ -112,6 +113,9 @@ export function MoreModuleContent({ data }: { data: MoreModuleData }) {
                 {item.meta ? (
                   <Text className="font-body text-[12px] leading-[16px] text-ink-muted dark:text-ink-dark-soft">
                     {item.meta}
+                    {item.publishedAt
+                      ? ` · ${formatShortDate(item.publishedAt, i18n.resolvedLanguage ?? 'ca')}`
+                      : ''}
                   </Text>
                 ) : null}
               </Card>
