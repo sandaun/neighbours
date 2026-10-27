@@ -1,5 +1,5 @@
-import { Tabs } from 'expo-router';
-import { NativeTabs } from 'expo-router/unstable-native-tabs';
+import { Tabs } from 'expo-router/js-tabs';
+import { NativeTabs } from 'expo-router/native-tabs';
 import { CreditCard, FileText, Home, LayoutGrid, MessageSquareWarning } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';

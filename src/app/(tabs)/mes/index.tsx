@@ -15,7 +15,7 @@ import {
 } from 'lucide-react-native';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View, type ScrollViewInstance } from 'react-native';
 
 import type { MoreModuleKey } from '@/data';
 import { ListItem, ScreenHeader, SectionHeader } from '@/design-system';
@@ -108,7 +108,7 @@ function DestinationRow({ destination }: { destination: Destination }) {
 
 export default function MoreScreen() {
   const { t } = useTranslation();
-  const scrollRef = useRef<ScrollView>(null);
+  const scrollRef = useRef<ScrollViewInstance>(null);
 
   useScrollToTop(scrollRef);
 

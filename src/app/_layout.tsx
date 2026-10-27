@@ -28,7 +28,7 @@ import { AuthNavigator } from '@/features/auth/AuthNavigator';
 SplashScreen.preventAutoHideAsync();
 
 export const unstable_settings = {
-  initialRouteName: '(tabs)',
+  anchor: '(tabs)',
 };
 
 export default function RootLayout() {

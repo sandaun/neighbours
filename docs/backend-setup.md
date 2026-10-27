@@ -217,6 +217,6 @@ administrative table writes, storage replacements, or storage deletes are grante
 - [Storage access control](https://supabase.com/docs/guides/storage/security/access-control)
 - [Private file URLs](https://supabase.com/docs/guides/storage/serving/downloads)
 - [SMTP](https://supabase.com/docs/guides/auth/auth-smtp)
-- [Expo SDK 57 reference](https://docs.expo.dev/versions/v57.0.0/)
+- [Expo SDK 58 reference](https://docs.expo.dev/versions/v58.0.0/)
 - [CLI 2.121.0 migration history source](https://github.com/supabase/cli/blob/v2.121.0/apps/cli/src/command-internal/migration-history.ts)
 - [CLI 2.121.0 repair handler](https://github.com/supabase/cli/blob/v2.121.0/apps/cli/src/commands/migration/repair/repair.handler.ts)

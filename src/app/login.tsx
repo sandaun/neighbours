@@ -10,6 +10,7 @@ import {
   ScrollView,
   Text,
   TextInput,
+  type TextInputInstance,
   View,
   useColorScheme,
   useWindowDimensions,
@@ -33,7 +34,7 @@ export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const passwordInput = useRef<TextInput>(null);
+  const passwordInput = useRef<TextInputInstance>(null);
   const submitting = useRef(false);
   const [focusedField, setFocusedField] = useState<'email' | 'password' | null>(null);
   const inputStyle =

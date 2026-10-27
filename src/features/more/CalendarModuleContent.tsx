@@ -18,7 +18,8 @@ const WEEKDAY_KEYS = [
   'sunday',
 ] as const;
 
-const CALENDAR_CELL_STYLE: ViewStyle = { width: '14.285714%' };
+// Leave a rounding margin so seven percentage cells stay on the same native row.
+const CALENDAR_CELL_STYLE: ViewStyle = { width: '14.28%' };
 
 type CalendarEvent = ModuleItem & { startsAt: string };
 

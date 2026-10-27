@@ -1,21 +1,24 @@
 # Neighbours
 
-Resident community app built with Expo SDK 57, React Native, TypeScript, and the
+Resident community app built with Expo SDK 58, React Native, TypeScript, and the
 existing NativeWind design system. The MVP covers manually provisioned email/password access,
 incidents, private documents, receipts, a read-only calendar, profile, and language.
 Administration is manual through Supabase; there is no administrator website.
 
 ## Run
 
-Use Node.js 22.13 or newer and npm:
+Use Node.js 24.13.1 (pinned in `.nvmrc`) and npm. With nvm installed:
 
 ```sh
+nvm use
 npm ci
 cp .env.example .env.local
 npm start
 ```
 
-Open the app with an Expo SDK 57 compatible client, or use `npm run web`.
+Open the app with an Expo SDK 58 compatible client, or use `npm run web`.
+SDK 58 supports Node.js 22.13+, 24.3+, or 26.x within those major versions;
+Node.js 23 and 25 are not supported. CI uses the same `.nvmrc` as local development.
 After changing public environment variables, restart Metro. Native permission
 configuration changes take effect in a new native build.
 
@@ -63,6 +66,16 @@ fixtures must not be provisioned as production residents.
 
 The shared implementation contract is in [docs/mvp-contract.md](docs/mvp-contract.md).
 
+SDK 58 verification on 27 October 2026 used Node.js 24.13.1: all 77 tests in
+16 suites, formatting, lint, and TypeScript passed. Expo Doctor passed all 20
+checks, package versions passed `expo install --check`, and production bundles
+exported for iOS, Android, and web. Expo Go 58.0.7 on the iPhone 16e simulator
+restored the existing Supabase session and loaded resident data. Visual checks
+covered native tabs, incident detail/back navigation, and calendar month changes,
+the Today action, and seven-column date alignment. The signed-out web route
+displayed the login screen. Real-device photo uploads and private PDF downloads
+were not re-tested during this SDK upgrade. No shared preview has been published.
+
 Initial verification on 18 October 2026: all 70 Jest tests, formatting, lint, and TypeScript
 passed; production bundles exported for iOS, Android, and web. Browser checks
 covered guarded routes, the bounded login, demo incident creation/detail/list
@@ -85,8 +98,8 @@ incident/photo/PDF flows remain to be exercised. Password access does not requir
 SMTP; automatic invitations and password recovery by email are deferred. No
 resident emails have been sent.
 
-The dependency audit reports 78 existing advisories (17 moderate, 60 high, one
+The pre-upgrade MVP dependency audit reported 78 advisories (17 moderate, 60 high, one
 critical). Every flagged installed package/version was already present in the
 baseline lockfile; none is a newly added or upgraded vulnerable package in this
-change. Dependency remediation remains a separate release task; no automatic
+MVP change. Dependency remediation remains a separate release task; no automatic
 major upgrades or framework downgrades were applied.
