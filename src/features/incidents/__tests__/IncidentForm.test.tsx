@@ -11,6 +11,18 @@ jest.mock('react-i18next', () => ({
 jest.mock('@/hooks/use-theme', () => ({ useTheme: () => ({ muted: 'gray', primary: 'purple' }) }));
 jest.mock('expo-image-picker', () => ({ launchImageLibraryAsync: jest.fn() }));
 jest.mock('expo-image', () => ({ Image: 'Image' }));
+jest.mock('lucide-react-native', () => ({ Camera: () => null }));
+jest.mock('@/design-system/ScreenHeader', () => {
+  const { Text, View } = jest.requireActual('react-native');
+  return {
+    ScreenHeader: ({ overline, title }: { overline: string; title: string }) => (
+      <View>
+        <Text>{overline}</Text>
+        <Text accessibilityRole="header">{title}</Text>
+      </View>
+    ),
+  };
+});
 
 const incident: IncidentDetail = {
   id: 'new-incident',
@@ -32,6 +44,8 @@ async function fillForm() {
   );
   await fireEvent.press(screen.getByRole('button', { name: 'incidentFlow.categories.plumbing' }));
 }
+
+beforeEach(() => jest.clearAllMocks());
 
 describe('IncidentForm', () => {
   test('keeps invalid input local and explains all required fields', async () => {
@@ -110,5 +124,84 @@ describe('IncidentForm', () => {
     );
     expect(onSubmit).toHaveBeenCalledTimes(1);
     expect(onSubmit.mock.calls[0][0].photo).toEqual({ base64: '/9j/AAAA', mimeType: 'image/jpeg' });
+  });
+
+  test('keeps the selected photo after an invalid replacement and removes it before submitting', async () => {
+    jest
+      .mocked(ImagePicker.launchImageLibraryAsync)
+      .mockResolvedValueOnce({
+        canceled: false,
+        assets: [{ uri: 'file:///photo.jpg', width: 350, height: 250, base64: '/9j/AAAA' }],
+      })
+      .mockResolvedValueOnce({
+        canceled: false,
+        assets: [{ uri: 'file:///invalid.jpg', width: 350, height: 250, base64: 'AAAA' }],
+      });
+    const onSubmit = jest.fn().mockResolvedValueOnce(incident);
+    await render(<IncidentForm onSubmit={onSubmit} onCreated={jest.fn()} />);
+    await fillForm();
+    await fireEvent.press(screen.getByRole('button', { name: 'incidentFlow.addPhoto' }));
+    expect(await screen.findByLabelText('incidentFlow.photoPreview')).toBeTruthy();
+    await fireEvent.press(screen.getByRole('button', { name: 'incidentFlow.changePhoto' }));
+    expect(await screen.findByText('incidentFlow.photoError')).toBeTruthy();
+    expect(screen.getByLabelText('incidentFlow.photoPreview')).toBeTruthy();
+
+    await fireEvent.press(screen.getByRole('button', { name: 'incidentFlow.removePhoto' }));
+    expect(screen.queryByLabelText('incidentFlow.photoPreview')).toBeNull();
+    expect(screen.queryByText('incidentFlow.photoError')).toBeNull();
+    expect(screen.getByRole('button', { name: 'incidentFlow.addPhoto' })).toBeTruthy();
+    await fireEvent.press(screen.getByRole('button', { name: 'incidentFlow.submit' }));
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1));
+    expect(onSubmit).toHaveBeenCalledWith({
+      title: incident.title,
+      location: incident.location,
+      description: incident.description,
+      category: incident.category,
+    });
+  });
+
+  test('preserves the form when photo selection is cancelled', async () => {
+    jest
+      .mocked(ImagePicker.launchImageLibraryAsync)
+      .mockResolvedValueOnce({ canceled: true, assets: null });
+    const onSubmit = jest.fn().mockResolvedValueOnce(incident);
+    await render(<IncidentForm onSubmit={onSubmit} onCreated={jest.fn()} />);
+    await fillForm();
+    await fireEvent.press(screen.getByRole('button', { name: 'incidentFlow.addPhoto' }));
+    expect(screen.queryByLabelText('incidentFlow.photoPreview')).toBeNull();
+    expect(screen.queryByText('incidentFlow.photoError')).toBeNull();
+    await fireEvent.press(screen.getByRole('button', { name: 'incidentFlow.submit' }));
+    await waitFor(() =>
+      expect(onSubmit).toHaveBeenCalledWith({
+        title: incident.title,
+        location: incident.location,
+        description: incident.description,
+        category: incident.category,
+      })
+    );
+  });
+
+  test('waits for the gallery to close before allowing submission', async () => {
+    let closeGallery: ((value: ImagePicker.ImagePickerResult) => void) | undefined;
+    jest.mocked(ImagePicker.launchImageLibraryAsync).mockImplementationOnce(
+      () =>
+        new Promise<ImagePicker.ImagePickerResult>((resolve) => {
+          closeGallery = resolve;
+        })
+    );
+    const onSubmit = jest.fn().mockResolvedValueOnce(incident);
+    await render(<IncidentForm onSubmit={onSubmit} onCreated={jest.fn()} />);
+    await fillForm();
+    await fireEvent.press(screen.getByRole('button', { name: 'incidentFlow.addPhoto' }));
+    expect(screen.getByRole('button', { name: 'incidentFlow.addPhoto' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'incidentFlow.submit' })).toBeDisabled();
+    await fireEvent.press(screen.getByRole('button', { name: 'incidentFlow.submit' }));
+    expect(onSubmit).not.toHaveBeenCalled();
+    closeGallery?.({ canceled: true, assets: null });
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'incidentFlow.submit' })).toBeEnabled()
+    );
+    await fireEvent.press(screen.getByRole('button', { name: 'incidentFlow.submit' }));
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1));
   });
 });

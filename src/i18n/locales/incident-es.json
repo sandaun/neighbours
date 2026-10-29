@@ -5,6 +5,13 @@
     "openHint": "Abre el detalle y el historial",
     "emptyFilter": "No hay incidencias con este estado",
     "formIntro": "Explica qué ocurre y dónde. La administración podrá consultar la incidencia y actualizar su estado.",
+    "formOverline": "Nueva incidencia",
+    "formTitle": "¿Qué está fallando?",
+    "placeholders": {
+      "title": "p. ej. Humedad en el trastero",
+      "location": "p. ej. Trasteros · pasillo norte",
+      "description": "El ascensor hace un ruido metálico al parar en la tercera planta…"
+    },
     "fields": {
       "title": "Título",
       "location": "Ubicación",
@@ -24,14 +31,16 @@
       "description": "Explica el problema con entre 10 y 4.000 caracteres.",
       "category": "Selecciona una categoría."
     },
-    "addPhoto": "Añade una foto",
+    "addPhoto": "Toca para añadir una foto",
+    "photoPickerHint": "Abre la galería para elegir una foto de la incidencia.",
+    "pickingPhoto": "Abriendo la galería…",
     "changePhoto": "Cambia la foto",
     "removePhoto": "Elimina la foto",
     "photoPreview": "Foto de la incidencia",
     "photoHint": "Una foto de hasta 5 MB.",
     "photoTooLarge": "La foto supera los 5 MB. Elige una más pequeña.",
     "photoError": "No hemos podido abrir esta foto. Inténtalo de nuevo.",
-    "submit": "Envía la incidencia",
+    "submit": "Enviar al administrador",
     "submitError": "No hemos podido enviar la incidencia. Revisa la conexión e inténtalo de nuevo.",
     "history": "Historial de actualizaciones",
     "noUpdates": "La incidencia se ha recibido. Las actualizaciones de la administración aparecerán aquí.",

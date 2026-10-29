@@ -34,6 +34,16 @@ are left empty. No additional accounts are needed.
 Documents and receipts have no attached files. Their PDF controls stay disabled.
 The operator can attach real private files later using the existing upload flow.
 
+The client demonstration includes David Colom's original `humitat.jpg` as
+`assets/images/demo/incident-damp-wall.jpg`. The local demo displays this bundled
+asset in the storage-room incident. For the connected pilot, upload the same file
+to the private `incident-photos` bucket at
+`<community-id>/<incident-id>/photo.jpg`, using the existing incident titled
+`Humitat a la paret del traster`. Attach that path to its `photo_path` only if no
+photo is already attached. This upload and association are deferred to the final
+pilot content update together with the board message and topic changes. No
+resolution photo, new bucket, or permission changes are needed.
+
 IDs are deterministic for each community/unit/content key. Reapplying a generated
 seed uses `ON CONFLICT DO NOTHING`, preserving existing and operator-edited rows.
 The generator never deletes content. Regenerating with another date does not

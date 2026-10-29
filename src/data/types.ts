@@ -23,6 +23,7 @@ export type IncidentDetail = Incident & {
   description: string;
   category: IncidentCategory;
   photoUrl?: string;
+  photoAsset?: number;
   photoUploadFailed?: boolean;
   updates: IncidentUpdate[];
 };

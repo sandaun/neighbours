@@ -19,6 +19,8 @@ export function IncidentDetailContent({ incident }: { incident: IncidentDetail }
   const { t, i18n } = useTranslation();
   const [photoFailed, setPhotoFailed] = useState(false);
   const locale = i18n.resolvedLanguage ?? 'ca';
+  const photoSource =
+    incident.photoAsset ?? (incident.photoUrl ? { uri: incident.photoUrl } : undefined);
 
   return (
     <>
@@ -45,10 +47,10 @@ export function IncidentDetailContent({ incident }: { incident: IncidentDetail }
         >
           {incident.description}
         </Text>
-        {incident.photoUrl ? (
+        {photoSource !== undefined ? (
           <Image
             accessibilityLabel={t('incidentFlow.photoPreview')}
-            source={{ uri: incident.photoUrl }}
+            source={photoSource}
             style={{ width: '100%', height: 240, borderRadius: 16 }}
             contentFit="contain"
             onError={() => setPhotoFailed(true)}

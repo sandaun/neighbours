@@ -5,6 +5,13 @@
     "openHint": "Obre el detall i l'historial",
     "emptyFilter": "No hi ha incidències amb aquest estat",
     "formIntro": "Explica què passa i on. L'administració podrà consultar la incidència i actualitzar-ne l'estat.",
+    "formOverline": "Nova incidència",
+    "formTitle": "Què està fallant?",
+    "placeholders": {
+      "title": "p. ex. Humitat al traster",
+      "location": "p. ex. Trasters · passadís nord",
+      "description": "L’ascensor fa un soroll metàl·lic quan s’atura a la tercera planta…"
+    },
     "fields": {
       "title": "Títol",
       "location": "Ubicació",
@@ -24,14 +31,16 @@
       "description": "Explica el problema amb entre 10 i 4.000 caràcters.",
       "category": "Selecciona una categoria."
     },
-    "addPhoto": "Afegeix una foto",
+    "addPhoto": "Toca per afegir una foto",
+    "photoPickerHint": "Obre la galeria per triar una foto de la incidència.",
+    "pickingPhoto": "Obrint la galeria…",
     "changePhoto": "Canvia la foto",
     "removePhoto": "Elimina la foto",
     "photoPreview": "Foto de la incidència",
     "photoHint": "Una foto de fins a 5 MB.",
     "photoTooLarge": "La foto supera els 5 MB. Tria'n una de més petita.",
     "photoError": "No hem pogut obrir aquesta foto. Torna-ho a provar.",
-    "submit": "Envia la incidència",
+    "submit": "Envia a l’administrador",
     "submitError": "No hem pogut enviar la incidència. Revisa la connexió i torna-ho a provar.",
     "history": "Historial d'actualitzacions",
     "noUpdates": "La incidència s'ha rebut. Les actualitzacions de l'administració apareixeran aquí.",

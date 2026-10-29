@@ -1,15 +1,26 @@
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
+import { Camera } from 'lucide-react-native';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, View } from 'react-native';
+import {
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 
 import type { CreateIncidentInput, IncidentCategory, IncidentDetail } from '@/data';
 import { Button } from '@/design-system/Button';
 import { Chip } from '@/design-system/Chip';
+import { ScreenHeader } from '@/design-system/ScreenHeader';
 import { useTheme } from '@/hooks/use-theme';
 
-const CATEGORIES: IncidentCategory[] = ['plumbing', 'electrical', 'elevator', 'other'];
+const CATEGORIES: IncidentCategory[] = ['elevator', 'plumbing', 'electrical', 'other'];
 const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
 
 type IncidentFormProps = {
@@ -125,113 +136,146 @@ export function IncidentForm({ onSubmit, onCreated }: IncidentFormProps) {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         keyboardShouldPersistTaps="handled"
-        contentContainerClassName="gap-5 px-5 pb-12 pt-4"
+        contentContainerClassName="pb-12"
       >
-        <Text className="font-body text-[14px] leading-[20px] text-ink-soft dark:text-ink-dark-soft">
-          {t('incidentFlow.formIntro')}
-        </Text>
-        {fields.map((field) => (
-          <View className="gap-2" key={field.key}>
+        <ScreenHeader
+          embedded
+          overline={t('incidentFlow.formOverline')}
+          title={t('incidentFlow.formTitle')}
+        />
+        <View className="gap-5 px-5 pt-6">
+          <Text className="font-body text-[14px] leading-[20px] text-ink-soft dark:text-ink-dark-soft">
+            {t('incidentFlow.formIntro')}
+          </Text>
+          <View className="gap-3">
             <Text className="font-label text-[13px] text-ink dark:text-ink-dark">
-              {t(`incidentFlow.fields.${field.key}`)}
+              {t('incidentFlow.fields.category')}
             </Text>
-            <TextInput
-              accessibilityLabel={t(`incidentFlow.fields.${field.key}`)}
-              value={field.value}
-              onChangeText={field.setValue}
-              editable={!submitting}
-              maxLength={field.maxLength}
-              multiline={field.key === 'description'}
-              textAlignVertical="top"
-              autoCapitalize="sentences"
-              placeholderTextColor={colors.muted}
-              selectionColor={colors.primary}
-              className={`rounded-sm border border-outline bg-surface px-4 py-3 font-body text-[15px] text-ink dark:border-outline-dark dark:bg-surface-dark dark:text-ink-dark ${field.key === 'description' ? 'min-h-32' : 'min-h-12'}`}
-            />
-            {validationVisible && field.value.trim().length < field.minLength ? (
+            <View className="flex-row flex-wrap gap-2">
+              {CATEGORIES.map((item) => (
+                <Chip
+                  key={item}
+                  selected={category === item}
+                  disabled={submitting}
+                  onPress={() => setCategory(item)}
+                >
+                  {t(`incidentFlow.categories.${item}`)}
+                </Chip>
+              ))}
+            </View>
+            {validationVisible && category === null ? (
               <Text accessibilityRole="alert" className="font-body text-[12px] text-danger">
-                {t(`incidentFlow.validation.${field.key}`)}
+                {t('incidentFlow.validation.category')}
               </Text>
             ) : null}
           </View>
-        ))}
-        <View className="gap-3">
-          <Text className="font-label text-[13px] text-ink dark:text-ink-dark">
-            {t('incidentFlow.fields.category')}
-          </Text>
-          <View className="flex-row flex-wrap gap-2">
-            {CATEGORIES.map((item) => (
-              <Chip
-                key={item}
-                selected={category === item}
-                disabled={submitting}
-                onPress={() => setCategory(item)}
-              >
-                {t(`incidentFlow.categories.${item}`)}
-              </Chip>
-            ))}
-          </View>
-          {validationVisible && category === null ? (
-            <Text accessibilityRole="alert" className="font-body text-[12px] text-danger">
-              {t('incidentFlow.validation.category')}
+          <View className="gap-3">
+            <Text className="font-label text-[13px] text-ink dark:text-ink-dark">
+              {t('incidentFlow.fields.photo')}
             </Text>
-          ) : null}
-        </View>
-        <View className="gap-3">
-          <Text className="font-label text-[13px] text-ink dark:text-ink-dark">
-            {t('incidentFlow.fields.photo')}
-          </Text>
-          {photoUri ? (
-            <Image
-              accessibilityLabel={t('incidentFlow.photoPreview')}
-              source={{ uri: photoUri }}
-              style={{ height: 200, borderRadius: 16 }}
-              contentFit="cover"
-            />
+            {photoUri ? (
+              <>
+                <Image
+                  accessibilityLabel={t('incidentFlow.photoPreview')}
+                  source={{ uri: photoUri }}
+                  style={{ height: 200, borderRadius: 16 }}
+                  contentFit="cover"
+                />
+                <Button
+                  variant="outline"
+                  loading={pickingPhoto}
+                  disabled={submitting}
+                  onPress={pickPhoto}
+                >
+                  {t('incidentFlow.changePhoto')}
+                </Button>
+              </>
+            ) : (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={t('incidentFlow.addPhoto')}
+                accessibilityHint={t('incidentFlow.photoPickerHint')}
+                accessibilityState={{ disabled: submitting || pickingPhoto, busy: pickingPhoto }}
+                disabled={submitting || pickingPhoto}
+                onPress={() => void pickPhoto()}
+                className={`min-h-28 flex-row items-center justify-center gap-3 rounded-lg border-2 border-dashed border-outline bg-surface px-5 py-6 active:bg-surface-hi dark:border-outline-dark dark:bg-surface-dark dark:active:bg-surface-dark-hi ${submitting || pickingPhoto ? 'opacity-40' : ''}`}
+              >
+                {pickingPhoto ? (
+                  <ActivityIndicator color={colors.primary} />
+                ) : (
+                  <Camera color={colors.primary} size={26} />
+                )}
+                <Text className="shrink font-body text-[15px] leading-[22px] text-ink-soft dark:text-ink-dark-soft">
+                  {t(pickingPhoto ? 'incidentFlow.pickingPhoto' : 'incidentFlow.addPhoto')}
+                </Text>
+              </Pressable>
+            )}
+            {photo ? (
+              <Button
+                variant="ghost"
+                disabled={submitting || pickingPhoto}
+                onPress={() => {
+                  setPhoto(undefined);
+                  setPhotoUri(undefined);
+                  setPhotoError(undefined);
+                }}
+              >
+                {t('incidentFlow.removePhoto')}
+              </Button>
+            ) : null}
+            <Text className="font-body text-[12px] text-ink-soft dark:text-ink-dark-soft">
+              {t('incidentFlow.photoHint')}
+            </Text>
+            {photoError ? (
+              <Text accessibilityRole="alert" className="font-body text-[13px] text-danger">
+                {photoError}
+              </Text>
+            ) : null}
+          </View>
+          {fields.map((field) => (
+            <View className="gap-2" key={field.key}>
+              <Text className="font-label text-[13px] text-ink dark:text-ink-dark">
+                {t(`incidentFlow.fields.${field.key}`)}
+              </Text>
+              <TextInput
+                accessibilityLabel={t(`incidentFlow.fields.${field.key}`)}
+                placeholder={t(`incidentFlow.placeholders.${field.key}`)}
+                value={field.value}
+                onChangeText={field.setValue}
+                editable={!submitting}
+                maxLength={field.maxLength}
+                multiline={field.key === 'description'}
+                textAlignVertical="top"
+                autoCapitalize="sentences"
+                placeholderTextColor={colors.muted}
+                selectionColor={colors.primary}
+                className={`rounded-sm border border-outline bg-surface px-4 py-3 font-body text-[15px] text-ink dark:border-outline-dark dark:bg-surface-dark dark:text-ink-dark ${field.key === 'description' ? 'min-h-32' : 'min-h-12'}`}
+              />
+              {validationVisible && field.value.trim().length < field.minLength ? (
+                <Text
+                  accessibilityRole="alert"
+                  className="font-body text-[12px] text-danger dark:text-danger-soft"
+                >
+                  {t(`incidentFlow.validation.${field.key}`)}
+                </Text>
+              ) : null}
+            </View>
+          ))}
+          {error ? (
+            <Text accessibilityRole="alert" className="font-body text-[14px] text-danger">
+              {error}
+            </Text>
           ) : null}
           <Button
-            variant="outline"
-            loading={pickingPhoto}
-            disabled={submitting}
-            onPress={pickPhoto}
+            loading={submitting}
+            disabled={pickingPhoto}
+            onPress={() => {
+              void submit();
+            }}
           >
-            {t(photo ? 'incidentFlow.changePhoto' : 'incidentFlow.addPhoto')}
+            {t('incidentFlow.submit')}
           </Button>
-          {photo ? (
-            <Button
-              variant="ghost"
-              disabled={submitting || pickingPhoto}
-              onPress={() => {
-                setPhoto(undefined);
-                setPhotoUri(undefined);
-              }}
-            >
-              {t('incidentFlow.removePhoto')}
-            </Button>
-          ) : null}
-          <Text className="font-body text-[12px] text-ink-soft dark:text-ink-dark-soft">
-            {t('incidentFlow.photoHint')}
-          </Text>
-          {photoError ? (
-            <Text accessibilityRole="alert" className="font-body text-[13px] text-danger">
-              {photoError}
-            </Text>
-          ) : null}
         </View>
-        {error ? (
-          <Text accessibilityRole="alert" className="font-body text-[14px] text-danger">
-            {error}
-          </Text>
-        ) : null}
-        <Button
-          loading={submitting}
-          disabled={pickingPhoto}
-          onPress={() => {
-            void submit();
-          }}
-        >
-          {t('incidentFlow.submit')}
-        </Button>
       </ScrollView>
     </KeyboardAvoidingView>
   );

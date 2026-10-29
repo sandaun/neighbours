@@ -32,6 +32,8 @@ Keep existing screen-facing types. Extend `Incident` via `IncidentDetail` with
 `createdAt`, `authorName`, optional `status`). Category is `plumbing`, `electrical`,
 `elevator`, or `other`. Create input has `title`, `description`, `location`,
 `category`, and optional `photo: { base64: string; mimeType: string }`.
+`IncidentDetail.photoAsset?: number` supports a bundled image in local demo data.
+Live photos continue to use private signed `photoUrl` values.
 
 Add `getIncident(id): Promise<IncidentDetail>`,
 `createIncident(input): Promise<IncidentDetail>`,

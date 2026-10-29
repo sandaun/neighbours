@@ -1,6 +1,7 @@
-import { render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import type { IncidentDetail } from '@/data';
+import { mockAppDataSource } from '@/mocks/app-data';
 
 import { IncidentDetailContent } from '../IncidentDetailContent';
 
@@ -43,4 +44,24 @@ test('explains when a received incident has no updates yet', async () => {
   );
   expect(screen.getByText('incidentFlow.noUpdates')).toBeTruthy();
   expect(screen.queryByText('Building manager')).toBeNull();
+});
+
+test('shows the original damp-wall photo with the local demo incident', async () => {
+  const detail = await mockAppDataSource.getIncident('incident-damp-wall');
+  await render(<IncidentDetailContent incident={detail} />);
+  expect(screen.getByRole('header', { name: 'Humitat a la paret del traster' })).toBeTruthy();
+  expect(screen.getByText(detail.description)).toBeTruthy();
+  expect(screen.getByLabelText('incidentFlow.photoPreview')).toHaveProp(
+    'source',
+    detail.photoAsset
+  );
+});
+
+test('loads a private photo URL and explains an image loading failure', async () => {
+  const photoUrl = 'https://example.supabase.co/private/photo.jpg?token=test';
+  await render(<IncidentDetailContent incident={{ ...incident, photoUrl }} />);
+  const photo = screen.getByLabelText('incidentFlow.photoPreview');
+  expect(photo).toHaveProp('source', { uri: photoUrl });
+  await fireEvent(photo, 'error', { error: 'Unable to load image' });
+  expect(screen.getByRole('alert')).toHaveTextContent('incidentFlow.photoLoadError');
 });

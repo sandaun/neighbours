@@ -1,4 +1,5 @@
 import type { AppDataSource } from '@/data/app-data-source';
+import dampWallPhoto from '../../assets/images/demo/incident-damp-wall.jpg';
 import type {
   AccountsData,
   BoardPost,
@@ -30,6 +31,13 @@ const incidents: Incident[] = [
     title: 'Llum del replà fosa',
     location: '3r pis · escala B',
     reportedAt: '2026-08-14T07:45:00+02:00',
+    status: 'received',
+  },
+  {
+    id: 'incident-damp-wall',
+    title: 'Humitat a la paret del traster',
+    location: 'Trasters · passadís nord',
+    reportedAt: '2026-10-29T09:00:00+01:00',
     status: 'received',
   },
 ];
@@ -483,8 +491,17 @@ const incidentDetails = new Map<string, IncidentDetail>(
     incident.id,
     {
       ...incident,
-      category: incident.id === 'incident-elevator' ? 'elevator' : 'other',
-      description: incident.title,
+      category:
+        incident.id === 'incident-elevator'
+          ? 'elevator'
+          : incident.id === 'incident-damp-wall'
+            ? 'plumbing'
+            : 'other',
+      description:
+        incident.id === 'incident-damp-wall'
+          ? 'Ha aparegut humitat a la part baixa de la paret del traster. La pintura s’ha aixecat després de les pluges.'
+          : incident.title,
+      ...(incident.id === 'incident-damp-wall' ? { photoAsset: dampWallPhoto } : {}),
       updates:
         incident.status === 'received'
           ? []
