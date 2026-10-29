@@ -13,9 +13,17 @@ python3 scripts/sample-data/generate.py \
 
 The three IDs must describe one existing membership. Use the pilot community,
 not a real resident community. `--date` anchors all historical and future dates.
-The ignored `.sample-data/` output contains `manifest.json` and `seed.sql`.
+The ignored `.sample-data/` output contains `manifest.json`, `seed.sql`, and
+`parking-post-update.sql`.
 Review the manifest and SQL before applying `seed.sql` in the project's SQL
 editor. Apply the checked-in migrations first.
+
+For an already seeded pilot, review and apply `parking-post-update.sql` separately
+to replace Marta Vidal's original meeting post with the garage rental message.
+It targets one deterministic post ID in the selected community, checks the
+existing membership, and only updates the unchanged original sample text. It is
+safe to rerun and preserves operator edits. Generating these files does not apply
+any changes to the hosted database.
 
 The dataset adds 30 incidents (10 in each state), 60 incident updates, 15 document
 records, 16 receipts, 25 calendar events, 18 board posts, and 12 directory contacts.

@@ -148,7 +148,7 @@ for index in range(25):
 
 post_specs = [
     ('Revisió dels ascensors', 'Demà al matí es revisaran les dues instal·lacions. El servei s’aturarà per torns i s’avisarà a cada escala.', 'Administració', 'Manteniment'),
-    ('Junta ordinària de tardor', 'Ja podeu consultar la convocatòria i preparar les preguntes sobre el pressupost i les obres de la finca.', 'Marta Vidal', 'Comunitat'),
+    ('Plaça de garatge en lloguer', 'Llogo la meva plaça de garatge (la núm. 35) per si algun veí/na de la finca està interessat.', 'Marta Vidal', 'Parking'),
     ('Claus trobades al vestíbul', 'S’ha trobat un clauer blau al costat de les bústies. Si és vostre, contacteu amb l’administració.', 'Jordi Roca', 'Objectes perduts'),
     ('Neteja del garatge', 'Recordeu retirar els objectes de les zones de pas abans de la neteja programada. Gràcies per la col·laboració.', 'Administració', 'Neteja'),
     ('Llibres per compartir', 'Deixarem una petita selecció de llibres a la sala comunitària per intercanviar durant la trobada de veïns.', 'Laia Soler', 'Veïnat'),
@@ -215,4 +215,21 @@ where id = '{unit}' and community_id = '{community}'
   and next_charge_at is null and next_charge_cents is null and balance_cents = 0;
 commit;''')
 (root / 'seed.sql').write_text('\n\n'.join(sql) + '\n')
+# Existing pilot rows are preserved by the seed. Update only the original sample post.
+parking_body = post_specs[1][1].replace("'", "''")
+(root / 'parking-post-update.sql').write_text(sql[0] + f'''
+
+update public.board_posts
+set title = 'Plaça de garatge en lloguer',
+    body = '{parking_body}',
+    topic = 'Parking'
+where id = '{identifier('post-1')}'
+  and community_id = '{community}'
+  and author_name = 'Marta Vidal · Mostra'
+  and title = 'Junta ordinària de tardor'
+  and body = 'Ja podeu consultar la convocatòria i preparar les preguntes sobre el pressupost i les obres de la finca.'
+  and topic = 'Comunitat';
+
+commit;
+''')
 print(json.dumps({'output': str(root.resolve()), 'counts': {table: len(rows) for table, rows in payload.items()}, 'uploadedFiles': 0}, indent=2))

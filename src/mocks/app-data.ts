@@ -1,6 +1,7 @@
 import type { AppDataSource } from '@/data/app-data-source';
 import type {
   AccountsData,
+  BoardPost,
   CommunityDocument,
   HomeData,
   Incident,
@@ -33,6 +34,16 @@ const incidents: Incident[] = [
   },
 ];
 
+const parkingPost: BoardPost = {
+  id: 'post-parking',
+  author: 'Marta Vidal',
+  authorInitials: 'MV',
+  body: 'Llogo la meva plaça de garatge (la núm. 35) per si algun veí/na de la finca està interessat.',
+  commentsCount: 0,
+  publishedAt: '2026-08-13T18:25:00+02:00',
+  topic: 'Parking',
+};
+
 const home: HomeData = {
   communityName: 'Carrer del Mar 14',
   incidents: incidents.slice(0, 2),
@@ -44,17 +55,7 @@ const home: HomeData = {
       location: 'Saló comunitari',
     },
   ],
-  boardPosts: [
-    {
-      id: 'post-pool',
-      author: 'Marta Vidal',
-      authorInitials: 'MV',
-      body: 'Recordeu que dissabte es farà el manteniment anual de la piscina.',
-      commentsCount: 4,
-      publishedAt: '2026-08-13T18:25:00+02:00',
-      topic: 'Manteniment',
-    },
-  ],
+  boardPosts: [parkingPost],
 };
 
 const documents: CommunityDocument[] = [
@@ -155,18 +156,18 @@ const moreModules: Record<MoreModuleKey, MoreModuleData> = {
   board: {
     key: 'board',
     descriptionKey: 'more.modules.board.description',
-    highlight: { labelKey: 'more.modules.board.highlight', value: '3' },
+    highlight: { labelKey: 'more.modules.board.highlight', value: '2' },
     sections: [
       {
         id: 'latest',
         titleKey: 'more.modules.sections.latest',
         items: [
           {
-            id: 'board-pool',
-            title: 'Manteniment de la piscina',
-            subtitle: 'Marta Vidal · Presidenta',
-            meta: 'Dissabte de 8:00 a 12:00 · 4 comentaris',
-            badgeKey: 'more.modules.badges.maintenance',
+            id: parkingPost.id,
+            title: 'Plaça de garatge en lloguer',
+            subtitle: parkingPost.body,
+            meta: `${parkingPost.author} · ${parkingPost.topic}`,
+            publishedAt: parkingPost.publishedAt,
           },
           {
             id: 'board-bicycle',
