@@ -2,13 +2,15 @@
   "expo": {
     "name": "neighbours",
     "slug": "neighbours",
+    "owner": "orbita-labs",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "neighbours",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "infoPlist": {}
     },
     "android": {
       "adaptiveIcon": {
@@ -47,6 +49,22 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "89a579e1-a22e-43f4-8f12-2c89033a994f"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/89a579e1-a22e-43f4-8f12-2c89033a994f"
     }
   }
 }
