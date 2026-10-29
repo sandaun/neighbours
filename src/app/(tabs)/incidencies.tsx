@@ -13,7 +13,7 @@ import {
   EmptyState,
   ErrorState,
   LoadingState,
-  ScreenHeader,
+  CollapsibleScreen,
   SectionHeader,
 } from '@/design-system';
 import { IncidentCard } from '@/features/incidents/IncidentCard';
@@ -37,15 +37,13 @@ export default function IncidentsScreen() {
 
   return (
     <View className="flex-1 bg-bg dark:bg-bg-dark">
-      <ScreenHeader
-        subtitle={t('incidents.subtitle')}
-        title={t('tabs.incidents')}
-        variant="section"
-      />
-      <ScrollView
-        className="flex-1"
+      <CollapsibleScreen
+        header={{
+          subtitle: t('incidents.subtitle'),
+          title: t('tabs.incidents'),
+          variant: 'section',
+        }}
         contentContainerClassName="px-5 pb-24"
-        contentInsetAdjustmentBehavior="automatic"
         refreshControl={
           <RefreshControl refreshing={resource.refreshing} onRefresh={resource.reload} />
         }
@@ -94,7 +92,7 @@ export default function IncidentsScreen() {
             </View>
           </>
         ) : null}
-      </ScrollView>
+      </CollapsibleScreen>
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={t('incidentFlow.create')}

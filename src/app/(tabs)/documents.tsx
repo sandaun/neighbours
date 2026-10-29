@@ -1,6 +1,6 @@
 import { FileText, ShieldCheck } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
-import { RefreshControl, ScrollView, Text, View } from 'react-native';
+import { RefreshControl, Text, View } from 'react-native';
 
 import { appDataSource } from '@/data';
 import {
@@ -9,7 +9,7 @@ import {
   EmptyState,
   ErrorState,
   LoadingState,
-  ScreenHeader,
+  CollapsibleScreen,
   SectionHeader,
 } from '@/design-system';
 import { useDataResource } from '@/hooks/use-data-resource';
@@ -26,14 +26,13 @@ export default function DocumentsScreen() {
 
   return (
     <View className="flex-1 bg-bg dark:bg-bg-dark">
-      <ScreenHeader
-        subtitle={t('documents.subtitle')}
-        title={t('tabs.documents')}
-        variant="section"
-      />
-      <ScrollView
+      <CollapsibleScreen
+        header={{
+          subtitle: t('documents.subtitle'),
+          title: t('tabs.documents'),
+          variant: 'section',
+        }}
         contentContainerClassName="px-5 pb-12"
-        contentInsetAdjustmentBehavior="automatic"
         refreshControl={
           <RefreshControl
             refreshing={resource.refreshing && resource.status !== 'loading'}
@@ -91,7 +90,7 @@ export default function DocumentsScreen() {
             </View>
           </>
         ) : null}
-      </ScrollView>
+      </CollapsibleScreen>
     </View>
   );
 }

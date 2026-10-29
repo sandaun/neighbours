@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { router } from 'expo-router';
+import type { ReactNode } from 'react';
 
 import type { Incident } from '@/data/types';
 
@@ -48,11 +49,11 @@ jest.mock('@/hooks/use-data-resource', () => ({
   }),
 }));
 jest.mock('@/design-system', () => {
-  const { Text } = jest.requireActual('react-native');
+  const { Text, View } = jest.requireActual('react-native');
   return {
     Button: jest.requireActual('@/design-system/Button').Button,
     Chip: jest.requireActual('@/design-system/Chip').Chip,
-    ScreenHeader: () => null,
+    CollapsibleScreen: ({ children }: { children: ReactNode }) => <View>{children}</View>,
     SectionHeader: () => null,
     EmptyState: ({ title }: { title: string }) => <Text>{title}</Text>,
     LoadingState: () => null,

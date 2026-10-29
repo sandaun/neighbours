@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { RefreshControl, ScrollView, Text, View } from 'react-native';
+import { RefreshControl, Text, View } from 'react-native';
 
 import { appDataSource } from '@/data';
 import {
@@ -9,7 +9,7 @@ import {
   ErrorState,
   ListItem,
   LoadingState,
-  ScreenHeader,
+  CollapsibleScreen,
   SectionHeader,
 } from '@/design-system';
 import { IncidentCard } from '@/features/incidents/IncidentCard';
@@ -25,10 +25,9 @@ export default function HomeScreen() {
 
   return (
     <View className="flex-1 bg-bg dark:bg-bg-dark">
-      <ScreenHeader overline={t('home.overline')} title={communityName} />
-      <ScrollView
+      <CollapsibleScreen
+        header={{ overline: t('home.overline'), title: communityName }}
         contentContainerClassName="px-5 pb-8"
-        contentInsetAdjustmentBehavior="automatic"
         refreshControl={
           <RefreshControl
             refreshing={resource.refreshing && resource.status !== 'loading'}
@@ -96,7 +95,7 @@ export default function HomeScreen() {
             ))}
           </>
         ) : null}
-      </ScrollView>
+      </CollapsibleScreen>
     </View>
   );
 }

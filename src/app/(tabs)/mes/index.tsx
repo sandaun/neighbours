@@ -1,4 +1,4 @@
-import { router, useScrollToTop } from 'expo-router';
+import { router } from 'expo-router';
 import {
   Bell,
   Calendar,
@@ -13,12 +13,11 @@ import {
   Vote,
   type LucideIcon,
 } from 'lucide-react-native';
-import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, Text, View, type ScrollViewInstance } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
 import type { MoreModuleKey } from '@/data';
-import { ListItem, ScreenHeader, SectionHeader } from '@/design-system';
+import { ListItem, CollapsibleScreen, SectionHeader } from '@/design-system';
 import { useTheme } from '@/hooks/use-theme';
 
 type Destination = {
@@ -108,17 +107,12 @@ function DestinationRow({ destination }: { destination: Destination }) {
 
 export default function MoreScreen() {
   const { t } = useTranslation();
-  const scrollRef = useRef<ScrollViewInstance>(null);
-
-  useScrollToTop(scrollRef);
 
   return (
     <View className="flex-1 bg-bg dark:bg-bg-dark">
-      <ScreenHeader subtitle={t('more.subtitle')} title={t('more.title')} variant="section" />
-      <ScrollView
-        ref={scrollRef}
+      <CollapsibleScreen
+        header={{ subtitle: t('more.subtitle'), title: t('more.title'), variant: 'section' }}
         contentContainerClassName="px-5 pb-12"
-        contentInsetAdjustmentBehavior="automatic"
       >
         <SectionHeader title={t('more.sections.participation')} />
         <View className="flex-row flex-wrap justify-between gap-y-3">
@@ -140,7 +134,7 @@ export default function MoreScreen() {
             <DestinationRow destination={destination} key={destination.key} />
           ))}
         </View>
-      </ScrollView>
+      </CollapsibleScreen>
     </View>
   );
 }

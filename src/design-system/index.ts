@@ -2,6 +2,7 @@ export { Avatar } from './Avatar';
 export { Button } from './Button';
 export { Card } from './Card';
 export { Chip } from './Chip';
+export { CollapsibleScreen } from './CollapsibleScreen';
 export { ErrorState, LoadingState } from './DataState';
 export { EmptyState } from './EmptyState';
 export { ListItem } from './ListItem';

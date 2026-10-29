@@ -142,6 +142,7 @@ Tots els components viuen a `/design-system/components/`, són controlats pels t
 |---|---|
 | `TabBar` | 5 pestanyes: Inicio · Incidencias · Documentos · Cuentas · Más. Glass a iOS, M3 a Android |
 | `ScreenHeader` | Bloc morat `radius-2xl` inferior amb overline + display serif |
+| `CollapsibleScreen` | Scroll container for the five primary tabs; expanded `ScreenHeader` transitions to a compact title as content scrolls |
 | `GlassModal` | Detall d'incidència i futures fitxes. Vidre iOS / targeta M3 |
 | `FAB` | "+" crear (incidència, missatge de tauló, reserva) |
 | `EmptyState` | Il·lustració + text + acció ("Toca un día marcado…") |
@@ -241,4 +242,4 @@ module.exports = {
 1. **Validar paleta de mode fosc** (proposta pròpia, no extreta del prototip).
 2. **Iconografia:** definir llibreria (proposta: `lucide-react-native`, consistent i lleugera) — el mockup usa icones diverses sense sistema.
 3. **Il·lustracions d'estats buits:** definir estil (lineal morat?).
-4. **Moviment:** definir 2-3 animacions estàndard (modal, transició de pestanya, feedback de vot) — pendent.
+4. **Motion:** primary tab headers collapse with scroll using Reanimated opacity and transforms. Large and compact titles use separate visibility ranges to avoid overlapping text. Home retains the same brand purple across light and dark appearances, without a divider. Safe areas and bottom tab clearance are handled by `CollapsibleScreen`; native tabs disable automatic content insets. Header height follows text layout, reduced motion removes the fade and translation, and reselecting a tab scrolls to the top. Modal, tab transition, and vote feedback motion remain pending.

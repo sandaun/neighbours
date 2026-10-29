@@ -56,7 +56,7 @@ export default function TabsLayout() {
         disableTransparentOnScrollEdge
       >
         {TABS.map((tab) => (
-          <NativeTabs.Trigger key={tab.name} name={tab.name}>
+          <NativeTabs.Trigger key={tab.name} name={tab.name} disableAutomaticContentInsets>
             <NativeTabs.Trigger.Label>{t(tab.labelKey)}</NativeTabs.Trigger.Label>
             <NativeTabs.Trigger.Icon sf={tab.sf} />
           </NativeTabs.Trigger>
