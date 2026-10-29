@@ -50,7 +50,11 @@ export default function TabsLayout() {
 
   if (Platform.OS === 'ios') {
     return (
-      <NativeTabs tintColor={colors.primary}>
+      <NativeTabs
+        tintColor={colors.primary}
+        backgroundColor={colors.surface}
+        disableTransparentOnScrollEdge
+      >
         {TABS.map((tab) => (
           <NativeTabs.Trigger key={tab.name} name={tab.name}>
             <NativeTabs.Trigger.Label>{t(tab.labelKey)}</NativeTabs.Trigger.Label>
