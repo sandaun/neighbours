@@ -70,7 +70,24 @@
     "openError": "No hem pogut obrir el document. Torna-ho a provar i permet l’obertura de finestres."
   },
   "accounts": {
-    "subtitle": "Quotes, derrames i històric de rebuts.",
+    "subtitle": "Despeses, quotes, derrames i històric de rebuts.",
+    "expenses": {
+      "title": "Despeses de la comunitat",
+      "sampleNotice": "Dades de demostració · {{year}}",
+      "total": "total",
+      "chartLabel": "Despeses de {{period}}: {{total}}",
+      "periods": {
+        "monthly": "Mensual",
+        "annual": "Anual"
+      },
+      "categories": {
+        "elevator": "Ascensor",
+        "electricity": "Llum de zones comunes",
+        "garden": "Jardí",
+        "cleaning": "Neteja",
+        "other": "Altres"
+      }
+    },
     "balance": "Saldo actual",
     "upToDate": "Estàs al corrent de pagament",
     "nextCharge": "Proper càrrec",

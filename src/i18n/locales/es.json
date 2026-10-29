@@ -70,7 +70,24 @@
     "openError": "No hemos podido abrir el documento. Inténtalo de nuevo y permite abrir ventanas."
   },
   "accounts": {
-    "subtitle": "Cuotas, derramas e histórico de recibos.",
+    "subtitle": "Gastos, cuotas, derramas e histórico de recibos.",
+    "expenses": {
+      "title": "Gastos de la comunidad",
+      "sampleNotice": "Datos de demostración · {{year}}",
+      "total": "total",
+      "chartLabel": "Gastos de {{period}}: {{total}}",
+      "periods": {
+        "monthly": "Mensual",
+        "annual": "Anual"
+      },
+      "categories": {
+        "elevator": "Ascensor",
+        "electricity": "Luz de zonas comunes",
+        "garden": "Jardín",
+        "cleaning": "Limpieza",
+        "other": "Otros"
+      }
+    },
     "balance": "Saldo actual",
     "upToDate": "Estás al corriente de pago",
     "nextCharge": "Próximo cargo",

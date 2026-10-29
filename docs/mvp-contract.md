@@ -7,6 +7,12 @@ are operator-maintained, read-only resident modules. Preserve the existing visua
 Emergency contacts are a local demonstration in both data modes: four services,
 an active `112` phone link, and three disabled placeholder numbers. They do not
 use the provider directory or introduce backend writes.
+The accounts screen includes a labeled local community-expense demonstration
+before the resident's balance and receipts. Its five categories contain twelve
+months of integer-cent amounts for 2026; annual values sum the same monthly
+amounts. This chart is available in both data modes, uses the existing SVG
+dependency, and does not derive community expenses from resident receipts or
+change live financial records.
 
 ## Runtime
 

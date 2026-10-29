@@ -194,6 +194,9 @@ until expiry after membership revocation.
   timezone-aware timestamps; `ends_at` is optional and cannot precede the start.
 - Documents, receipts, and balances are manually maintained data. `paid` records
   a known receipt state; the app does not execute payments or reconcile a bank.
+- The accounts expense chart is explicitly labeled as demonstration data. It is
+  local to the app in both data modes and does not change real balances, charges,
+  or receipts. Monthly and annual views use the same five-category example data.
 - Emergency contacts use a local demonstration screen in both data modes. It
   displays four services; only `112` has an active phone action. Numbers shown
   with `X` are placeholders and their call buttons are disabled. No database

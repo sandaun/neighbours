@@ -10,6 +10,8 @@ import { Platform } from 'react-native';
 export const Colors = {
   light: {
     primary: '#803EF6',
+    secondary: '#50E3C2',
+    highlight: '#D2BCFF',
     onPrimary: '#FFFFFF',
     danger: '#BA1A1A',
     warning: '#FFBA00',
@@ -23,6 +25,8 @@ export const Colors = {
   },
   dark: {
     primary: '#9B6BFF',
+    secondary: '#50E3C2',
+    highlight: '#D2BCFF',
     onPrimary: '#FFFFFF',
     danger: '#C13B3B',
     warning: '#FFBA00',

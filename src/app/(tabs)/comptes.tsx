@@ -14,6 +14,7 @@ import {
 } from '@/design-system';
 import { useDataResource } from '@/hooks/use-data-resource';
 import { PdfButton } from '@/features/documents/PdfButton';
+import { ExpensesCard } from '@/features/accounts/ExpensesCard';
 import { useTheme } from '@/hooks/use-theme';
 import { formatCurrency, formatShortDate } from '@/utils/formatters';
 
@@ -44,8 +45,9 @@ export default function AccountsScreen() {
         ) : null}
         {resource.status === 'success' ? (
           <>
+            <ExpensesCard />
             <Card
-              className="mt-2 gap-5"
+              className="mt-5 gap-5"
               style={{ backgroundColor: colors.primary }}
               variant="elevated"
             >
