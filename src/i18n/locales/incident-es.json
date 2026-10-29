@@ -5,8 +5,6 @@
     "openHint": "Abre el detalle y el historial",
     "emptyFilter": "No hay incidencias con este estado",
     "formIntro": "Explica qué ocurre y dónde. La administración podrá consultar la incidencia y actualizar su estado.",
-    "formOverline": "Nueva incidencia",
-    "formTitle": "¿Qué está fallando?",
     "placeholders": {
       "title": "p. ej. Humedad en el trastero",
       "location": "p. ej. Trasteros · pasillo norte",

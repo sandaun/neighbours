@@ -172,9 +172,7 @@
       "voting": {
         "description": "Participa en les decisions de la comunitat i consulta'n els resultats.",
         "highlight": "Votacions actives",
-        "title": "Votació en línia",
-        "meeting": "Junta anual · {{date}}",
-        "sampleNotice": "Demostració: les accions d’aquesta pantalla no registren cap vot ni delegació real.",
+        "meeting": "Junta anual",
         "question": "Aproves el pressupost de manteniment dels extintors?",
         "choices": { "for": "A favor", "against": "En contra" },
         "voteFor": "Vota a favor",

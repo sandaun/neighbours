@@ -147,6 +147,10 @@ Tots els components viuen a `/design-system/components/`, són controlats pels t
 | `FAB` | "+" crear (incidència, missatge de tauló, reserva) |
 | `EmptyState` | Il·lustració + text + acció ("Toca un día marcado…") |
 
+Secondary screens use their native navigation title without an additional hero banner.
+Voting uses a meeting heading with its date below, directly above the poll card;
+incident creation starts with its form introduction.
+
 ### 5.3 Formularis
 | Component | Notes |
 |---|---|

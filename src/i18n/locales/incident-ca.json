@@ -5,8 +5,6 @@
     "openHint": "Obre el detall i l'historial",
     "emptyFilter": "No hi ha incidències amb aquest estat",
     "formIntro": "Explica què passa i on. L'administració podrà consultar la incidència i actualitzar-ne l'estat.",
-    "formOverline": "Nova incidència",
-    "formTitle": "Què està fallant?",
     "placeholders": {
       "title": "p. ex. Humitat al traster",
       "location": "p. ex. Trasters · passadís nord",
