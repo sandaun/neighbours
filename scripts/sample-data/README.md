@@ -14,16 +14,18 @@ python3 scripts/sample-data/generate.py \
 The three IDs must describe one existing membership. Use the pilot community,
 not a real resident community. `--date` anchors all historical and future dates.
 The ignored `.sample-data/` output contains `manifest.json`, `seed.sql`, and
-`parking-post-update.sql`.
+`client-demo-update.sql`.
 Review the manifest and SQL before applying `seed.sql` in the project's SQL
 editor. Apply the checked-in migrations first.
 
-For an already seeded pilot, review and apply `parking-post-update.sql` separately
-to replace Marta Vidal's original meeting post with the garage rental message.
-It targets one deterministic post ID in the selected community, checks the
-existing membership, and only updates the unchanged original sample text. It is
-safe to rerun and preserves operator edits. Generating these files does not apply
-any changes to the hosted database.
+For an already seeded pilot, upload the photo described below, then review and
+apply `client-demo-update.sql` separately. It replaces Marta Vidal's original
+meeting post with the garage rental message, tags the book exchange and autumn
+meeting as activities, and attaches the damp-wall photo. It targets deterministic
+IDs in the selected community, checks the existing membership and private photo,
+and only updates unchanged sample content. It is safe to rerun and preserves
+operator edits and existing photos. Generating these files does not apply any
+changes to the hosted database.
 
 The dataset adds 30 incidents (10 in each state), 60 incident updates, 15 document
 records, 16 receipts, 25 calendar events, 18 board posts, and 12 directory contacts.
@@ -40,9 +42,10 @@ asset in the storage-room incident. For the connected pilot, upload the same fil
 to the private `incident-photos` bucket at
 `<community-id>/<incident-id>/photo.jpg`, using the existing incident titled
 `Humitat a la paret del traster`. Attach that path to its `photo_path` only if no
-photo is already attached. This upload and association are deferred to the final
-pilot content update together with the board message and topic changes. No
-resolution photo, new bucket, or permission changes are needed.
+photo is already attached. The generated `client-demo-update.sql` performs this
+association together with the board message and topic changes. It refuses to run
+until the JPEG exists in the private bucket. No resolution photo, new bucket, or
+permission changes are needed.
 
 IDs are deterministic for each community/unit/content key. Reapplying a generated
 seed uses `ON CONFLICT DO NOTHING`, preserving existing and operator-edited rows.

@@ -151,7 +151,7 @@ post_specs = [
     ('Plaça de garatge en lloguer', 'Llogo la meva plaça de garatge (la núm. 35) per si algun veí/na de la finca està interessat.', 'Marta Vidal', 'Parking'),
     ('Claus trobades al vestíbul', 'S’ha trobat un clauer blau al costat de les bústies. Si és vostre, contacteu amb l’administració.', 'Jordi Roca', 'Objectes perduts'),
     ('Neteja del garatge', 'Recordeu retirar els objectes de les zones de pas abans de la neteja programada. Gràcies per la col·laboració.', 'Administració', 'Neteja'),
-    ('Llibres per compartir', 'Deixarem una petita selecció de llibres a la sala comunitària per intercanviar durant la trobada de veïns.', 'Laia Soler', 'Veïnat'),
+    ('Llibres per compartir', 'Deixarem una petita selecció de llibres a la sala comunitària per intercanviar durant la trobada de veïns.', 'Laia Soler', 'Activitats'),
     ('Respectem el descans', 'Us recordem els horaris de descans. Si feu una mudança, aviseu amb antelació per facilitar l’accés.', 'Marta Vidal', 'Convivència'),
     ('Revisió de l’assegurança', 'L’administració ha penjat un resum de mostra de les cobertures a l’apartat Documents.', 'Administració', 'Documents'),
     ('Paraigua trobat', 'Hi ha un paraigua vermell a consergeria des de la darrera pluja. El guardarem durant aquesta setmana.', 'Pau Ferrer', 'Objectes perduts'),
@@ -161,7 +161,7 @@ post_specs = [
     ('Sala comunitària recollida', 'Després de les activitats, deixeu les taules netes i les cadires al seu lloc. Entre tots cuidem l’espai.', 'Laia Soler', 'Espais comuns'),
     ('Actualització de documents', 'Hem afegit les actes de mostra dels darrers mesos i les normes de convivència perquè les pugueu consultar.', 'Administració', 'Documents'),
     ('Bicicletes a les zones de pas', 'Feu servir els espais habilitats i mantingueu lliures els accessos als ascensors i les sortides.', 'Marta Vidal', 'Convivència'),
-    ('Trobada de tardor', 'Ens trobarem a la sala comunitària per compartir propostes de millora. Consulteu el dia i l’hora al calendari.', 'Pau Ferrer', 'Veïnat'),
+    ('Trobada de tardor', 'Ens trobarem a la sala comunitària per compartir propostes de millora. Consulteu el dia i l’hora al calendari.', 'Pau Ferrer', 'Activitats'),
     ('Revisió dels extintors', 'El servei de manteniment comprovarà els extintors i la senyalització. No cal entrar als habitatges.', 'Administració', 'Manteniment'),
     ('Consulta dels rebuts', 'Ja teniu disponible un historial de rebuts de mostra amb quotes ordinàries i una derrama de rehabilitació.', 'Administració', 'Comptes'),
     ('Gràcies per cuidar la finca', 'La col·laboració del veïnat facilita el seguiment de les incidències i la conservació dels espais comuns.', 'Anna Costa', 'Comunitat'),
@@ -215,9 +215,22 @@ where id = '{unit}' and community_id = '{community}'
   and next_charge_at is null and next_charge_cents is null and balance_cents = 0;
 commit;''')
 (root / 'seed.sql').write_text('\n\n'.join(sql) + '\n')
-# Existing pilot rows are preserved by the seed. Update only the original sample post.
+# Existing pilot rows are preserved by the seed. Update only unchanged sample content.
 parking_body = post_specs[1][1].replace("'", "''")
-(root / 'parking-post-update.sql').write_text(sql[0] + f'''
+photo_path = f"{community}/{identifier('incident-5')}/photo.jpg"
+content_update = [sql[0], f'''
+-- Upload the original damp-wall JPEG to this private path before applying.
+do $photo$ begin
+  if not exists (
+    select 1 from storage.objects o
+    join storage.buckets b on b.id = o.bucket_id
+    where b.id = 'incident-photos' and not b.public
+      and o.name = '{photo_path}'
+      and o.metadata->>'mimetype' = 'image/jpeg'
+  ) then
+    raise exception 'Upload the damp-wall JPEG to the private incident-photos bucket first';
+  end if;
+end $photo$;
 
 update public.board_posts
 set title = 'Plaça de garatge en lloguer',
@@ -228,8 +241,21 @@ where id = '{identifier('post-1')}'
   and author_name = 'Marta Vidal · Mostra'
   and title = 'Junta ordinària de tardor'
   and body = 'Ja podeu consultar la convocatòria i preparar les preguntes sobre el pressupost i les obres de la finca.'
-  and topic = 'Comunitat';
+  and topic = 'Comunitat';''']
 
-commit;
-''')
+for index in (4, 14):
+    title, body, author, topic = (value.replace("'", "''") for value in post_specs[index])
+    content_update.append(f'''update public.board_posts set topic = '{topic}'
+where id = '{identifier(f'post-{index}')}' and community_id = '{community}'
+  and title = '{title}' and body = '{body}'
+  and author_name = '{author} · Mostra' and topic = 'Veïnat';''')
+incident_title = incident_specs[5][0].replace("'", "''")
+incident_description = incident_specs[5][3].replace("'", "''")
+content_update.append(f'''update public.incidents set photo_path = '{photo_path}'
+where id = '{identifier('incident-5')}' and community_id = '{community}'
+  and reporter_id = '{reporter}' and photo_path is null
+  and title = '{incident_title}' and description = '{incident_description}';
+
+commit;''')
+(root / 'client-demo-update.sql').write_text('\n\n'.join(content_update) + '\n')
 print(json.dumps({'output': str(root.resolve()), 'counts': {table: len(rows) for table, rows in payload.items()}, 'uploadedFiles': 0}, indent=2))
