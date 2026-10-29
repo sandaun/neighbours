@@ -4,6 +4,9 @@ Scope: resident app, managed Supabase backend, and manual operation through the
 Supabase dashboard. No administrator website, push delivery, bookings, voting,
 or door integrations in this iteration. The community board and provider directory
 are operator-maintained, read-only resident modules. Preserve the existing visual system.
+Emergency contacts are a local demonstration in both data modes: four services,
+an active `112` phone link, and three disabled placeholder numbers. They do not
+use the provider directory or introduce backend writes.
 
 ## Runtime
 

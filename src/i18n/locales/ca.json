@@ -199,7 +199,29 @@
       },
       "emergencies": {
         "description": "Contactes prioritaris per actuar ràpid davant d'una urgència.",
-        "highlight": "Servei disponible"
+        "call": "Truca a {{name}}",
+        "callHint": "Obre l’aplicació de telèfon.",
+        "numberPending": "Número pendent de configurar.",
+        "callError": "No hem pogut obrir el telèfon. Pots marcar el {{number}} manualment.",
+        "sampleNotice": "Els telèfons amb X són exemples i encara no estan disponibles.",
+        "contacts": {
+          "locksmith": {
+            "title": "Fuster / serraller",
+            "description": "Portes, panys i claus."
+          },
+          "general": {
+            "title": "Urgències generals",
+            "description": "Bombers, policia i emergències mèdiques."
+          },
+          "elevator": {
+            "title": "Manteniment d’ascensor",
+            "description": "Avaries i assistència de l’ascensor."
+          },
+          "insurance": {
+            "title": "Assegurança de la finca",
+            "description": "Assistència i comunicació de sinistres."
+          }
+        }
       },
       "profile": {
         "description": "Consulta les teves dades i les unitats vinculades al compte.",

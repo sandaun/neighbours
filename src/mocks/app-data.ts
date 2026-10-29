@@ -339,42 +339,11 @@ const moreModules: Record<MoreModuleKey, MoreModuleData> = {
     key: 'emergencies',
     descriptionKey: 'more.modules.emergencies.description',
     highlight: {
-      labelKey: 'more.modules.emergencies.highlight',
-      value: '24 h',
+      labelKey: 'more.modules.sections.emergencyContacts',
+      value: '4',
       tone: 'danger',
     },
-    sections: [
-      {
-        id: 'contacts',
-        titleKey: 'more.modules.sections.emergencyContacts',
-        items: [
-          {
-            id: 'emergency-general',
-            title: 'Emergències',
-            subtitle: 'Bombers, policia i emergències mèdiques',
-            meta: '112',
-            badgeKey: 'more.modules.badges.call',
-            tone: 'danger',
-          },
-          {
-            id: 'emergency-elevator',
-            title: 'Ascensors Litoral',
-            subtitle: 'Persones atrapades o avaria urgent',
-            meta: '900 123 456',
-            badgeKey: 'more.modules.badges.alwaysOpen',
-            tone: 'danger',
-          },
-          {
-            id: 'emergency-water',
-            title: 'Avaria general d’aigua',
-            subtitle: 'Clau de pas i servei de guàrdia',
-            meta: '93 555 80 21',
-            badgeKey: 'more.modules.badges.onCall',
-            tone: 'danger',
-          },
-        ],
-      },
-    ],
+    sections: [],
   },
   profile: {
     key: 'profile',

@@ -199,7 +199,29 @@
       },
       "emergencies": {
         "description": "Contactos prioritarios para actuar rápidamente ante una urgencia.",
-        "highlight": "Servicio disponible"
+        "call": "Llamar a {{name}}",
+        "callHint": "Abre la aplicación de teléfono.",
+        "numberPending": "Número pendiente de configurar.",
+        "callError": "No hemos podido abrir el teléfono. Puedes marcar el {{number}} manualmente.",
+        "sampleNotice": "Los teléfonos con X son ejemplos y todavía no están disponibles.",
+        "contacts": {
+          "locksmith": {
+            "title": "Carpintero / cerrajero",
+            "description": "Puertas, cerraduras y llaves."
+          },
+          "general": {
+            "title": "Urgencias generales",
+            "description": "Bomberos, policía y emergencias médicas."
+          },
+          "elevator": {
+            "title": "Mantenimiento de ascensor",
+            "description": "Averías y asistencia del ascensor."
+          },
+          "insurance": {
+            "title": "Seguro de la finca",
+            "description": "Asistencia y comunicación de siniestros."
+          }
+        }
       },
       "profile": {
         "description": "Consulta tus datos y las unidades vinculadas a la cuenta.",

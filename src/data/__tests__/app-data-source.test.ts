@@ -23,7 +23,12 @@ describe('mock app data source', () => {
     );
 
     expect(modules.map((module) => module.key)).toEqual(MORE_MODULE_KEYS);
-    expect(modules.every((module) => module.sections.length > 0)).toBe(true);
+    // Emergency contacts have their own local screen in both data modes.
+    expect(
+      modules
+        .filter((module) => module.key !== 'emergencies')
+        .every((module) => module.sections.length > 0)
+    ).toBe(true);
   });
 
   test('recognizes valid More destination keys', () => {
