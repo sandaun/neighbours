@@ -7,7 +7,6 @@ import {
   Button,
   Card,
   ErrorState,
-  ListItem,
   LoadingState,
   CollapsibleScreen,
   SectionHeader,
@@ -57,14 +56,18 @@ export default function HomeScreen() {
                 {t('home.noEvents')}
               </Text>
             ) : null}
-            {resource.data.events.map((event) => (
-              <Card key={event.id}>
-                <ListItem
-                  title={event.title}
-                  subtitle={`${formatEventDate(event.startsAt, locale)} · ${event.location}`}
-                />
-              </Card>
-            ))}
+            <View className="gap-3">
+              {resource.data.events.map((event) => (
+                <Card key={event.id}>
+                  <Text className="font-body-semi text-[15px] leading-[22px] text-ink dark:text-ink-dark">
+                    {event.title}
+                  </Text>
+                  <Text className="font-body text-[12px] leading-[16px] text-ink-soft dark:text-ink-dark-soft">
+                    {`${formatEventDate(event.startsAt, locale)} · ${event.location}`}
+                  </Text>
+                </Card>
+              ))}
+            </View>
 
             <SectionHeader title={t('home.sections.board')} />
             {resource.data.boardPosts.length === 0 ? (
@@ -72,27 +75,29 @@ export default function HomeScreen() {
                 {t('home.noBoardPosts')}
               </Text>
             ) : null}
-            {resource.data.boardPosts.map((post) => (
-              <Card className="gap-3" key={post.id}>
-                <View className="flex-row items-center gap-3">
-                  <Avatar initials={post.authorInitials} />
-                  <View className="flex-1">
-                    <Text className="font-body-semi text-[14px] leading-[20px] text-ink dark:text-ink-dark">
-                      {post.author}
-                    </Text>
-                    <Text className="font-label text-[10px] uppercase leading-[14px] tracking-[1px] text-primary dark:text-primary-darkmode">
-                      {post.topic}
-                    </Text>
+            <View className="gap-3">
+              {resource.data.boardPosts.map((post) => (
+                <Card className="gap-3" key={post.id}>
+                  <View className="flex-row items-center gap-3">
+                    <Avatar initials={post.authorInitials} />
+                    <View className="flex-1">
+                      <Text className="font-body-semi text-[14px] leading-[20px] text-ink dark:text-ink-dark">
+                        {post.author}
+                      </Text>
+                      <Text className="font-label text-[10px] uppercase leading-[14px] tracking-[1px] text-primary dark:text-primary-darkmode">
+                        {post.topic}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-                <Text className="font-body text-[13px] leading-[19px] text-ink-soft dark:text-ink-dark-soft">
-                  {post.body}
-                </Text>
-                <Text className="font-body text-[11px] leading-[15px] text-ink-muted dark:text-ink-dark-soft">
-                  {t('home.boardComments', { count: post.commentsCount })}
-                </Text>
-              </Card>
-            ))}
+                  <Text className="font-body text-[13px] leading-[19px] text-ink-soft dark:text-ink-dark-soft">
+                    {post.body}
+                  </Text>
+                  <Text className="font-body text-[11px] leading-[15px] text-ink-muted dark:text-ink-dark-soft">
+                    {t('home.boardComments', { count: post.commentsCount })}
+                  </Text>
+                </Card>
+              ))}
+            </View>
           </>
         ) : null}
       </CollapsibleScreen>
