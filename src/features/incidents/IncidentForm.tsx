@@ -17,7 +17,6 @@ import {
 import type { CreateIncidentInput, IncidentCategory, IncidentDetail } from '@/data';
 import { Button } from '@/design-system/Button';
 import { Chip } from '@/design-system/Chip';
-import { ScreenHeader } from '@/design-system/ScreenHeader';
 import { useTheme } from '@/hooks/use-theme';
 
 const CATEGORIES: IncidentCategory[] = ['elevator', 'plumbing', 'electrical', 'other'];
@@ -138,12 +137,7 @@ export function IncidentForm({ onSubmit, onCreated }: IncidentFormProps) {
         keyboardShouldPersistTaps="handled"
         contentContainerClassName="pb-12"
       >
-        <ScreenHeader
-          embedded
-          overline={t('incidentFlow.formOverline')}
-          title={t('incidentFlow.formTitle')}
-        />
-        <View className="gap-5 px-5 pt-6">
+        <View className="gap-5 px-5 pt-5">
           <Text className="font-body text-[14px] leading-[20px] text-ink-soft dark:text-ink-dark-soft">
             {t('incidentFlow.formIntro')}
           </Text>

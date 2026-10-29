@@ -172,9 +172,7 @@
       "voting": {
         "description": "Participa en las decisiones de la comunidad y consulta sus resultados.",
         "highlight": "Votaciones activas",
-        "title": "Votación online",
-        "meeting": "Junta anual · {{date}}",
-        "sampleNotice": "Demostración: las acciones de esta pantalla no registran ningún voto ni delegación real.",
+        "meeting": "Junta anual",
         "question": "¿Aprueba el presupuesto de mantenimiento de extintores?",
         "choices": { "for": "A favor", "against": "En contra" },
         "voteFor": "Votar a favor",

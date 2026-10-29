@@ -12,17 +12,6 @@ jest.mock('@/hooks/use-theme', () => ({ useTheme: () => ({ muted: 'gray', primar
 jest.mock('expo-image-picker', () => ({ launchImageLibraryAsync: jest.fn() }));
 jest.mock('expo-image', () => ({ Image: 'Image' }));
 jest.mock('lucide-react-native', () => ({ Camera: () => null }));
-jest.mock('@/design-system/ScreenHeader', () => {
-  const { Text, View } = jest.requireActual('react-native');
-  return {
-    ScreenHeader: ({ overline, title }: { overline: string; title: string }) => (
-      <View>
-        <Text>{overline}</Text>
-        <Text accessibilityRole="header">{title}</Text>
-      </View>
-    ),
-  };
-});
 
 const incident: IncidentDetail = {
   id: 'new-incident',

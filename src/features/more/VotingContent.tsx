@@ -5,7 +5,6 @@ import { ScrollView, Text, View } from 'react-native';
 import { Avatar } from '@/design-system/Avatar';
 import { Button } from '@/design-system/Button';
 import { Card } from '@/design-system/Card';
-import { ScreenHeader } from '@/design-system/ScreenHeader';
 import { SectionHeader } from '@/design-system/SectionHeader';
 
 const MEETING_DATE = new Date(Date.UTC(2026, 10, 18, 12));
@@ -70,9 +69,9 @@ export function VotingContent() {
     year: 'numeric',
     timeZone: 'UTC',
   }).format(MEETING_DATE);
-  const shortMeetingDate = new Intl.DateTimeFormat(locale, {
+  const meetingDay = new Intl.DateTimeFormat(locale, {
     day: 'numeric',
-    month: 'short',
+    month: 'long',
     timeZone: 'UTC',
   }).format(MEETING_DATE);
   const formatCoefficient = (value: number) =>
@@ -86,15 +85,18 @@ export function VotingContent() {
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerClassName="pb-12">
-      <ScreenHeader
-        embedded
-        overline={t('more.modules.voting.meeting', { date: shortMeetingDate })}
-        title={t('more.modules.voting.title')}
-      />
       <View className="gap-5 px-5 pt-5">
-        <Text className="font-body text-[12px] leading-[18px] text-ink-soft dark:text-ink-dark-soft">
-          {t('more.modules.voting.sampleNotice')}
-        </Text>
+        <View className="gap-1">
+          <Text
+            accessibilityRole="header"
+            className="font-display text-[26px] leading-[32px] text-ink dark:text-ink-dark"
+          >
+            {t('more.modules.voting.meeting')}
+          </Text>
+          <Text className="font-body text-[14px] leading-[20px] text-ink-soft dark:text-ink-dark-soft">
+            {meetingDay}
+          </Text>
+        </View>
         <Card className="gap-5">
           <Text
             accessibilityRole="header"

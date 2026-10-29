@@ -10,10 +10,17 @@ import es from '@/i18n/locales/es.json';
 import MoreDestinationScreen from '../../../app/(tabs)/mes/[module]';
 
 let mockDemoMode = false;
-jest.mock('expo-router', () => ({
-  Stack: { Screen: () => null },
-  useLocalSearchParams: () => ({ module: 'voting' }),
-}));
+jest.mock('expo-router', () => {
+  const { Text } = jest.requireActual('react-native');
+  return {
+    Stack: {
+      Screen: ({ options }: { options: { title: string } }) => (
+        <Text accessibilityRole="header">{options.title}</Text>
+      ),
+    },
+    useLocalSearchParams: () => ({ module: 'voting' }),
+  };
+});
 jest.mock('expo-status-bar', () => ({ StatusBar: () => null }));
 jest.mock('@/lib/app-config', () => ({
   get isDemoMode() {
@@ -29,17 +36,6 @@ jest.mock('@/features/auth/ProfileContent', () => ({ ProfileContent: () => null 
 jest.mock('@/features/auth/LanguageContent', () => ({ LanguageContent: () => null }));
 jest.mock('../EmergenciesContent', () => ({ EmergenciesContent: () => null }));
 jest.mock('../MoreModuleContent', () => ({ MoreModuleContent: () => null }));
-jest.mock('@/design-system/ScreenHeader', () => {
-  const { Text, View } = jest.requireActual('react-native');
-  return {
-    ScreenHeader: ({ overline, title }: { overline: string; title: string }) => (
-      <View>
-        <Text>{overline}</Text>
-        <Text accessibilityRole="header">{title}</Text>
-      </View>
-    ),
-  };
-});
 jest.mock('@/design-system', () => {
   const { Text } = jest.requireActual('react-native');
   return { EmptyState: ({ subtitle }: { subtitle: string }) => <Text>{subtitle}</Text> };
@@ -74,9 +70,12 @@ test.each([
   async ({ language, demo, messages }) => {
     mockDemoMode = demo;
     await renderVoting(language);
-    expect(screen.getByRole('header', { name: messages.title })).toBeTruthy();
+    const destination =
+      language === 'ca' ? ca.more.destinations.voting : es.more.destinations.voting;
+    expect(screen.getByRole('header', { name: destination })).toBeTruthy();
+    expect(screen.getByRole('header', { name: messages.meeting })).toBeTruthy();
+    expect(screen.getByText(language === 'ca' ? '18 de novembre' : '18 de noviembre')).toBeTruthy();
     expect(screen.getByRole('header', { name: messages.question })).toBeTruthy();
-    expect(screen.getByText(messages.sampleNotice)).toBeTruthy();
     expect(screen.getByText(/18.*2026/)).toBeTruthy();
     expect(screen.getByRole('progressbar', { name: messages.choices.for })).toHaveProp(
       'accessibilityValue',
