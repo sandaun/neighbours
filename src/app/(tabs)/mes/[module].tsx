@@ -10,6 +10,7 @@ import { LanguageContent } from '@/features/auth/LanguageContent';
 import { ProfileContent } from '@/features/auth/ProfileContent';
 import { EmergenciesContent } from '@/features/more/EmergenciesContent';
 import { MoreModuleContent } from '@/features/more/MoreModuleContent';
+import { VotingContent } from '@/features/more/VotingContent';
 import { useDataResource } from '@/hooks/use-data-resource';
 import { isDemoMode } from '@/lib/app-config';
 
@@ -42,6 +43,7 @@ export default function MoreDestinationScreen() {
   else if (key === 'profile') content = <ProfileContent />;
   else if (key === 'language') content = <LanguageContent />;
   else if (key === 'emergencies') content = <EmergenciesContent />;
+  else if (key === 'voting') content = <VotingContent />;
   else if (!isDemoMode && !['calendar', 'board', 'directory'].includes(key))
     content = <EmptyState title={title} subtitle={t('empty.comingSoon')} />;
   else content = <ModuleResource key={key} moduleKey={key} />;

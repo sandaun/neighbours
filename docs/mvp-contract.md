@@ -1,7 +1,7 @@
 # MVP implementation contract
 
 Scope: resident app, managed Supabase backend, and manual operation through the
-Supabase dashboard. No administrator website, push delivery, bookings, voting,
+Supabase dashboard. No administrator website, push delivery, bookings, live voting,
 or door integrations in this iteration. The community board and provider directory
 are operator-maintained, read-only resident modules. Preserve the existing visual system.
 Emergency contacts are a local demonstration in both data modes: four services,
@@ -13,6 +13,11 @@ months of integer-cent amounts for 2026; annual values sum the same monthly
 amounts. This chart is available in both data modes, uses the existing SVG
 dependency, and does not derive community expenses from resident receipts or
 change live financial records.
+Voting is a labeled local interactive preview in both data modes. The poll starts
+at 17 votes for and 8 against, has a fixed example meeting date of November 18,
+2026, and allows one local vote or a delegation to one of two example residents.
+Voting and delegation are mutually exclusive. Choices live only in screen state
+and reset on remount; no votes, delegations, memberships, or backend records are written.
 
 ## Runtime
 

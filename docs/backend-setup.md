@@ -201,7 +201,10 @@ until expiry after membership revocation.
   displays four services; only `112` has an active phone action. Numbers shown
   with `X` are placeholders and their call buttons are disabled. No database
   tables, policies, or contact records are changed for this screen.
-- Voting, reservations, access, notification
+- Voting uses a local demonstration in both data modes, with seeded results,
+  one local vote or delegation, and a fixed example meeting date. Choices reset
+  when the screen remounts and never write to Supabase.
+- Reservations, access, notification
   preferences, and privacy actions return no invented live data. Their generic
   module destination is explicitly marked as coming soon.
 - For access removal, delete the membership. New database/storage requests fail

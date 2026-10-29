@@ -130,36 +130,7 @@ const moreModules: Record<MoreModuleKey, MoreModuleData> = {
     key: 'voting',
     descriptionKey: 'more.modules.voting.description',
     highlight: { labelKey: 'more.modules.voting.highlight', value: '1', tone: 'warning' },
-    sections: [
-      {
-        id: 'active',
-        titleKey: 'more.modules.sections.active',
-        items: [
-          {
-            id: 'vote-charger',
-            title: 'Instal·lació de carregadors elèctrics',
-            subtitle: 'Participació: 18 de 24 habitatges',
-            meta: 'Oberta fins diumenge · 23:59',
-            badgeKey: 'more.modules.badges.pendingVote',
-            tone: 'warning',
-          },
-        ],
-      },
-      {
-        id: 'recent',
-        titleKey: 'more.modules.sections.recent',
-        items: [
-          {
-            id: 'vote-garden',
-            title: 'Renovació del jardí interior',
-            subtitle: 'Aprovada amb un 72% dels coeficients',
-            meta: 'Tancada el 30 de juliol',
-            badgeKey: 'more.modules.badges.approved',
-            tone: 'success',
-          },
-        ],
-      },
-    ],
+    sections: [],
   },
   board: {
     key: 'board',

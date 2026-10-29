@@ -23,10 +23,10 @@ describe('mock app data source', () => {
     );
 
     expect(modules.map((module) => module.key)).toEqual(MORE_MODULE_KEYS);
-    // Emergency contacts have their own local screen in both data modes.
+    // Voting and emergency contacts have their own local screens in both data modes.
     expect(
       modules
-        .filter((module) => module.key !== 'emergencies')
+        .filter((module) => !['emergencies', 'voting'].includes(module.key))
         .every((module) => module.sections.length > 0)
     ).toBe(true);
   });
