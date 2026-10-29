@@ -158,7 +158,14 @@
       },
       "board": {
         "description": "Novetats, avisos i converses entre les persones de la comunitat.",
-        "highlight": "Publicacions"
+        "highlight": "Publicacions",
+        "filters": {
+          "all": "Tots",
+          "parking": "Parking",
+          "garden": "Jardí",
+          "activities": "Activitats"
+        },
+        "noPosts": "No hi ha publicacions per a aquest filtre."
       },
       "bookings": {
         "description": "Consulta la disponibilitat dels espais comuns abans de reservar.",

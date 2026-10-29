@@ -12,15 +12,23 @@ import {
   Vote,
   type LucideIcon,
 } from 'lucide-react-native';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, Text, View } from 'react-native';
 
 import type { ModuleItemTone, MoreModuleData, MoreModuleKey } from '@/data';
-import { Card, SectionHeader } from '@/design-system';
+import { Card, Chip, SectionHeader } from '@/design-system';
 import { useTheme } from '@/hooks/use-theme';
 import { formatShortDate } from '@/utils/formatters';
 
 import { CalendarModuleContent } from './CalendarModuleContent';
+
+const BOARD_FILTERS = [
+  { key: 'all', topic: null },
+  { key: 'parking', topic: 'Parking' },
+  { key: 'garden', topic: 'Jardí' },
+  { key: 'activities', topic: 'Activitats' },
+] as const;
 
 const MODULE_ICONS: Record<MoreModuleKey, LucideIcon> = {
   voting: Vote,
@@ -63,6 +71,17 @@ function ModuleBadge({ label, tone = 'default' }: { label: string; tone?: Module
 export function MoreModuleContent({ data }: { data: MoreModuleData }) {
   const { t, i18n } = useTranslation();
   const colors = useTheme();
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const isBoard = data.key === 'board';
+  const sections =
+    isBoard && selectedTopic !== null
+      ? data.sections
+          .map((section) => ({
+            ...section,
+            items: section.items.filter((item) => item.topic === selectedTopic),
+          }))
+          .filter((section) => section.items.length > 0)
+      : data.sections;
   const highlightTone = data.highlight.tone ?? 'default';
   const HighlightIcon = MODULE_ICONS[data.key];
   const highlightIconColor = highlightTone === 'danger' ? colors.danger : colors.primary;
@@ -76,6 +95,24 @@ export function MoreModuleContent({ data }: { data: MoreModuleData }) {
       <Text className="pt-5 font-body text-[14px] leading-[20px] text-ink-soft dark:text-ink-dark-soft">
         {t(data.descriptionKey)}
       </Text>
+
+      {isBoard ? (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerClassName="gap-2 py-4"
+        >
+          {BOARD_FILTERS.map((filter) => (
+            <Chip
+              key={filter.key}
+              selected={selectedTopic === filter.topic}
+              onPress={() => setSelectedTopic(filter.topic)}
+            >
+              {t(`more.modules.board.filters.${filter.key}`)}
+            </Chip>
+          ))}
+        </ScrollView>
+      ) : null}
 
       <Card className="mt-5 flex-row items-center justify-between gap-4" variant="elevated">
         <View className="flex-1">
@@ -93,7 +130,16 @@ export function MoreModuleContent({ data }: { data: MoreModuleData }) {
         </View>
       </Card>
 
-      {data.sections.map((section) => (
+      {isBoard && !sections.some((section) => section.items.length > 0) ? (
+        <Text
+          accessibilityLiveRegion="polite"
+          className="mt-6 font-body text-[14px] leading-[20px] text-ink-soft dark:text-ink-dark-soft"
+        >
+          {t('more.modules.board.noPosts')}
+        </Text>
+      ) : null}
+
+      {sections.map((section) => (
         <View key={section.id}>
           <SectionHeader title={t(section.titleKey)} />
           <View className="gap-3">

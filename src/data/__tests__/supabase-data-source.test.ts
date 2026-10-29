@@ -345,6 +345,7 @@ describe('Supabase resident data source', () => {
       id: home.boardPosts[0].id,
       title: 'Lift inspection',
       subtitle: home.boardPosts[0].body,
+      topic: 'Maintenance',
       publishedAt: '2026-10-20T09:00:00Z',
     });
     const postRequests = requests.filter((request) =>

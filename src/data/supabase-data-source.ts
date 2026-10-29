@@ -371,6 +371,7 @@ export function createSupabaseDataSource(
               items: posts.map((post) => ({
                 id: post.id,
                 title: post.title,
+                topic: post.topic,
                 subtitle: post.body,
                 meta: `${post.author_name} · ${post.topic}`,
                 publishedAt: post.published_at,

@@ -158,7 +158,14 @@
       },
       "board": {
         "description": "Novedades, avisos y conversaciones entre las personas de la comunidad.",
-        "highlight": "Publicaciones"
+        "highlight": "Publicaciones",
+        "filters": {
+          "all": "Todos",
+          "parking": "Parking",
+          "garden": "Jardín",
+          "activities": "Actividades"
+        },
+        "noPosts": "No hay publicaciones para este filtro."
       },
       "bookings": {
         "description": "Consulta la disponibilidad de los espacios comunes antes de reservar.",

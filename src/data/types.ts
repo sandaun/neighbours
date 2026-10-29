@@ -109,6 +109,7 @@ export type ModuleItemTone = 'default' | 'success' | 'warning' | 'danger';
 export type ModuleItem = {
   id: string;
   title: string;
+  topic?: string;
   subtitle?: string;
   meta?: string;
   startsAt?: string;

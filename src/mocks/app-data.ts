@@ -156,7 +156,7 @@ const moreModules: Record<MoreModuleKey, MoreModuleData> = {
   board: {
     key: 'board',
     descriptionKey: 'more.modules.board.description',
-    highlight: { labelKey: 'more.modules.board.highlight', value: '2' },
+    highlight: { labelKey: 'more.modules.board.highlight', value: '4' },
     sections: [
       {
         id: 'latest',
@@ -165,6 +165,7 @@ const moreModules: Record<MoreModuleKey, MoreModuleData> = {
           {
             id: parkingPost.id,
             title: 'Plaça de garatge en lloguer',
+            topic: parkingPost.topic,
             subtitle: parkingPost.body,
             meta: `${parkingPost.author} · ${parkingPost.topic}`,
             publishedAt: parkingPost.publishedAt,
@@ -172,9 +173,24 @@ const moreModules: Record<MoreModuleKey, MoreModuleData> = {
           {
             id: 'board-bicycle',
             title: 'Bicicleta trobada al garatge',
+            topic: 'Objectes perduts',
             subtitle: 'Jordi Roca · 2n 1a',
             meta: 'Publicat ahir · 2 comentaris',
             badgeKey: 'more.modules.badges.lostAndFound',
+          },
+          {
+            id: 'board-garden',
+            title: 'Cura del jardí interior',
+            topic: 'Jardí',
+            subtitle: 'Dissabte revisarem el reg i les plantes del pati.',
+            meta: 'Administració · Jardí',
+          },
+          {
+            id: 'board-activities',
+            title: 'Trobada de veïns',
+            topic: 'Activitats',
+            subtitle: 'Ens trobem a la sala comunitària per compartir propostes.',
+            meta: 'Sara Martí · Activitats',
           },
         ],
       },
