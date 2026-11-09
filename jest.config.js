@@ -1,5 +1,8 @@
 module.exports = {
   preset: 'jest-expo',
+  // The web backoffice in admin/ has its own Vitest suite.
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/admin/'],
+  modulePathIgnorePatterns: ['<rootDir>/admin/'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },

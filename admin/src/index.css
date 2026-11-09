@@ -1,0 +1,43 @@
+@import 'tailwindcss';
+
+/* Same tokens as the resident app (../tailwind.config.js and DESIGN_SYSTEM.md). */
+@theme {
+  --color-primary: #803ef6;
+  --color-primary-dark: #6714dd;
+  --color-primary-on: #ffffff;
+  --color-secondary: #50e3c2;
+  --color-secondary-txt: #006b58;
+  --color-tertiary: #ffba00;
+  --color-tertiary-txt: #6c4d00;
+  --color-surface: #ffffff;
+  --color-surface-hi: #f0e3ff;
+  --color-bg: #fafbfc;
+  --color-ink: #321461;
+  --color-ink-soft: #4a4455;
+  --color-ink-muted: #7b7487;
+  --color-outline: #ccc3d8;
+  --color-danger: #ba1a1a;
+  --color-danger-dark: #8f1414;
+  --color-danger-soft: #c13b3b;
+  --color-highlight: #d2bcff;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-label: 'Montserrat', system-ui, sans-serif;
+
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-pill: 34px;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  body {
+    @apply bg-bg font-body text-ink antialiased;
+  }
+}

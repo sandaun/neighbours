@@ -3,7 +3,8 @@ const expoConfig = require('eslint-config-expo/flat');
 const prettierConfig = require('eslint-config-prettier');
 
 module.exports = defineConfig([
-  globalIgnores(['.expo/*', 'coverage/*', 'dist/*']),
+  // The web backoffice in admin/ has its own ESLint config.
+  globalIgnores(['.expo/*', 'coverage/*', 'dist/*', 'admin/**']),
   expoConfig,
   prettierConfig,
 ]);

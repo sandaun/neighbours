@@ -3,7 +3,9 @@
 Resident community app built with Expo SDK 58, React Native, TypeScript, and the
 existing NativeWind design system. The MVP covers manually provisioned email/password access,
 incidents, private documents, receipts, a read-only calendar, profile, and language.
-Administration is manual through Supabase; there is no administrator website.
+Administration is manual through Supabase. A web backoffice for community
+administrators is in progress in [`admin/`](admin/README.md); it is a separate
+Vite + React project and currently lists the communities an admin account manages.
 
 ## Run
 

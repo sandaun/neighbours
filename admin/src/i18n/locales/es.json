@@ -1,0 +1,39 @@
+{
+  "brand": {
+    "name": "Neighbours",
+    "area": "Backoffice"
+  },
+  "auth": {
+    "title": "Gestiona tus comunidades",
+    "subtitle": "Entra con tu cuenta de administración.",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "nombre@ejemplo.es",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Introduce la contraseña",
+    "showPassword": "Mostrar la contraseña",
+    "hidePassword": "Ocultar la contraseña",
+    "signIn": "Entrar",
+    "signingIn": "Entrando…",
+    "signInError": "No hemos podido iniciar la sesión. Comprueba el correo, la contraseña y la conexión y vuelve a intentarlo.",
+    "signOut": "Cerrar sesión",
+    "loading": "Comprobando el acceso…",
+    "errorTitle": "No hemos podido comprobar el acceso",
+    "errorBody": "Comprueba la conexión y vuelve a intentarlo.",
+    "retry": "Volver a intentarlo",
+    "noAccessTitle": "Esta cuenta no tiene permisos de administración",
+    "noAccessBody": "El backoffice es solo para administradores de comunidad. Si crees que es un error, contacta con el equipo de Neighbours.",
+    "configErrorTitle": "El backoffice no está configurado",
+    "configErrorBody": "Faltan la dirección o la clave pública de Supabase. Revisa el archivo .env.local."
+  },
+  "language": {
+    "label": "Idioma",
+    "ca": "Catalán",
+    "es": "Castellano"
+  },
+  "communities": {
+    "title": "Tus comunidades",
+    "subtitle_one": "Administras {{count}} comunidad.",
+    "subtitle_other": "Administras {{count}} comunidades.",
+    "comingSoon": "Próximamente: incidencias, vecinos, documentos y recibos."
+  }
+}

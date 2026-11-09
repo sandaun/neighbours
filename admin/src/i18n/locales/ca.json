@@ -1,0 +1,39 @@
+{
+  "brand": {
+    "name": "Neighbours",
+    "area": "Backoffice"
+  },
+  "auth": {
+    "title": "Gestiona les teves comunitats",
+    "subtitle": "Entra amb el teu compte d’administració.",
+    "email": "Correu electrònic",
+    "emailPlaceholder": "nom@exemple.cat",
+    "password": "Contrasenya",
+    "passwordPlaceholder": "Introdueix la contrasenya",
+    "showPassword": "Mostra la contrasenya",
+    "hidePassword": "Amaga la contrasenya",
+    "signIn": "Entrar",
+    "signingIn": "Entrant…",
+    "signInError": "No hem pogut iniciar la sessió. Comprova el correu, la contrasenya i la connexió i torna-ho a provar.",
+    "signOut": "Tancar sessió",
+    "loading": "Comprovant l’accés…",
+    "errorTitle": "No hem pogut comprovar l’accés",
+    "errorBody": "Comprova la connexió i torna-ho a provar.",
+    "retry": "Tornar-ho a provar",
+    "noAccessTitle": "Aquest compte no té permisos d’administració",
+    "noAccessBody": "El backoffice només és per a administradors de comunitat. Si creus que és un error, contacta amb l’equip de Neighbours.",
+    "configErrorTitle": "El backoffice no està configurat",
+    "configErrorBody": "Falten l’adreça o la clau pública de Supabase. Revisa el fitxer .env.local."
+  },
+  "language": {
+    "label": "Idioma",
+    "ca": "Català",
+    "es": "Castellà"
+  },
+  "communities": {
+    "title": "Les teves comunitats",
+    "subtitle_one": "Administres {{count}} comunitat.",
+    "subtitle_other": "Administres {{count}} comunitats.",
+    "comingSoon": "Properament: incidències, veïns, documents i rebuts."
+  }
+}
