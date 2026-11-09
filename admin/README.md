@@ -39,7 +39,12 @@ update that membership in the Supabase dashboard.
   events, board posts (including scheduled publication), and provider contacts.
   Requires migration `20261109110000_admin_community_content`.
 
-Routes are client-side (`/communities/:id/incidents`, `/events`, `/board`, `/directory`). When hosting
+- **Documents and receipts** (per community): upload private PDFs (up to 20 MB)
+  for community documents and per-unit receipts, replace or remove them, and
+  open them through short-lived links. Requires migration
+  `20261109120000_admin_documents_receipts`.
+
+Routes are client-side (`/communities/:id/incidents`, `/events`, `/board`, `/directory`, `/documents`, `/receipts`). When hosting
 the built `dist/`, serve `index.html` for unknown paths so deep links work.
 
 ## Verify

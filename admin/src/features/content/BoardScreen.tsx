@@ -26,7 +26,7 @@ const postsApi: CrudApi<BoardPostRow, PostInput> = {
   list: listPosts,
   create: createPost,
   update: updatePost,
-  remove: deletePost,
+  remove: (client, row) => deletePost(client, row.id),
 };
 
 export function BoardScreen() {

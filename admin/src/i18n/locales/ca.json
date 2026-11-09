@@ -34,9 +34,9 @@
     "title": "Les teves comunitats",
     "subtitle_one": "Administres {{count}} comunitat.",
     "subtitle_other": "Administres {{count}} comunitats.",
-    "comingSoon": "Properament: veïns, documents i rebuts.",
+    "comingSoon": "Properament: gestió de veïns i pisos.",
     "open": "Obre {{name}}",
-    "manage": "Incidències, calendari, tauló i directori",
+    "manage": "Incidències, calendari, tauló, directori, documents i rebuts",
     "sections": "Seccions de la comunitat"
   },
   "incidents": {
@@ -165,5 +165,67 @@
       "hours": "Horari",
       "order": "Ordre"
     }
+  },
+  "documents": {
+    "title": "Documents",
+    "subtitle": "Actes, assegurances i normes que els veïns poden consultar i descarregar a l’app.",
+    "add": "Afegir document",
+    "edit": "Editar document",
+    "empty": "Encara no hi ha documents.",
+    "updatedAt": "Actualitzat el {{date}}",
+    "titlePlaceholder": "p. ex. Acta de la junta de novembre",
+    "categories": {
+      "minutes": "Actes",
+      "insurance": "Assegurances",
+      "rules": "Normes i estatuts"
+    },
+    "fields": {
+      "title": "Títol",
+      "category": "Categoria"
+    }
+  },
+  "receipts": {
+    "title": "Rebuts",
+    "subtitle": "Rebuts de cada pis. Cada veí només veu els del seu habitatge.",
+    "add": "Afegir rebut",
+    "edit": "Editar rebut",
+    "empty": "No hi ha rebuts.",
+    "noUnits": "Aquesta comunitat encara no té pisos donats d’alta. Afegeix-los per poder crear rebuts.",
+    "filterLabel": "Pis",
+    "allUnits": "Tots els pisos",
+    "noFile": "Sense PDF",
+    "invalidAmount": "Escriu un import en euros, p. ex. 125,50.",
+    "unitLocked": "El pis no es pot canviar. Si cal, esborra el rebut i crea’n un de nou.",
+    "conceptPlaceholder": "p. ex. Quota ordinària",
+    "periodPlaceholder": "p. ex. Novembre 2026",
+    "statuses": {
+      "paid": "Pagat",
+      "scheduled": "Programat"
+    },
+    "fields": {
+      "unit": "Pis",
+      "concept": "Concepte",
+      "amount": "Import (€)",
+      "issuedAt": "Data d’emissió",
+      "period": "Període",
+      "status": "Estat"
+    }
+  },
+  "files": {
+    "label": "PDF (opcional)",
+    "hint": "Només PDF, fins a 20 MB. És privat: només el veuran els veïns que hi tinguin accés.",
+    "replaceHint": "Tria un PDF nou només si vols substituir l’actual.",
+    "current": "PDF adjunt",
+    "open": "Veure PDF",
+    "openCurrent": "Veure el PDF actual",
+    "openNamed": "Veure el PDF de {{name}}",
+    "clear": "Treure",
+    "notPdf": "El fitxer ha de ser un PDF.",
+    "tooLarge": "El PDF no pot superar els 20 MB.",
+    "missing": "Sense PDF: els veïns veuen el document, però no el poden obrir.",
+    "openError": "No hem pogut obrir el PDF.",
+    "choose": "Triar PDF",
+    "chooseOther": "Triar un altre PDF",
+    "none": "Cap fitxer triat"
   }
 }

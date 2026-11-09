@@ -31,12 +31,14 @@ export function makeFakeClient({
   tables = {},
   rpc = { data: null, error: null },
   signedUrl = { data: { signedUrl: 'https://files.example/photo.jpg' }, error: null },
+  uploadResult = { data: { path: 'uploaded' }, error: null },
 }: {
   session?: Session | null;
   memberships?: QueryResult;
   tables?: Record<string, QueryResult>;
   rpc?: QueryResult;
   signedUrl?: QueryResult;
+  uploadResult?: QueryResult;
 } = {}) {
   const calls: Call[] = [];
   const results: Record<string, QueryResult> = { community_members: memberships, ...tables };
@@ -72,7 +74,15 @@ export function makeFakeClient({
     signOut: vi.fn(async () => ({ error: null as Error | null })),
   };
   const createSignedUrl = vi.fn(async () => signedUrl);
-  const storage = { from: vi.fn(() => ({ createSignedUrl })) };
+  const upload = vi.fn(async (path: string) => {
+    calls.push({ table: 'storage', method: 'upload', args: [path] });
+    return uploadResult;
+  });
+  const remove = vi.fn(async (paths: string[]) => {
+    calls.push({ table: 'storage', method: 'remove', args: [paths] });
+    return { data: [], error: null };
+  });
+  const storage = { from: vi.fn(() => ({ createSignedUrl, upload, remove })) };
   const client = {
     auth,
     storage,
@@ -89,6 +99,8 @@ export function makeFakeClient({
     rpc: client.rpc,
     storage,
     createSignedUrl,
+    upload,
+    remove,
     setTable(table: string, value: QueryResult) {
       results[table] = value;
     },

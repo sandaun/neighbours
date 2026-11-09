@@ -89,6 +89,8 @@ Private buckets: `incident-photos` and `community-documents`. Photo paths are
 `community_id/incident_id/filename`; document/receipt paths begin with
 `community_id/`. Document reads require a corresponding authorized row; receipt
 reads additionally require unit ownership (or community administrator role).
+Community admins also publish documents and receipts with their PDFs from the
+backoffice (migration `20261109120000`).
 All exposed tables and storage objects need explicit RLS and grants. Use foreign
 keys to prevent linking a unit from a different community. Membership checks must
 not recurse through their own RLS. No client status edits or administrative writes.

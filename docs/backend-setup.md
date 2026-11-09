@@ -327,3 +327,35 @@ PostgreSQL 16 stand-in. The new suite detected deliberate faults: resident inser
 movable communities, residents reading scheduled posts, cross-community deletes,
 cross-community edits (when both policy clauses are weakened), and anonymous
 writes. Hosted PostgREST and the advisors were not exercised.
+
+## Administrator documents and receipts (pending deployment)
+
+Migration `20261109120000_admin_documents_receipts.sql` lets community
+administrators publish `documents` and `receipts` with their private PDFs from the
+backoffice. It has not been applied to the hosted project.
+
+- Table writes follow the calendar pattern: column-limited grants and admin-only
+  policies. `id`, `community_id`, and a receipt's `unit_id` cannot be updated, and
+  the existing path checks keep each PDF in its community/unit namespace.
+- Storage: admins can upload into `<community_id>/documents/` and
+  `<community_id>/receipts/<unit_id>/` of their own communities (the unit must
+  belong to that community), read every file there (including uploads not yet
+  attached to a row), and delete them. `authenticated` receives DELETE on
+  `storage.objects`; no UPDATE/upsert policy exists, so files are never replaced in
+  place. Residents' Storage access is unchanged.
+- The backoffice uploads a PDF under a new UUID name before writing the row,
+  removes that upload if the row write fails, and removes the previous file after a
+  successful replacement or deletion. A leftover file is unreadable to residents.
+
+`supabase/tests/admin_documents_receipts.test.sql` covers table and Storage writes,
+namespace and unit checks, path traversal, an admin who is a resident elsewhere,
+incident photos, residents, admin role revocation, and anonymous access. One
+assertion in `resident_rls.test.sql` changed from "denied" to "no rows changed"
+for a resident document update, which holds before and after this migration.
+
+On 9 November 2026 all seven migrations and the five SQL suites passed on the
+local PostgreSQL 16 stand-in, and the new suite detected nine deliberate faults
+(resident inserts and uploads, receipt folders not tied to a unit, cross-community
+file reads/deletes, deletes outside the bucket, a movable receipt unit, and
+cross-community receipt edits and document deletes). Hosted Storage HTTP uploads,
+signed URLs, and the advisors were not exercised.

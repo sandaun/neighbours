@@ -34,9 +34,9 @@
     "title": "Tus comunidades",
     "subtitle_one": "Administras {{count}} comunidad.",
     "subtitle_other": "Administras {{count}} comunidades.",
-    "comingSoon": "Próximamente: vecinos, documentos y recibos.",
+    "comingSoon": "Próximamente: gestión de vecinos y pisos.",
     "open": "Abre {{name}}",
-    "manage": "Incidencias, calendario, tablón y directorio",
+    "manage": "Incidencias, calendario, tablón, directorio, documentos y recibos",
     "sections": "Secciones de la comunidad"
   },
   "incidents": {
@@ -165,5 +165,67 @@
       "hours": "Horario",
       "order": "Orden"
     }
+  },
+  "documents": {
+    "title": "Documentos",
+    "subtitle": "Actas, seguros y normas que los vecinos pueden consultar y descargar en la app.",
+    "add": "Añadir documento",
+    "edit": "Editar documento",
+    "empty": "Todavía no hay documentos.",
+    "updatedAt": "Actualizado el {{date}}",
+    "titlePlaceholder": "p. ej. Acta de la junta de noviembre",
+    "categories": {
+      "minutes": "Actas",
+      "insurance": "Seguros",
+      "rules": "Normas y estatutos"
+    },
+    "fields": {
+      "title": "Título",
+      "category": "Categoría"
+    }
+  },
+  "receipts": {
+    "title": "Recibos",
+    "subtitle": "Recibos de cada piso. Cada vecino solo ve los de su vivienda.",
+    "add": "Añadir recibo",
+    "edit": "Editar recibo",
+    "empty": "No hay recibos.",
+    "noUnits": "Esta comunidad todavía no tiene pisos dados de alta. Añádelos para poder crear recibos.",
+    "filterLabel": "Piso",
+    "allUnits": "Todos los pisos",
+    "noFile": "Sin PDF",
+    "invalidAmount": "Escribe un importe en euros, p. ej. 125,50.",
+    "unitLocked": "El piso no se puede cambiar. Si hace falta, elimina el recibo y crea uno nuevo.",
+    "conceptPlaceholder": "p. ej. Cuota ordinaria",
+    "periodPlaceholder": "p. ej. Noviembre 2026",
+    "statuses": {
+      "paid": "Pagado",
+      "scheduled": "Programado"
+    },
+    "fields": {
+      "unit": "Piso",
+      "concept": "Concepto",
+      "amount": "Importe (€)",
+      "issuedAt": "Fecha de emisión",
+      "period": "Periodo",
+      "status": "Estado"
+    }
+  },
+  "files": {
+    "label": "PDF (opcional)",
+    "hint": "Solo PDF, hasta 20 MB. Es privado: solo lo verán los vecinos que tengan acceso.",
+    "replaceHint": "Elige un PDF nuevo solo si quieres sustituir el actual.",
+    "current": "PDF adjunto",
+    "open": "Ver PDF",
+    "openCurrent": "Ver el PDF actual",
+    "openNamed": "Ver el PDF de {{name}}",
+    "clear": "Quitar",
+    "notPdf": "El archivo tiene que ser un PDF.",
+    "tooLarge": "El PDF no puede superar los 20 MB.",
+    "missing": "Sin PDF: los vecinos ven el documento, pero no lo pueden abrir.",
+    "openError": "No hemos podido abrir el PDF.",
+    "choose": "Elegir PDF",
+    "chooseOther": "Elegir otro PDF",
+    "none": "Ningún archivo elegido"
   }
 }

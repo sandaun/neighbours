@@ -11,6 +11,8 @@ const tabs = [
   { path: 'events', label: 'events.title' },
   { path: 'board', label: 'board.title' },
   { path: 'directory', label: 'directory.title' },
+  { path: 'documents', label: 'documents.title' },
+  { path: 'receipts', label: 'receipts.title' },
 ] as const;
 
 export function CommunityLayout() {

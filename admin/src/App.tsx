@@ -12,6 +12,8 @@ import { CommunityLayout } from './features/communities/CommunityLayout';
 import { BoardScreen } from './features/content/BoardScreen';
 import { DirectoryScreen } from './features/content/DirectoryScreen';
 import { EventsScreen } from './features/content/EventsScreen';
+import { DocumentsScreen } from './features/files/DocumentsScreen';
+import { ReceiptsScreen } from './features/files/ReceiptsScreen';
 import { IncidentDetailScreen } from './features/incidents/IncidentDetailScreen';
 import { IncidentsScreen } from './features/incidents/IncidentsScreen';
 
@@ -52,6 +54,8 @@ export function App() {
               <Route path="events" element={<EventsScreen />} />
               <Route path="board" element={<BoardScreen />} />
               <Route path="directory" element={<DirectoryScreen />} />
+              <Route path="documents" element={<DocumentsScreen />} />
+              <Route path="receipts" element={<ReceiptsScreen />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

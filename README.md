@@ -6,7 +6,7 @@ incidents, private documents, receipts, a read-only calendar, profile, and langu
 Administration is manual through Supabase. A web backoffice for community
 administrators is in progress in [`admin/`](admin/README.md); it is a separate
 Vite + React project where an admin account answers incidents and manages the
-calendar, board, and provider directory of its communities.
+calendar, board, provider directory, documents, and receipts of its communities.
 
 ## Run
 

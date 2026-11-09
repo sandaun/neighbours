@@ -26,6 +26,7 @@ type Props<Row extends { id: string }, Input> = {
   renderItem(row: Row): ReactNode;
   renderForm(props: FormProps<Row, Input>): ReactNode;
   sections?(rows: Row[]): Section<Row>[];
+  toolbar?: ReactNode;
 };
 
 type Notice = 'saved' | 'deleted' | null;
@@ -41,6 +42,7 @@ export function CrudScreen<Row extends { id: string }, Input>({
   renderItem,
   renderForm,
   sections,
+  toolbar,
 }: Props<Row, Input>) {
   const { t } = useTranslation();
   const { list, save, remove } = useCrud(api, communityId);
@@ -104,7 +106,7 @@ export function CrudScreen<Row extends { id: string }, Input>({
                 variant="danger"
                 disabled={remove.isPending}
                 onClick={() =>
-                  remove.mutate(row.id, {
+                  remove.mutate(row, {
                     onSuccess: () => {
                       setConfirming(null);
                       setNotice('deleted');
@@ -176,13 +178,15 @@ export function CrudScreen<Row extends { id: string }, Input>({
         </p>
       )}
 
+      {toolbar && <div className="flex flex-wrap items-center gap-3">{toolbar}</div>}
+
       {editing === 'new' && form(null)}
 
       {list.isPending ? (
         <LoadingState />
       ) : list.isError ? (
         <ErrorState onRetry={() => void list.refetch()} />
-      ) : rows.length === 0 ? (
+      ) : groups.every((group) => group.rows.length === 0) ? (
         <p className="rounded-lg border border-dashed border-outline px-4 py-8 text-center text-ink-soft">
           {emptyText}
         </p>

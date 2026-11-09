@@ -1,5 +1,6 @@
 import type { BoardPostRow, DirectoryContactRow, EventRow } from '@shared/database';
 
+import { one } from '@/lib/rows';
 import type { AdminClient } from '@/lib/supabase';
 
 // Editable fields only: `id` and `community_id` are fixed by the database grants.
@@ -16,15 +17,6 @@ export type ContactInput = Pick<
 export type { BoardPostRow, DirectoryContactRow, EventRow };
 
 const LIST_LIMIT = 500;
-
-// RLS skips rows the caller may not change instead of failing, so every write
-// returns the affected row and treats "no row" as an error.
-function one<T>(result: { data: T[] | null; error: Error | null }): T {
-  if (result.error) throw result.error;
-  const row = result.data?.[0];
-  if (!row) throw new Error('The row does not exist or cannot be changed.');
-  return row;
-}
 
 export async function listEvents(client: AdminClient, communityId: string) {
   const { data, error } = await client

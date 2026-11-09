@@ -21,7 +21,7 @@ const contactsApi: CrudApi<DirectoryContactRow, ContactInput> = {
   list: listContacts,
   create: createContact,
   update: updateContact,
-  remove: deleteContact,
+  remove: (client, row) => deleteContact(client, row.id),
 };
 
 const optional = (value: string) => value.trim() || null;

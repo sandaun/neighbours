@@ -24,7 +24,7 @@ const eventsApi: CrudApi<EventRow, EventInput> = {
   list: listEvents,
   create: createEvent,
   update: updateEvent,
-  remove: deleteEvent,
+  remove: (client, row) => deleteEvent(client, row.id),
 };
 
 export function EventsScreen() {
