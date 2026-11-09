@@ -1,5 +1,5 @@
 import { Pencil, Plus, Trash2 } from 'lucide-react';
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { type CrudApi, useCrud } from './use-crud';
@@ -8,6 +8,8 @@ import { ErrorState, LoadingState } from '@/components/QueryState';
 
 export type FormProps<Row, Input> = {
   initial: Row | null;
+  /** Prefilled values for a new row, e.g. the day picked in a calendar. */
+  defaults?: Partial<Row>;
   pending: boolean;
   onSubmit(input: Input): void;
   onCancel(): void;
@@ -27,6 +29,13 @@ type Props<Row extends { id: string }, Input> = {
   renderForm(props: FormProps<Row, Input>): ReactNode;
   sections?(rows: Row[]): Section<Row>[];
   toolbar?: ReactNode;
+  /** Replaces the default list, e.g. with a calendar. Forms then open above it. */
+  renderCollection?(rows: Row[], actions: CollectionActions<Row>): ReactNode;
+};
+
+export type CollectionActions<Row> = {
+  edit(id: string): void;
+  create(defaults?: Partial<Row>): void;
 };
 
 type Notice = 'saved' | 'deleted' | null;
@@ -43,16 +52,19 @@ export function CrudScreen<Row extends { id: string }, Input>({
   renderForm,
   sections,
   toolbar,
+  renderCollection,
 }: Props<Row, Input>) {
   const { t } = useTranslation();
   const { list, save, remove } = useCrud(api, communityId);
   const [editing, setEditing] = useState<string | null>(null);
   const [confirming, setConfirming] = useState<string | null>(null);
   const [notice, setNotice] = useState<Notice>(null);
+  const [defaults, setDefaults] = useState<Partial<Row> | undefined>(undefined);
   const rows = list.data ?? [];
 
-  function startEditing(id: string) {
+  function startEditing(id: string, nextDefaults?: Partial<Row>) {
     setEditing(id);
+    setDefaults(nextDefaults);
     setConfirming(null);
     setNotice(null);
     save.reset();
@@ -61,9 +73,10 @@ export function CrudScreen<Row extends { id: string }, Input>({
 
   function form(initial: Row | null) {
     return (
-      <div className="flex flex-col gap-3">
+      <FormSlot key={`${initial?.id ?? 'new'}:${JSON.stringify(defaults ?? {})}`}>
         {renderForm({
           initial,
+          defaults: initial ? undefined : defaults,
           pending: save.isPending,
           onCancel: () => setEditing(null),
           onSubmit: (input) =>
@@ -82,7 +95,7 @@ export function CrudScreen<Row extends { id: string }, Input>({
             {t('crud.saveError')}
           </p>
         )}
-      </div>
+      </FormSlot>
     );
   }
 
@@ -181,11 +194,20 @@ export function CrudScreen<Row extends { id: string }, Input>({
       {toolbar && <div className="flex flex-wrap items-center gap-3">{toolbar}</div>}
 
       {editing === 'new' && form(null)}
+      {renderCollection &&
+        editing &&
+        editing !== 'new' &&
+        form(rows.find((row) => row.id === editing) ?? null)}
 
       {list.isPending ? (
         <LoadingState />
       ) : list.isError ? (
         <ErrorState onRetry={() => void list.refetch()} />
+      ) : renderCollection ? (
+        renderCollection(rows, {
+          edit: (id) => startEditing(id),
+          create: (nextDefaults) => startEditing('new', nextDefaults),
+        })
       ) : groups.every((group) => group.rows.length === 0) ? (
         <p className="rounded-lg border border-dashed border-outline px-4 py-8 text-center text-ink-soft">
           {emptyText}
@@ -239,5 +261,18 @@ export function FormCard({
         </Button>
       </div>
     </form>
+  );
+}
+
+// Brings a form opened from further down the page (e.g. a calendar) into view.
+function FormSlot({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    ref.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, []);
+  return (
+    <div ref={ref} className="flex scroll-mt-24 flex-col gap-3">
+      {children}
+    </div>
   );
 }

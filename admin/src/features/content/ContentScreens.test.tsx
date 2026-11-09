@@ -79,7 +79,7 @@ test('switches between community sections with tabs', async () => {
   const nav = screen.getByRole('navigation', { name: 'Seccions de la comunitat' });
   expect(await screen.findByRole('heading', { name: 'Incidències' })).toBeInTheDocument();
   await userEvent.click(within(nav).getByRole('link', { name: 'Calendari' }));
-  expect(await screen.findByText('Junta ordinària')).toBeInTheDocument();
+  expect(await screen.findByRole('group', { name: 'Vista' })).toBeInTheDocument();
   await userEvent.click(within(nav).getByRole('link', { name: 'Tauló' }));
   expect(await screen.findByText('Tall d’aigua')).toBeInTheDocument();
   await userEvent.click(within(nav).getByRole('link', { name: 'Directori' }));
@@ -87,7 +87,7 @@ test('switches between community sections with tabs', async () => {
 });
 
 test('groups events into upcoming and past', async () => {
-  setup('/communities/c1/events');
+  setup('/communities/c1/events?view=list');
   const upcoming = await screen.findByRole('heading', { name: 'Propers' });
   const past = screen.getByRole('heading', { name: 'Passats' });
   expect(upcoming.parentElement).toHaveTextContent('Junta ordinària');
@@ -222,4 +222,94 @@ test('shows a retryable error when content fails to load', async () => {
   });
   expect(await screen.findByRole('alert')).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Afegir esdeveniment' })).toBeDisabled();
+});
+
+const december = [
+  {
+    id: 'm1',
+    community_id: 'c1',
+    title: 'Junta de desembre',
+    location: 'Sala comunitària',
+    starts_at: '2026-12-15T17:00:00Z',
+    ends_at: null,
+  },
+  {
+    id: 'm2',
+    community_id: 'c1',
+    title: 'Revisió extintors',
+    location: 'Garatge',
+    starts_at: '2026-12-15T08:00:00Z',
+    ends_at: null,
+  },
+];
+
+test('shows a month calendar with events on their days', async () => {
+  setup('/communities/c1/events?month=2026-12', {
+    community_events: { data: december, error: null },
+  });
+  expect(await screen.findByRole('heading', { name: /desembre del 2026/i })).toBeInTheDocument();
+  // Local time (Madrid): 09:00 and 18:00, sorted within the day.
+  const chips = screen.getAllByRole('button', { name: /^Editar / }).map((chip) => chip.textContent);
+  expect(chips).toEqual(['09:00 Revisió extintors', '18:00 Junta de desembre']);
+  expect(
+    screen.getByRole('button', { name: /dimarts, 15 de desembre: 2 esdeveniments/ })
+  ).toBeInTheDocument();
+
+  await userEvent.click(screen.getByRole('button', { name: 'Mes següent' }));
+  expect(screen.getByRole('heading', { name: /gener del 2027/i })).toBeInTheDocument();
+  expect(screen.queryByText(/Junta de desembre/)).not.toBeInTheDocument();
+  await userEvent.click(screen.getByRole('button', { name: 'Mes anterior' }));
+  expect(screen.getByRole('heading', { name: /desembre del 2026/i })).toBeInTheDocument();
+});
+
+test('opens the edit form from a calendar event', async () => {
+  setup('/communities/c1/events?month=2026-12', {
+    community_events: { data: december, error: null },
+  });
+  await userEvent.click(await screen.findByRole('button', { name: 'Editar Junta de desembre' }));
+  const form = screen.getByRole('form', { name: 'Editar esdeveniment' });
+  expect(within(form).getByLabelText('Títol')).toHaveValue('Junta de desembre');
+  expect(within(form).getByLabelText('Inici')).toHaveValue('2026-12-15T18:00');
+});
+
+test('creates an event on the chosen day, prefilled at 18:00', async () => {
+  const { fake } = setup('/communities/c1/events?month=2026-12', {
+    community_events: { data: december, error: null },
+  });
+  await userEvent.click(
+    await screen.findByRole('button', { name: 'Afegir esdeveniment el dijous, 24 de desembre' })
+  );
+  const form = screen.getByRole('form', { name: 'Afegir esdeveniment' });
+  expect(within(form).getByLabelText('Inici')).toHaveValue('2026-12-24T18:00');
+  await userEvent.type(within(form).getByLabelText('Títol'), 'Sopar de Nadal');
+  await userEvent.type(within(form).getByLabelText('Lloc'), 'Terrat');
+  await userEvent.click(within(form).getByRole('button', { name: 'Desar' }));
+  expect(fake.calls.find((call) => call.method === 'insert')?.args[0]).toMatchObject({
+    title: 'Sopar de Nadal',
+    starts_at: '2026-12-24T17:00:00.000Z',
+  });
+});
+
+test('shows the selected day with its events', async () => {
+  setup('/communities/c1/events?month=2026-12', {
+    community_events: { data: december, error: null },
+  });
+  await userEvent.click(
+    await screen.findByRole('button', { name: /dimarts, 15 de desembre: 2 esdeveniments/ })
+  );
+  const day = screen.getByRole('region', { name: 'dimarts, 15 de desembre' });
+  expect(within(day).getAllByRole('listitem')).toHaveLength(2);
+  await userEvent.click(within(day).getByRole('button', { name: 'Afegir esdeveniment' }));
+  expect(
+    within(screen.getByRole('form', { name: 'Afegir esdeveniment' })).getByLabelText('Inici')
+  ).toHaveValue('2026-12-15T18:00');
+});
+
+test('switches to the list view', async () => {
+  setup('/communities/c1/events?month=2026-12', {
+    community_events: { data: december, error: null },
+  });
+  await userEvent.click(await screen.findByRole('button', { name: 'Llista' }));
+  expect(screen.getByRole('button', { name: 'Llista' })).toHaveAttribute('aria-pressed', 'true');
+  expect(screen.getByRole('heading', { name: 'Propers' })).toBeInTheDocument();
 });

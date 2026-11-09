@@ -126,6 +126,21 @@
       "location": "Lloc",
       "startsAt": "Inici",
       "endsAt": "Final"
+    },
+    "views": {
+      "label": "Vista",
+      "month": "Mes",
+      "list": "Llista"
+    },
+    "calendar": {
+      "today": "Avui",
+      "previous": "Mes anterior",
+      "next": "Mes següent",
+      "more": "+{{count}} més",
+      "addOn": "Afegir esdeveniment el {{date}}",
+      "noEvents": "Cap esdeveniment aquest dia.",
+      "count_one": "{{count}} esdeveniment",
+      "count_other": "{{count}} esdeveniments"
     }
   },
   "board": {

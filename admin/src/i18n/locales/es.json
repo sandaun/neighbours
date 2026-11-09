@@ -126,6 +126,21 @@
       "location": "Lugar",
       "startsAt": "Inicio",
       "endsAt": "Fin"
+    },
+    "views": {
+      "label": "Vista",
+      "month": "Mes",
+      "list": "Lista"
+    },
+    "calendar": {
+      "today": "Hoy",
+      "previous": "Mes anterior",
+      "next": "Mes siguiente",
+      "more": "+{{count}} más",
+      "addOn": "Añadir evento el {{date}}",
+      "noEvents": "Ningún evento este día.",
+      "count_one": "{{count}} evento",
+      "count_other": "{{count}} eventos"
     }
   },
   "board": {

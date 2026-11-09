@@ -1,6 +1,7 @@
-import { CalendarDays, MapPin } from 'lucide-react';
+import { CalendarDays, List, MapPin } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router';
 
 import {
   createEvent,
@@ -12,6 +13,7 @@ import {
 } from './content-api';
 import { CrudScreen, FormCard, type FormProps } from './CrudScreen';
 import { useLengthMessages } from './messages';
+import { MonthCalendar, monthKey, parseMonth } from './MonthCalendar';
 import type { CrudApi } from './use-crud';
 import { lengthError, TextField } from '@/components/Field';
 import { useCommunity } from '@/features/communities/CommunityLayout';
@@ -32,6 +34,11 @@ export function EventsScreen() {
   const { communityId } = useCommunity();
   const language = i18n.resolvedLanguage;
   const now = useNow();
+  const [params, setParams] = useSearchParams();
+  const view = params.get('view') === 'list' ? 'list' : 'month';
+  const month = parseMonth(params.get('month'), new Date(now));
+  const update = (changes: Record<string, string>) =>
+    setParams((current) => ({ ...Object.fromEntries(current), ...changes }), { replace: true });
 
   return (
     <CrudScreen
@@ -42,6 +49,47 @@ export function EventsScreen() {
       addLabel={t('events.add')}
       emptyText={t('events.empty')}
       itemName={(row) => row.title}
+      toolbar={
+        <div
+          role="group"
+          aria-label={t('events.views.label')}
+          className="inline-flex rounded-pill border border-outline bg-surface p-1"
+        >
+          {(
+            [
+              ['month', CalendarDays, t('events.views.month')],
+              ['list', List, t('events.views.list')],
+            ] as const
+          ).map(([value, Icon, label]) => (
+            <button
+              key={value}
+              type="button"
+              aria-pressed={view === value}
+              onClick={() => update({ view: value })}
+              className={`inline-flex min-h-8 items-center gap-1.5 rounded-pill px-3 font-label text-xs transition-colors focus-visible:outline-2 focus-visible:outline-primary-dark ${
+                view === value ? 'bg-primary text-primary-on' : 'text-ink-soft hover:text-ink'
+              }`}
+            >
+              <Icon aria-hidden size={14} />
+              {label}
+            </button>
+          ))}
+        </div>
+      }
+      renderCollection={
+        view === 'month'
+          ? (rows, actions) => (
+              <MonthCalendar
+                events={rows}
+                month={month}
+                today={new Date(now)}
+                onMonthChange={(next) => update({ month: monthKey(next) })}
+                onEdit={actions.edit}
+                onCreate={(startsAt) => actions.create({ starts_at: startsAt })}
+              />
+            )
+          : undefined
+      }
       sections={(rows) => {
         const sorted = [...rows].sort((a, b) => a.starts_at.localeCompare(b.starts_at));
         const upcoming = sorted.filter((row) => Date.parse(row.ends_at ?? row.starts_at) >= now);
@@ -70,12 +118,18 @@ export function EventsScreen() {
   );
 }
 
-function EventForm({ initial, pending, onSubmit, onCancel }: FormProps<EventRow, EventInput>) {
+function EventForm({
+  initial,
+  defaults,
+  pending,
+  onSubmit,
+  onCancel,
+}: FormProps<EventRow, EventInput>) {
   const { t } = useTranslation();
   const messages = useLengthMessages();
   const [title, setTitle] = useState(initial?.title ?? '');
   const [location, setLocation] = useState(initial?.location ?? '');
-  const [startsAt, setStartsAt] = useState(toLocalInput(initial?.starts_at));
+  const [startsAt, setStartsAt] = useState(toLocalInput(initial?.starts_at ?? defaults?.starts_at));
   const [endsAt, setEndsAt] = useState(toLocalInput(initial?.ends_at));
   const [submitted, setSubmitted] = useState(false);
 
