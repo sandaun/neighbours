@@ -1,6 +1,6 @@
 # Backoffice — estat i pròxims passos
 
-**Actualitzat:** 9 de novembre de 2026 · **Branca:** `claude/modest-cannon-evfse4`
+**Actualitzat:** 9 de novembre de 2026 (aplicat i provat al Supabase real) · **Branca:** `claude/modest-cannon-evfse4`
 (encara no fusionada amb `feature/mvp` ni `main`).
 
 El backoffice és una web React a `admin/` perquè l'administrador de cada comunitat
@@ -20,9 +20,15 @@ els mateixos colors que l'app. L'app dels veïns no canvia.
 **Seguretat:** cada admin només pot tocar les seves comunitats; els veïns continuen
 només llegint. Ho garanteix la base de dades (RLS), no la web.
 
-**Provat:** 109 tests de l'app, 73 del backoffice i 5 jocs de tests SQL, sobre un
-Postgres local. A cada migració s'hi han introduït errors a propòsit i els tests els
-han detectat. **No s'ha provat contra el Supabase real.**
+**Provat:** 109 tests de l'app, 73 del backoffice i 5 jocs de tests SQL. A cada
+migració s'hi han introduït errors a propòsit i els tests els han detectat.
+
+**Aplicat al Supabase real (9 de novembre de 2026):** les 3 migracions estan
+aplicades, els 5 tests SQL passen al projecte real i el backoffice s'ha provat amb
+dades reals (incidències, calendari, tauló, directori, documents i rebuts amb PDF).
+Calia corregir dos tests que només fallaven al projecte real: comptaven dades que ja
+hi eren, i Supabase prohibeix esborrar fitxers amb SQL directe (`7d81da9`,
+`341d37d`). La seguretat no ha canviat.
 
 **Fitxers existents tocats:**
 - La configuració de l'app (`tsconfig`, Jest, ESLint, Metro), perquè ignori `admin/`.
@@ -32,35 +38,18 @@ han detectat. **No s'ha provat contra el Supabase real.**
   "dóna error" ha passat a "no canvia res". És la mateixa protecció per als veïns, i
   passa amb les migracions i sense.
 
-## 2. Què has de fer tu (ara)
+## 2. Com aplicar-ho o tornar-ho a fer
 
-Aplicar les 3 migracions i provar-ho. Detall pas a pas a
-[`guia-aplicar-backoffice.md`](guia-aplicar-backoffice.md).
+Fet. Per a un altre projecte o per repetir-ho, segueix
+[`guia-aplicar-backoffice.md`](guia-aplicar-backoffice.md). Per obrir el backoffice
+en local:
 
 ```sh
-git checkout claude/modest-cannon-evfse4 && git pull
-npx supabase@2.121.0 login
-npx supabase@2.121.0 link --project-ref ttrgbzqedarelznbdiye
-npx supabase@2.121.0 migration list        # només 3 noves (20261109…)
-npx supabase@2.121.0 db push --dry-run     # ha de llistar només aquestes 3
-npx supabase@2.121.0 db push
+cd admin && npm ci && cp .env.example .env.local   # després, posa-hi la clau sb_publishable_
+npm run dev                                        # http://localhost:5173
 ```
 
-Després:
-1. Al **SQL Editor**, executa els 5 fitxers de `supabase/tests/`. No ha de sortir
-   cap error.
-2. Fes-te `admin` d'una **comunitat de prova**. El SQL és a la guia.
-3. Obre el backoffice:
-
-   ```sh
-   cd admin && npm ci && cp .env.example .env.local   # posa-hi la clau sb_publishable_
-   npm run dev                                        # http://localhost:5173
-   ```
-
-4. Prova cada pestanya i comprova que el canvi surt a l'app.
-
-**Si cal desfer-ho:** `supabase/operations/rollback_admin_backoffice.sql`. Explicat a
-la guia.
+Per desfer-ho: `supabase/operations/rollback_admin_backoffice.sql` (explicat a la guia).
 
 ## 3. Què queda pendent
 
@@ -74,6 +63,7 @@ la guia.
 - **Quan fusionar** la branca a `feature/mvp`, un cop provat.
 
 **Feina que faré jo, per ordre:**
+0. **Retocs d'interfície:** desplegables propis (Radix Select) a tot el backoffice.
 1. **Veïns:** donar d'alta i de baixa, i assignar pis. Necessita una Edge Function
    que també s'haurà de desplegar.
 2. **Pisos i saldos:** editar el saldo i el proper càrrec que el veí veu a Comptes.
