@@ -137,7 +137,10 @@ reset role;
 do $$
 begin
   assert (select status = 'in-progress' from public.incidents where id = '30000000-0000-0000-0000-000000000021'), 'Final status is unchanged by rejected calls';
-  assert (select count(*) = 3 from public.incident_updates), 'Exactly the three accepted updates exist';
+  -- Only this test's incidents: a real project already has its own updates.
+  assert (select count(*) = 3 from public.incident_updates
+    where incident_id in ('30000000-0000-0000-0000-000000000021', '30000000-0000-0000-0000-000000000022')),
+    'Exactly the three accepted updates exist';
 end;
 $$;
 select 'ok 1 - admin incident updates: atomic status/update, author, isolation, residents, revocation, anonymous';

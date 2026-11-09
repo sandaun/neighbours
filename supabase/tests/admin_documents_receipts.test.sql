@@ -185,7 +185,7 @@ reset role;
 do $$
 begin
   assert (select count(*) = 3 from storage.objects where name like '10000000-0000-0000-0000-000000000072/%'), 'Community B files untouched (rules, receipt, orphan)';
-  assert (select count(*) = 1 from storage.objects where bucket_id = 'incident-photos'), 'Incident photo untouched';
+  assert (select count(*) = 1 from storage.objects where bucket_id = 'incident-photos' and name = '10000000-0000-0000-0000-000000000071/30000000-0000-0000-0000-000000000071/photo.jpg'), 'Incident photo untouched';
   assert (select count(*) = 1 from storage.objects where name like '%/documents/rules.pdf' and name like '10000000-0000-0000-0000-000000000071/%'), 'Community A file not renamed';
   assert (select title = 'Rules B' from public.documents where id = '70000000-0000-0000-0000-000000000072'), 'Community B document untouched';
   assert (select amount_cents = 300 from public.receipts where id = '80000000-0000-0000-0000-000000000072'), 'Community B receipt untouched';
