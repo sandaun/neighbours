@@ -1,11 +1,15 @@
 import { useTranslation } from 'react-i18next';
+import { Route, Routes } from 'react-router';
 
 import { AppShell } from './components/AppShell';
 import { Button } from './components/Button';
+import { NotFound } from './components/NotFound';
 import { StatusScreen } from './components/StatusScreen';
 import { useAuth } from './features/auth/AuthProvider';
 import { LoginScreen } from './features/auth/LoginScreen';
 import { CommunitiesScreen } from './features/communities/CommunitiesScreen';
+import { IncidentDetailScreen } from './features/incidents/IncidentDetailScreen';
+import { IncidentsScreen } from './features/incidents/IncidentsScreen';
 
 export function App() {
   const { t } = useTranslation();
@@ -35,7 +39,15 @@ export function App() {
     case 'ready':
       return (
         <AppShell>
-          <CommunitiesScreen />
+          <Routes>
+            <Route index element={<CommunitiesScreen />} />
+            <Route path="communities/:communityId/incidents" element={<IncidentsScreen />} />
+            <Route
+              path="communities/:communityId/incidents/:incidentId"
+              element={<IncidentDetailScreen />}
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </AppShell>
       );
   }

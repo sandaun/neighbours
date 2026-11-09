@@ -25,9 +25,18 @@ Sign-in uses Supabase email/password. Only accounts with at least one
 accounts see a "no administration permissions" screen. To grant access, add or
 update that membership in the Supabase dashboard.
 
-This first step is read-only: it lists the communities the account administers.
-Administrative writes still require new RLS policies (planned next) and remain
-denied by the database until then.
+## Features
+
+- **Communities**: the communities the account administers.
+- **Incidents** (per community): list with status filters, detail with the
+  description, the private photo (short-lived signed URL) and the update history,
+  and a reply form that can also change the status. Replies go through
+  `admin_add_incident_update` (migration `20261109100000_admin_incident_updates`);
+  until that migration is applied to the Supabase project, publishing a reply
+  fails with an error and nothing is written. Residents see the reply in the app.
+
+Routes are client-side (`/communities/:id/incidents/:incidentId`). When hosting
+the built `dist/`, serve `index.html` for unknown paths so deep links work.
 
 ## Verify
 

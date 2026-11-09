@@ -34,6 +34,63 @@
     "title": "Tus comunidades",
     "subtitle_one": "Administras {{count}} comunidad.",
     "subtitle_other": "Administras {{count}} comunidades.",
-    "comingSoon": "Próximamente: incidencias, vecinos, documentos y recibos."
+    "comingSoon": "Próximamente: vecinos, documentos y recibos.",
+    "open": "Abre las incidencias de {{name}}"
+  },
+  "incidents": {
+    "title": "Incidencias",
+    "back": "Todas las comunidades",
+    "backToList": "Volver a las incidencias",
+    "subtitle": "Revisa las incidencias comunicadas por los vecinos y respóndelas.",
+    "filters": {
+      "label": "Filtra por estado",
+      "all": "Todas"
+    },
+    "statuses": {
+      "received": "Recibida",
+      "in-progress": "En gestión",
+      "resolved": "Resuelta"
+    },
+    "categories": {
+      "plumbing": "Fontanería",
+      "electrical": "Electricidad",
+      "elevator": "Ascensor",
+      "other": "Otros"
+    },
+    "empty": "Todavía no hay incidencias en esta comunidad.",
+    "emptyFilter": "No hay incidencias con este estado.",
+    "loadErrorTitle": "No hemos podido cargar las incidencias",
+    "loadErrorBody": "Comprueba la conexión y vuelve a intentarlo.",
+    "retry": "Volver a intentarlo",
+    "loading": "Cargando…",
+    "notFoundTitle": "No encontramos esta incidencia",
+    "notFoundBody": "Puede que no exista o que no sea de una comunidad que administras.",
+    "reportedAt": "Comunicada el {{date}}",
+    "category": "Categoría",
+    "location": "Ubicación",
+    "description": "Descripción",
+    "photo": "Foto de la incidencia",
+    "photoUnavailable": "No hemos podido cargar la foto.",
+    "history": "Historial",
+    "noUpdates": "Todavía no hay ninguna respuesta. El vecino verá aquí lo que publiques.",
+    "statusChanged": "Estado: {{status}}",
+    "form": {
+      "title": "Responde al vecino",
+      "body": "Mensaje",
+      "bodyPlaceholder": "p. ej. Hemos avisado al electricista; vendrá el jueves por la mañana.",
+      "bodyHint": "El vecino verá este mensaje en la app con tu nombre.",
+      "status": "Estado de la incidencia",
+      "keepStatus": "Mantener ({{status}})",
+      "submit": "Publicar respuesta",
+      "submitting": "Publicando…",
+      "success": "Respuesta publicada. El vecino ya la puede ver en la app.",
+      "error": "No hemos podido publicar la respuesta. Comprueba la conexión y vuelve a intentarlo.",
+      "validation": "Escribe un mensaje de entre 1 y 4.000 caracteres."
+    }
+  },
+  "notFound": {
+    "title": "Esta página no existe",
+    "body": "Vuelve a la lista de comunidades.",
+    "back": "Ir al inicio"
   }
 }

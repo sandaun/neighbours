@@ -34,6 +34,63 @@
     "title": "Les teves comunitats",
     "subtitle_one": "Administres {{count}} comunitat.",
     "subtitle_other": "Administres {{count}} comunitats.",
-    "comingSoon": "Properament: incidències, veïns, documents i rebuts."
+    "comingSoon": "Properament: veïns, documents i rebuts.",
+    "open": "Obre les incidències de {{name}}"
+  },
+  "incidents": {
+    "title": "Incidències",
+    "back": "Totes les comunitats",
+    "backToList": "Tornar a les incidències",
+    "subtitle": "Revisa les incidències comunicades pels veïns i respon-les.",
+    "filters": {
+      "label": "Filtra per estat",
+      "all": "Totes"
+    },
+    "statuses": {
+      "received": "Rebuda",
+      "in-progress": "En gestió",
+      "resolved": "Resolta"
+    },
+    "categories": {
+      "plumbing": "Fontaneria",
+      "electrical": "Electricitat",
+      "elevator": "Ascensor",
+      "other": "Altres"
+    },
+    "empty": "Encara no hi ha incidències en aquesta comunitat.",
+    "emptyFilter": "No hi ha incidències amb aquest estat.",
+    "loadErrorTitle": "No hem pogut carregar les incidències",
+    "loadErrorBody": "Comprova la connexió i torna-ho a provar.",
+    "retry": "Tornar-ho a provar",
+    "loading": "Carregant…",
+    "notFoundTitle": "No trobem aquesta incidència",
+    "notFoundBody": "Pot ser que no existeixi o que no sigui d’una comunitat que administres.",
+    "reportedAt": "Comunicada el {{date}}",
+    "category": "Categoria",
+    "location": "Ubicació",
+    "description": "Descripció",
+    "photo": "Foto de la incidència",
+    "photoUnavailable": "No hem pogut carregar la foto.",
+    "history": "Historial",
+    "noUpdates": "Encara no hi ha cap resposta. El veí veurà aquí el que publiquis.",
+    "statusChanged": "Estat: {{status}}",
+    "form": {
+      "title": "Respon al veí",
+      "body": "Missatge",
+      "bodyPlaceholder": "p. ex. Hem avisat l’electricista; vindrà dijous al matí.",
+      "bodyHint": "El veí veurà aquest missatge a l’app amb el teu nom.",
+      "status": "Estat de la incidència",
+      "keepStatus": "Mantenir ({{status}})",
+      "submit": "Publicar resposta",
+      "submitting": "Publicant…",
+      "success": "Resposta publicada. El veí ja la pot veure a l’app.",
+      "error": "No hem pogut publicar la resposta. Comprova la connexió i torna-ho a provar.",
+      "validation": "Escriu un missatge d’entre 1 i 4.000 caràcters."
+    }
+  },
+  "notFound": {
+    "title": "Aquesta pàgina no existeix",
+    "body": "Torna a la llista de comunitats.",
+    "back": "Anar a l’inici"
   }
 }

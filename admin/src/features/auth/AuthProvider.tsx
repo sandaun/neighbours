@@ -8,6 +8,7 @@ export type AuthStatus =
   'config-error' | 'loading' | 'signed-out' | 'ready' | 'no-access' | 'error';
 
 export type AuthContextValue = {
+  client: AdminClient | null;
   status: AuthStatus;
   session: Session | null;
   communities: AdminCommunity[];
@@ -154,6 +155,7 @@ export function AuthProvider({
   return (
     <AuthContext.Provider
       value={{
+        client,
         status,
         session,
         communities: current?.communities ?? [],

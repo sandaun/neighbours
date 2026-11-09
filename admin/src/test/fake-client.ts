@@ -3,7 +3,8 @@ import { vi } from 'vitest';
 
 import type { AdminClient } from '@/lib/supabase';
 
-type QueryResult = { data: unknown; error: Error | null };
+export type QueryResult = { data: unknown; error: Error | null };
+type Call = { table: string; method: string; args: unknown[] };
 
 export function makeSession(userId = 'user-1', email = 'admin@example.com'): Session {
   return {
@@ -23,27 +24,67 @@ export function makeSession(userId = 'user-1', email = 'admin@example.com'): Ses
 }
 
 // Minimal chainable stand-in for the parts of supabase-js the backoffice uses.
+// Each table resolves to its configured result, whatever filters are chained.
 export function makeFakeClient({
   session = null,
   memberships = { data: [], error: null },
-}: { session?: Session | null; memberships?: QueryResult } = {}) {
-  const calls: { method: string; args: unknown[] }[] = [];
-  const query = {
-    select: (...args: unknown[]) => (calls.push({ method: 'select', args }), query),
-    eq: (...args: unknown[]) => (calls.push({ method: 'eq', args }), query),
-    order: (...args: unknown[]) => (calls.push({ method: 'order', args }), query),
-    then: (resolve: (value: QueryResult) => unknown, reject?: (error: unknown) => unknown) =>
-      Promise.resolve(memberships).then(resolve, reject),
+  tables = {},
+  rpc = { data: null, error: null },
+  signedUrl = { data: { signedUrl: 'https://files.example/photo.jpg' }, error: null },
+}: {
+  session?: Session | null;
+  memberships?: QueryResult;
+  tables?: Record<string, QueryResult>;
+  rpc?: QueryResult;
+  signedUrl?: QueryResult;
+} = {}) {
+  const calls: Call[] = [];
+  const results: Record<string, QueryResult> = { community_members: memberships, ...tables };
+
+  const builder = (table: string) => {
+    const result = () => results[table] ?? { data: [], error: null };
+    const query: Record<string, unknown> = {};
+    for (const method of ['select', 'eq', 'order', 'limit']) {
+      query[method] = (...args: unknown[]) => {
+        calls.push({ table, method, args });
+        return query;
+      };
+    }
+    query.maybeSingle = () => {
+      calls.push({ table, method: 'maybeSingle', args: [] });
+      return Promise.resolve(result());
+    };
+    query.then = (resolve: (value: QueryResult) => unknown, reject?: (error: unknown) => unknown) =>
+      Promise.resolve(result()).then(resolve, reject);
+    return query;
   };
+
   const auth = {
     onAuthStateChange: vi.fn(() => ({ data: { subscription: { unsubscribe: vi.fn() } } })),
     getSession: vi.fn(async () => ({ data: { session }, error: null })),
     signInWithPassword: vi.fn(async () => ({ data: {}, error: null as Error | null })),
     signOut: vi.fn(async () => ({ error: null as Error | null })),
   };
+  const createSignedUrl = vi.fn(async () => signedUrl);
+  const storage = { from: vi.fn(() => ({ createSignedUrl })) };
   const client = {
     auth,
-    from: vi.fn((table: string) => (calls.push({ method: 'from', args: [table] }), query)),
+    storage,
+    from: vi.fn((table: string) => {
+      calls.push({ table, method: 'from', args: [table] });
+      return builder(table);
+    }),
+    rpc: vi.fn(async () => rpc),
   };
-  return { client: client as unknown as AdminClient, auth, calls };
+  return {
+    client: client as unknown as AdminClient,
+    auth,
+    calls,
+    rpc: client.rpc,
+    storage,
+    createSignedUrl,
+    setTable(table: string, value: QueryResult) {
+      results[table] = value;
+    },
+  };
 }

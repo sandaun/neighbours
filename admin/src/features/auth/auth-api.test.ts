@@ -18,9 +18,21 @@ test('loads only admin memberships for the user, sorted by community name', asyn
     { communityId: 'c1', communityName: 'Gran Via 12', displayName: 'Anna' },
     { communityId: 'c2', communityName: 'Rambla 8', displayName: 'Anna' },
   ]);
-  expect(calls).toContainEqual({ method: 'from', args: ['community_members'] });
-  expect(calls).toContainEqual({ method: 'eq', args: ['user_id', 'user-1'] });
-  expect(calls).toContainEqual({ method: 'eq', args: ['role', 'admin'] });
+  expect(calls).toContainEqual({
+    table: 'community_members',
+    method: 'from',
+    args: ['community_members'],
+  });
+  expect(calls).toContainEqual({
+    table: 'community_members',
+    method: 'eq',
+    args: ['user_id', 'user-1'],
+  });
+  expect(calls).toContainEqual({
+    table: 'community_members',
+    method: 'eq',
+    args: ['role', 'admin'],
+  });
 });
 
 test('propagates query errors', async () => {

@@ -1,5 +1,6 @@
-import { Building2 } from 'lucide-react';
+import { Building2, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
 
 import { useAuth } from '@/features/auth/AuthProvider';
 
@@ -17,16 +18,23 @@ export function CommunitiesScreen() {
       </div>
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {communities.map((community) => (
-          <li
-            key={community.communityId}
-            className="flex items-center gap-3 rounded-lg border border-outline/60 bg-surface p-5 shadow-sm"
-          >
-            <span className="flex size-11 shrink-0 items-center justify-center rounded-md bg-surface-hi text-primary">
-              <Building2 aria-hidden size={22} />
-            </span>
-            <span className="font-body text-base font-semibold text-ink">
-              {community.communityName}
-            </span>
+          <li key={community.communityId}>
+            <Link
+              to={`/communities/${community.communityId}/incidents`}
+              aria-label={t('communities.open', { name: community.communityName })}
+              className="flex items-center gap-3 rounded-lg border border-outline/60 bg-surface p-5 shadow-sm transition-colors hover:border-primary/60 hover:bg-surface-hi/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-dark"
+            >
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-md bg-surface-hi text-primary">
+                <Building2 aria-hidden size={22} />
+              </span>
+              <span className="flex min-w-0 flex-1 flex-col">
+                <span className="truncate font-body text-base font-semibold text-ink">
+                  {community.communityName}
+                </span>
+                <span className="font-label text-xs text-ink-soft">{t('incidents.title')}</span>
+              </span>
+              <ChevronRight aria-hidden size={18} className="shrink-0 text-ink-muted" />
+            </Link>
           </li>
         ))}
       </ul>
