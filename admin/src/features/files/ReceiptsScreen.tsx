@@ -15,6 +15,7 @@ import {
 } from './files-api';
 import { ErrorState, LoadingState } from '@/components/QueryState';
 import { lengthError, TextField } from '@/components/Field';
+import { Select } from '@/components/Select';
 import { CrudScreen, FormCard, type FormProps } from '@/features/content/CrudScreen';
 import { useLengthMessages } from '@/features/content/messages';
 import type { CrudApi } from '@/features/content/use-crud';
@@ -31,9 +32,6 @@ const receiptsApi: CrudApi<ReceiptRow, ReceiptInput> = {
   update: (client, id, input, communityId) => updateReceipt(client, communityId, id, input),
   remove: deleteReceipt,
 };
-
-const selectClass =
-  'min-h-11 rounded-lg border border-outline bg-surface px-3 text-ink focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30';
 
 const formatDay = (value: string, language: string | undefined) =>
   new Intl.DateTimeFormat(language === 'es' ? 'es-ES' : 'ca-ES', {
@@ -87,19 +85,18 @@ function ReceiptsList({ communityId, units }: { communityId: string; units: Unit
         toolbar={
           <div className="flex items-center gap-2 text-sm text-ink-soft">
             <label htmlFor={filterId}>{t('receipts.filterLabel')}</label>
-            <select
-              id={filterId}
-              value={unitFilter}
-              onChange={(event) => setUnitFilter(event.target.value)}
-              className={selectClass}
-            >
-              <option value="">{t('receipts.allUnits')}</option>
-              {units.map((unit) => (
-                <option key={unit.id} value={unit.id}>
-                  {unit.label}
-                </option>
-              ))}
-            </select>
+            <div className="w-48">
+              <Select
+                id={filterId}
+                size="sm"
+                value={unitFilter}
+                onValueChange={setUnitFilter}
+                options={[
+                  { value: '', label: t('receipts.allUnits') },
+                  ...units.map((unit) => ({ value: unit.id, label: unit.label })),
+                ]}
+              />
+            </div>
           </div>
         }
         renderItem={(row) => (
@@ -194,20 +191,14 @@ function ReceiptForm({
           <label htmlFor={unitId} className="font-label text-xs text-ink-soft">
             {t('receipts.fields.unit')}
           </label>
-          <select
+          <Select
             id={unitId}
             value={unit}
-            onChange={(event) => setUnit(event.target.value)}
+            onValueChange={setUnit}
             // A receipt stays with its unit: the PDF lives in that unit's folder.
             disabled={pending || Boolean(initial)}
-            className={selectClass}
-          >
-            {units.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+            options={units.map((option) => ({ value: option.id, label: option.label }))}
+          />
           {initial && <p className="text-xs text-ink-muted">{t('receipts.unitLocked')}</p>}
         </div>
         <TextField
@@ -249,19 +240,16 @@ function ReceiptForm({
           <label htmlFor={statusId} className="font-label text-xs text-ink-soft">
             {t('receipts.fields.status')}
           </label>
-          <select
+          <Select
             id={statusId}
             value={status}
-            onChange={(event) => setStatus(event.target.value as ReceiptRow['status'])}
+            onValueChange={(value) => setStatus(value as ReceiptRow['status'])}
             disabled={pending}
-            className={selectClass}
-          >
-            {statuses.map((value) => (
-              <option key={value} value={value}>
-                {t(`receipts.statuses.${value}`)}
-              </option>
-            ))}
-          </select>
+            options={statuses.map((value) => ({
+              value,
+              label: t(`receipts.statuses.${value}`),
+            }))}
+          />
         </div>
       </div>
       <FileField

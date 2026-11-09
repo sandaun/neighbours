@@ -5,6 +5,7 @@ import { expect, test } from 'vitest';
 import { App } from '@/App';
 import { makeFakeClient, makeSession } from '@/test/fake-client';
 import { makeAuth, renderWithAuth } from '@/test/render-with-auth';
+import { chooseOption } from '@/test/select';
 
 const communities = [
   { communityId: 'c1', communityName: 'Gran Via 112', displayName: 'Anna Puig' },
@@ -131,13 +132,16 @@ test('publishes a reply with a status change and refreshes the incident', async 
     },
   });
   await screen.findByRole('heading', { name: 'Respon al veí' });
-  const status = screen.getByLabelText('Estat de la incidència');
+  const status = screen.getByRole('combobox', { name: 'Estat de la incidència' });
   // The current status is the default and is not offered twice.
-  expect(
-    within(status)
-      .getAllByRole('option')
-      .map((option) => option.textContent)
-  ).toEqual(['Mantenir (Rebuda)', 'En gestió', 'Resolta']);
+  expect(status).toHaveTextContent('Mantenir (Rebuda)');
+  await userEvent.click(status);
+  expect(screen.getAllByRole('option').map((option) => option.textContent)).toEqual([
+    'Mantenir (Rebuda)',
+    'En gestió',
+    'Resolta',
+  ]);
+  await userEvent.keyboard('{Escape}');
 
   // The database now returns the updated incident and its history.
   fake.setTable('incidents', { data: { ...detailRow, status: 'in-progress' }, error: null });
@@ -155,7 +159,7 @@ test('publishes a reply with a status change and refreshes the incident', async 
   });
 
   await userEvent.type(screen.getByLabelText('Missatge'), '  Hem avisat l’electricista.  ');
-  await userEvent.selectOptions(status, 'in-progress');
+  await chooseOption(status, 'En gestió');
   await userEvent.click(screen.getByRole('button', { name: 'Publicar resposta' }));
 
   expect(fake.rpc).toHaveBeenCalledWith('admin_add_incident_update', {

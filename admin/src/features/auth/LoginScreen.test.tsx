@@ -4,6 +4,7 @@ import { expect, test } from 'vitest';
 
 import { LoginScreen } from './LoginScreen';
 import { makeAuth, renderWithAuth } from '@/test/render-with-auth';
+import { chooseOption } from '@/test/select';
 
 test('enables sign-in only with a valid email and a password', async () => {
   renderWithAuth(<LoginScreen />);
@@ -47,6 +48,6 @@ test('toggles password visibility', async () => {
 
 test('switches the interface to Spanish', async () => {
   renderWithAuth(<LoginScreen />);
-  await userEvent.selectOptions(screen.getByLabelText('Idioma'), 'es');
+  await chooseOption(screen.getByRole('combobox', { name: 'Idioma' }), 'Castellà');
   expect(screen.getByRole('heading', { name: 'Gestiona tus comunidades' })).toBeInTheDocument();
 });

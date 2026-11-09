@@ -9,6 +9,7 @@ import { StatusBadge } from './StatusBadge';
 import { Button } from '@/components/Button';
 import { NotFound } from '@/components/NotFound';
 import { ErrorState, LoadingState } from '@/components/QueryState';
+import { Select } from '@/components/Select';
 import { useCommunity } from '@/features/communities/CommunityLayout';
 import { formatDateTime } from '@/lib/format';
 
@@ -205,26 +206,23 @@ function ReplyForm({ communityId, incident }: { communityId: string; incident: I
         <label htmlFor={statusId} className="font-label text-xs text-ink-soft">
           {t('incidents.form.status')}
         </label>
-        <select
+        <Select
           id={statusId}
           value={status}
-          onChange={(event) => setStatus(event.target.value as IncidentStatus | '')}
+          onValueChange={(value) => setStatus(value as IncidentStatus | '')}
           disabled={mutation.isPending}
-          className="min-h-11 rounded-lg border border-outline bg-surface px-3 text-ink focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
-        >
-          <option value="">
-            {t('incidents.form.keepStatus', {
-              status: t(`incidents.statuses.${incident.status}`),
-            })}
-          </option>
-          {incidentStatuses
-            .filter((value) => value !== incident.status)
-            .map((value) => (
-              <option key={value} value={value}>
-                {t(`incidents.statuses.${value}`)}
-              </option>
-            ))}
-        </select>
+          options={[
+            {
+              value: '',
+              label: t('incidents.form.keepStatus', {
+                status: t(`incidents.statuses.${incident.status}`),
+              }),
+            },
+            ...incidentStatuses
+              .filter((value) => value !== incident.status)
+              .map((value) => ({ value, label: t(`incidents.statuses.${value}`) })),
+          ]}
+        />
       </div>
       {mutation.isError && (
         <p role="alert" className="rounded-md bg-danger/10 px-3 py-2 text-sm text-danger">

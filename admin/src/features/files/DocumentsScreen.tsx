@@ -11,6 +11,7 @@ import {
   updateDocument,
 } from './files-api';
 import { lengthError, TextField } from '@/components/Field';
+import { Select } from '@/components/Select';
 import { CrudScreen, FormCard, type FormProps } from '@/features/content/CrudScreen';
 import { useLengthMessages } from '@/features/content/messages';
 import type { CrudApi } from '@/features/content/use-crud';
@@ -119,19 +120,16 @@ function DocumentForm({
           <label htmlFor={categoryId} className="font-label text-xs text-ink-soft">
             {t('documents.fields.category')}
           </label>
-          <select
+          <Select
             id={categoryId}
             value={category}
-            onChange={(event) => setCategory(event.target.value as DocumentRow['category'])}
+            onValueChange={(value) => setCategory(value as DocumentRow['category'])}
             disabled={pending}
-            className="min-h-11 rounded-lg border border-outline bg-surface px-3 text-ink focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
-          >
-            {categories.map((value) => (
-              <option key={value} value={value}>
-                {t(`documents.categories.${value}`)}
-              </option>
-            ))}
-          </select>
+            options={categories.map((value) => ({
+              value,
+              label: t(`documents.categories.${value}`),
+            }))}
+          />
         </div>
       </div>
       <FileField

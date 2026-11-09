@@ -5,6 +5,7 @@ import { expect, test, vi } from 'vitest';
 import { App } from '@/App';
 import { makeFakeClient, makeSession, type QueryResult } from '@/test/fake-client';
 import { makeAuth, renderWithAuth } from '@/test/render-with-auth';
+import { chooseOption } from '@/test/select';
 
 const communities = [
   { communityId: 'c1', communityName: 'Gran Via 112', displayName: 'Anna Puig' },
@@ -91,7 +92,7 @@ test('publishes a document with its PDF', async () => {
   await userEvent.click(await screen.findByRole('button', { name: 'Afegir document' }));
   const form = screen.getByRole('form', { name: 'Afegir document' });
   await userEvent.type(within(form).getByLabelText('Títol'), 'Acta de novembre');
-  await userEvent.selectOptions(within(form).getByLabelText('Categoria'), 'minutes');
+  await chooseOption(within(form).getByRole('combobox', { name: 'Categoria' }), 'Actes');
   await userEvent.upload(within(form).getByLabelText('PDF (opcional)'), pdf());
   expect(within(form).getByText(/acta\.pdf ·/)).toBeInTheDocument();
   await userEvent.click(within(form).getByRole('button', { name: 'Desar' }));
@@ -147,7 +148,7 @@ test('shows receipts with unit, amount, status, and filters by unit', async () =
   expect(screen.getByText('Programat')).toBeInTheDocument();
   expect(screen.getByText('Pagat')).toBeInTheDocument();
 
-  await userEvent.selectOptions(screen.getByLabelText('Pis'), 'u2');
+  await chooseOption(screen.getByRole('combobox', { name: 'Pis' }), '2n 2a');
   expect(screen.queryByText('Quota ordinària')).not.toBeInTheDocument();
   expect(screen.getByText('Derrama ascensor')).toBeInTheDocument();
 });
@@ -156,7 +157,7 @@ test('creates a receipt converting euros to cents', async () => {
   const { fake } = setup('/communities/c1/receipts');
   await userEvent.click(await screen.findByRole('button', { name: 'Afegir rebut' }));
   const form = screen.getByRole('form', { name: 'Afegir rebut' });
-  await userEvent.selectOptions(within(form).getByLabelText('Pis'), 'u2');
+  await chooseOption(within(form).getByRole('combobox', { name: 'Pis' }), '2n 2a');
   await userEvent.type(within(form).getByLabelText('Concepte'), 'Quota ordinària');
   await userEvent.type(within(form).getByLabelText('Import (€)'), '12,5');
   await userEvent.type(within(form).getByLabelText('Data d’emissió'), '2026-12-01');
