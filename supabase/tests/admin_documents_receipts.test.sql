@@ -42,6 +42,12 @@ begin
 end;
 $$;
 
+-- Hosted Storage blocks direct SQL deletes on its tables unless
+-- storage.allow_delete_query is set. The Storage API sets it on every request and
+-- then deletes as the caller, so RLS still decides. Emulate the API here so the
+-- delete policies are what this test checks.
+select set_config('storage.allow_delete_query', 'true', true);
+
 -- Community A: 71, units A1 = 81, A2 = 82. Community B: 72, unit B1 = 83.
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-000000000071', 'files-admin-a@example.invalid'),
