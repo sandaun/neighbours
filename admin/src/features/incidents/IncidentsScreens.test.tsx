@@ -52,7 +52,7 @@ function setup(route: string, options: Parameters<typeof makeFakeClient>[0] = {}
 
 test('opens a community’s incidents from the community list', async () => {
   setup('/');
-  await userEvent.click(screen.getByRole('link', { name: 'Obre les incidències de Gran Via 112' }));
+  await userEvent.click(screen.getByRole('link', { name: 'Obre Gran Via 112' }));
   expect(await screen.findByRole('heading', { name: 'Incidències' })).toBeInTheDocument();
   expect(await screen.findByText('Llum de l’entrada espatllada')).toBeInTheDocument();
   expect(screen.getByText('Fuita al garatge')).toBeInTheDocument();

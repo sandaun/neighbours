@@ -30,11 +30,16 @@ begin
   assert (select count(*) = 1 and bool_and(storage_path is null) from public.documents), 'Unattached metadata is readable';
   assert (select count(*) = 1 and min(title) = 'Published A' from public.board_posts), 'Only published posts in own community';
   assert (select count(*) = 1 and min(name) = 'Contact A' from public.directory_contacts), 'Only own community contacts';
-  assert not has_table_privilege('authenticated','public.board_posts','INSERT,UPDATE,DELETE'), 'Posts are client read only';
-  assert not has_table_privilege('authenticated','public.directory_contacts','INSERT,UPDATE,DELETE'), 'Contacts are client read only';
+  -- Residents cannot write: either no grant (read-only schema) or, once admins
+  -- write through RLS policies (20261109110000), no matching policy and no rows.
   begin
     update public.board_posts set body = 'Forged notice';
-    raise exception 'Client post writes must fail';
+    assert not found, 'Resident post writes affect no rows';
+  exception when insufficient_privilege then null;
+  end;
+  begin
+    delete from public.directory_contacts;
+    assert not found, 'Resident contact deletes affect no rows';
   exception when insufficient_privilege then null;
   end;
   begin

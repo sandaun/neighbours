@@ -9,16 +9,15 @@ import { StatusBadge } from './StatusBadge';
 import { Button } from '@/components/Button';
 import { NotFound } from '@/components/NotFound';
 import { ErrorState, LoadingState } from '@/components/QueryState';
-import { useAuth } from '@/features/auth/AuthProvider';
+import { useCommunity } from '@/features/communities/CommunityLayout';
 import { formatDateTime } from '@/lib/format';
 
 const MAX_BODY = 4000;
 
 export function IncidentDetailScreen() {
   const { t } = useTranslation();
-  const { communityId = '', incidentId = '' } = useParams();
-  const community = useAuth().communities.find((item) => item.communityId === communityId);
-  if (!community) return <NotFound />;
+  const { incidentId = '' } = useParams();
+  const { communityId } = useCommunity();
   return (
     <div className="flex flex-col gap-6">
       <Link
@@ -28,22 +27,16 @@ export function IncidentDetailScreen() {
         <ChevronLeft aria-hidden size={14} />
         {t('incidents.backToList')}
       </Link>
-      <IncidentDetailContent
-        communityId={communityId}
-        communityName={community.communityName}
-        incidentId={incidentId}
-      />
+      <IncidentDetailContent communityId={communityId} incidentId={incidentId} />
     </div>
   );
 }
 
 function IncidentDetailContent({
   communityId,
-  communityName,
   incidentId,
 }: {
   communityId: string;
-  communityName: string;
   incidentId: string;
 }) {
   const { t } = useTranslation();
@@ -54,7 +47,7 @@ function IncidentDetailContent({
     return <NotFound title={t('incidents.notFoundTitle')} body={t('incidents.notFoundBody')} />;
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
-      <IncidentSummaryCard incident={query.data} communityName={communityName} />
+      <IncidentSummaryCard incident={query.data} />
       <div className="lg:sticky lg:top-24">
         <ReplyForm communityId={communityId} incident={query.data} />
       </div>
@@ -62,19 +55,12 @@ function IncidentDetailContent({
   );
 }
 
-function IncidentSummaryCard({
-  incident,
-  communityName,
-}: {
-  incident: IncidentDetail;
-  communityName: string;
-}) {
+function IncidentSummaryCard({ incident }: { incident: IncidentDetail }) {
   const { t, i18n } = useTranslation();
   const language = i18n.resolvedLanguage;
   return (
     <article aria-labelledby="incident-title" className="flex flex-col gap-6">
       <header className="flex flex-col gap-2">
-        <p className="font-label text-xs tracking-wide text-primary uppercase">{communityName}</p>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <h1 id="incident-title" className="font-display text-3xl text-ink">
             {incident.title}

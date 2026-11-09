@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 
 import { AppShell } from './components/AppShell';
 import { Button } from './components/Button';
@@ -8,6 +8,10 @@ import { StatusScreen } from './components/StatusScreen';
 import { useAuth } from './features/auth/AuthProvider';
 import { LoginScreen } from './features/auth/LoginScreen';
 import { CommunitiesScreen } from './features/communities/CommunitiesScreen';
+import { CommunityLayout } from './features/communities/CommunityLayout';
+import { BoardScreen } from './features/content/BoardScreen';
+import { DirectoryScreen } from './features/content/DirectoryScreen';
+import { EventsScreen } from './features/content/EventsScreen';
 import { IncidentDetailScreen } from './features/incidents/IncidentDetailScreen';
 import { IncidentsScreen } from './features/incidents/IncidentsScreen';
 
@@ -41,11 +45,14 @@ export function App() {
         <AppShell>
           <Routes>
             <Route index element={<CommunitiesScreen />} />
-            <Route path="communities/:communityId/incidents" element={<IncidentsScreen />} />
-            <Route
-              path="communities/:communityId/incidents/:incidentId"
-              element={<IncidentDetailScreen />}
-            />
+            <Route path="communities/:communityId" element={<CommunityLayout />}>
+              <Route index element={<Navigate to="incidents" replace />} />
+              <Route path="incidents" element={<IncidentsScreen />} />
+              <Route path="incidents/:incidentId" element={<IncidentDetailScreen />} />
+              <Route path="events" element={<EventsScreen />} />
+              <Route path="board" element={<BoardScreen />} />
+              <Route path="directory" element={<DirectoryScreen />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AppShell>

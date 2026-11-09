@@ -79,9 +79,11 @@ cents. Clients cannot assign membership, role, community, or receipt ownership.
   nullable `ends_at`.
 
 - `board_posts`: `id`, `community_id`, `title`, `body`, `author_name`, `topic`,
-  `published_at`. Members read published posts; all client writes are denied.
+  `published_at`. Members read published posts; community admins read, create,
+  edit, and delete their communities' posts. Resident writes are denied.
 - `directory_contacts`: `id`, `community_id`, `name`, `service`, nullable `phone`,
-  `email`, `hours`, and `sort_order`. Member-only reads; operator-managed writes.
+  `email`, `hours`, and `sort_order`. Member-only reads; community admins and the
+  operator manage writes. Community admins also manage `community_events`.
 
 Private buckets: `incident-photos` and `community-documents`. Photo paths are
 `community_id/incident_id/filename`; document/receipt paths begin with

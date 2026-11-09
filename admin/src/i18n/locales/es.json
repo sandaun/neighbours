@@ -35,7 +35,9 @@
     "subtitle_one": "Administras {{count}} comunidad.",
     "subtitle_other": "Administras {{count}} comunidades.",
     "comingSoon": "Próximamente: vecinos, documentos y recibos.",
-    "open": "Abre las incidencias de {{name}}"
+    "open": "Abre {{name}}",
+    "manage": "Incidencias, calendario, tablón y directorio",
+    "sections": "Secciones de la comunidad"
   },
   "incidents": {
     "title": "Incidencias",
@@ -92,5 +94,76 @@
     "title": "Esta página no existe",
     "body": "Vuelve a la lista de comunidades.",
     "back": "Ir al inicio"
+  },
+  "crud": {
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "saving": "Guardando…",
+    "saved": "Cambios guardados. Los vecinos ya lo ven en la app.",
+    "deleted": "Eliminado. Ya no aparece en la app.",
+    "saveError": "No hemos podido guardar los cambios. Comprueba la conexión y vuelve a intentarlo.",
+    "deleteError": "No hemos podido eliminarlo. Comprueba la conexión y vuelve a intentarlo.",
+    "confirmDelete": "¿Seguro que quieres eliminar «{{name}}»? No se puede deshacer.",
+    "confirmYes": "Sí, elimínalo",
+    "editLabel": "Editar {{name}}",
+    "deleteLabel": "Eliminar {{name}}",
+    "required": "Este campo es obligatorio.",
+    "tooLong": "Máximo {{max}} caracteres."
+  },
+  "events": {
+    "title": "Calendario",
+    "subtitle": "Eventos que los vecinos ven en el inicio y en el calendario de la app.",
+    "add": "Añadir evento",
+    "edit": "Editar evento",
+    "empty": "Todavía no hay eventos.",
+    "upcoming": "Próximos",
+    "past": "Pasados",
+    "endsBeforeStart": "La hora de fin no puede ser anterior a la de inicio.",
+    "endsHint": "Opcional.",
+    "locationPlaceholder": "p. ej. Sala comunitaria",
+    "fields": {
+      "title": "Título",
+      "location": "Lugar",
+      "startsAt": "Inicio",
+      "endsAt": "Fin"
+    }
+  },
+  "board": {
+    "title": "Tablón",
+    "subtitle": "Avisos y noticias para los vecinos. Puedes programar su publicación.",
+    "add": "Añadir anuncio",
+    "edit": "Editar anuncio",
+    "empty": "Todavía no hay anuncios.",
+    "scheduled": "Programado",
+    "topicHint": "En la app se puede filtrar por Parking, Jardí y Activitats.",
+    "authorHint": "Cómo aparecerá la firma en la app.",
+    "publishHint": "Déjalo vacío para publicarlo ahora. Si pones una fecha futura, los vecinos no lo verán hasta entonces.",
+    "fields": {
+      "title": "Título",
+      "topic": "Tema",
+      "author": "Firmado por",
+      "body": "Texto",
+      "publishAt": "Fecha de publicación"
+    }
+  },
+  "directory": {
+    "title": "Directorio",
+    "subtitle": "Proveedores y servicios de la comunidad, con llamada directa desde la app.",
+    "add": "Añadir contacto",
+    "edit": "Editar contacto",
+    "empty": "Todavía no hay contactos.",
+    "invalidEmail": "Escribe un correo válido.",
+    "invalidOrder": "Escribe un número entero.",
+    "orderHint": "Los números más bajos aparecen primero.",
+    "servicePlaceholder": "p. ej. Fontanería y urgencias",
+    "hoursPlaceholder": "p. ej. De lunes a viernes, 9–18 h",
+    "fields": {
+      "name": "Nombre",
+      "service": "Servicio",
+      "phone": "Teléfono",
+      "email": "Correo electrónico",
+      "hours": "Horario",
+      "order": "Orden"
+    }
   }
 }

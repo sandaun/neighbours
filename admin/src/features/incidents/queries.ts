@@ -6,14 +6,7 @@ import {
   type IncidentStatus,
   listIncidents,
 } from './incidents-api';
-import { useAuth } from '@/features/auth/AuthProvider';
-import type { AdminClient } from '@/lib/supabase';
-
-function useClient(): AdminClient {
-  const { client } = useAuth();
-  if (!client) throw new Error('Supabase client is unavailable.');
-  return client;
-}
+import { useClient } from '@/lib/use-client';
 
 export const incidentKeys = {
   list: (communityId: string) => ['incidents', communityId] as const,

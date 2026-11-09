@@ -35,7 +35,9 @@
     "subtitle_one": "Administres {{count}} comunitat.",
     "subtitle_other": "Administres {{count}} comunitats.",
     "comingSoon": "Properament: veïns, documents i rebuts.",
-    "open": "Obre les incidències de {{name}}"
+    "open": "Obre {{name}}",
+    "manage": "Incidències, calendari, tauló i directori",
+    "sections": "Seccions de la comunitat"
   },
   "incidents": {
     "title": "Incidències",
@@ -92,5 +94,76 @@
     "title": "Aquesta pàgina no existeix",
     "body": "Torna a la llista de comunitats.",
     "back": "Anar a l’inici"
+  },
+  "crud": {
+    "cancel": "Cancel·lar",
+    "save": "Desar",
+    "saving": "Desant…",
+    "saved": "Canvis desats. Els veïns ja ho veuen a l’app.",
+    "deleted": "Esborrat. Ja no apareix a l’app.",
+    "saveError": "No hem pogut desar els canvis. Comprova la connexió i torna-ho a provar.",
+    "deleteError": "No hem pogut esborrar-ho. Comprova la connexió i torna-ho a provar.",
+    "confirmDelete": "Segur que vols esborrar «{{name}}»? No es pot desfer.",
+    "confirmYes": "Sí, esborra",
+    "editLabel": "Editar {{name}}",
+    "deleteLabel": "Esborrar {{name}}",
+    "required": "Aquest camp és obligatori.",
+    "tooLong": "Màxim {{max}} caràcters."
+  },
+  "events": {
+    "title": "Calendari",
+    "subtitle": "Esdeveniments que els veïns veuen a l’inici i al calendari de l’app.",
+    "add": "Afegir esdeveniment",
+    "edit": "Editar esdeveniment",
+    "empty": "Encara no hi ha esdeveniments.",
+    "upcoming": "Propers",
+    "past": "Passats",
+    "endsBeforeStart": "L’hora de final no pot ser anterior a la d’inici.",
+    "endsHint": "Opcional.",
+    "locationPlaceholder": "p. ex. Sala comunitària",
+    "fields": {
+      "title": "Títol",
+      "location": "Lloc",
+      "startsAt": "Inici",
+      "endsAt": "Final"
+    }
+  },
+  "board": {
+    "title": "Tauló",
+    "subtitle": "Avisos i notícies per als veïns. Pots programar-ne la publicació.",
+    "add": "Afegir anunci",
+    "edit": "Editar anunci",
+    "empty": "Encara no hi ha anuncis.",
+    "scheduled": "Programat",
+    "topicHint": "A l’app es pot filtrar per Parking, Jardí i Activitats.",
+    "authorHint": "Com apareixerà la signatura a l’app.",
+    "publishHint": "Deixa-ho buit per publicar-lo ara. Si poses una data futura, els veïns no el veuran fins aleshores.",
+    "fields": {
+      "title": "Títol",
+      "topic": "Tema",
+      "author": "Signat per",
+      "body": "Text",
+      "publishAt": "Data de publicació"
+    }
+  },
+  "directory": {
+    "title": "Directori",
+    "subtitle": "Proveïdors i serveis de la comunitat, amb trucada directa des de l’app.",
+    "add": "Afegir contacte",
+    "edit": "Editar contacte",
+    "empty": "Encara no hi ha contactes.",
+    "invalidEmail": "Escriu un correu vàlid.",
+    "invalidOrder": "Escriu un número enter.",
+    "orderHint": "Els números més baixos apareixen primer.",
+    "servicePlaceholder": "p. ex. Fontaneria i urgències",
+    "hoursPlaceholder": "p. ex. De dilluns a divendres, 9–18 h",
+    "fields": {
+      "name": "Nom",
+      "service": "Servei",
+      "phone": "Telèfon",
+      "email": "Correu electrònic",
+      "hours": "Horari",
+      "order": "Ordre"
+    }
   }
 }

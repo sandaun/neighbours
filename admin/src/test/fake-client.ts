@@ -42,10 +42,16 @@ export function makeFakeClient({
   const results: Record<string, QueryResult> = { community_members: memberships, ...tables };
 
   const builder = (table: string) => {
-    const result = () => results[table] ?? { data: [], error: null };
+    let write = false;
+    // Writes resolve to `<table>:write` when configured, else to one stub row.
+    const result = () =>
+      write
+        ? (results[`${table}:write`] ?? { data: [{ id: 'written' }], error: null })
+        : (results[table] ?? { data: [], error: null });
     const query: Record<string, unknown> = {};
-    for (const method of ['select', 'eq', 'order', 'limit']) {
+    for (const method of ['select', 'eq', 'order', 'limit', 'insert', 'update', 'delete']) {
       query[method] = (...args: unknown[]) => {
+        if (['insert', 'update', 'delete'].includes(method)) write = true;
         calls.push({ table, method, args });
         return query;
       };

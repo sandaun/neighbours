@@ -1,32 +1,19 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams, useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 
 import { incidentStatuses, type IncidentStatus } from './incidents-api';
 import { useIncidents } from './queries';
 import { StatusBadge } from './StatusBadge';
-import { NotFound } from '@/components/NotFound';
 import { ErrorState, LoadingState } from '@/components/QueryState';
-import { useAuth } from '@/features/auth/AuthProvider';
+import { useCommunity } from '@/features/communities/CommunityLayout';
 import { formatDateTime } from '@/lib/format';
 
 const isStatus = (value: string | null): value is IncidentStatus =>
   incidentStatuses.includes(value as IncidentStatus);
 
 export function IncidentsScreen() {
-  const { communityId = '' } = useParams();
-  const community = useAuth().communities.find((item) => item.communityId === communityId);
-  if (!community) return <NotFound />;
-  return <IncidentsList communityId={communityId} communityName={community.communityName} />;
-}
-
-function IncidentsList({
-  communityId,
-  communityName,
-}: {
-  communityId: string;
-  communityName: string;
-}) {
+  const { communityId } = useCommunity();
   const { t, i18n } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const filterParam = searchParams.get('status');
@@ -39,15 +26,7 @@ function IncidentsList({
 
   return (
     <section aria-labelledby="incidents-title" className="flex flex-col gap-6">
-      <div className="flex flex-col gap-2">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-1 self-start font-label text-xs text-ink-soft hover:text-primary focus-visible:outline-2 focus-visible:outline-primary-dark"
-        >
-          <ChevronLeft aria-hidden size={14} />
-          {t('incidents.back')}
-        </Link>
-        <p className="font-label text-xs tracking-wide text-primary uppercase">{communityName}</p>
+      <div className="flex flex-col gap-1">
         <h1 id="incidents-title" className="font-display text-3xl text-ink">
           {t('incidents.title')}
         </h1>

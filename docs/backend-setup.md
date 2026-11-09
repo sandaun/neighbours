@@ -299,3 +299,31 @@ faults (no role check, no community check, anonymous EXECUTE, unpinned search
 path, client-supplied author, status not written). Hosted Auth, PostgREST, and
 the advisors were not exercised. Before applying remotely, run
 `supabase db push --dry-run`, then the three SQL suites and the advisors.
+
+## Administrator calendar, board, and directory (pending deployment)
+
+Migration `20261109110000_admin_community_content.sql` lets community
+administrators create, edit, and delete `community_events`, `board_posts`, and
+`directory_contacts` from the backoffice. It has not been applied to the hosted
+project.
+
+- `authenticated` receives column-limited INSERT/UPDATE and DELETE grants. Every
+  write needs a policy that requires `role = 'admin'` in the row's community, so
+  residents get an RLS error on INSERT and affect no rows on UPDATE/DELETE.
+- `id` and `community_id` are not updatable, so a row cannot be moved to another
+  community. Existing check constraints still apply (blank text, empty optional
+  contact fields, an event ending before it starts).
+- Admins also read their communities' scheduled board posts
+  (`board_posts_admin_read`); residents still see only published posts.
+
+`supabase/tests/admin_community_content.test.sql` covers admin writes, an admin
+who is a resident in another community, immutable communities, residents, admin
+role revocation, and anonymous access. `community_content_rls.test.sql` no longer
+asserts that clients hold no write grants; it now asserts that resident writes
+fail or change no rows, which holds before and after this migration.
+
+On 9 November 2026 all six migrations and the four SQL suites passed on the local
+PostgreSQL 16 stand-in. The new suite detected deliberate faults: resident inserts,
+movable communities, residents reading scheduled posts, cross-community deletes,
+cross-community edits (when both policy clauses are weakened), and anonymous
+writes. Hosted PostgREST and the advisors were not exercised.

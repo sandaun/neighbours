@@ -1,3 +1,6 @@
+// Deterministic local time for date formatting and datetime-local inputs.
+process.env.TZ = 'Europe/Madrid';
+
 import '@testing-library/jest-dom/vitest';
 
 import { cleanup } from '@testing-library/react';

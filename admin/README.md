@@ -35,7 +35,11 @@ update that membership in the Supabase dashboard.
   until that migration is applied to the Supabase project, publishing a reply
   fails with an error and nothing is written. Residents see the reply in the app.
 
-Routes are client-side (`/communities/:id/incidents/:incidentId`). When hosting
+- **Calendar, board, directory** (per community): list, create, edit, and delete
+  events, board posts (including scheduled publication), and provider contacts.
+  Requires migration `20261109110000_admin_community_content`.
+
+Routes are client-side (`/communities/:id/incidents`, `/events`, `/board`, `/directory`). When hosting
 the built `dist/`, serve `index.html` for unknown paths so deep links work.
 
 ## Verify

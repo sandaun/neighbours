@@ -31,7 +31,7 @@ export function CommunitiesScreen() {
                 <span className="truncate font-body text-base font-semibold text-ink">
                   {community.communityName}
                 </span>
-                <span className="font-label text-xs text-ink-soft">{t('incidents.title')}</span>
+                <span className="font-label text-xs text-ink-soft">{t('communities.manage')}</span>
               </span>
               <ChevronRight aria-hidden size={18} className="shrink-0 text-ink-muted" />
             </Link>

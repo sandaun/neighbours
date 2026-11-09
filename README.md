@@ -5,7 +5,8 @@ existing NativeWind design system. The MVP covers manually provisioned email/pas
 incidents, private documents, receipts, a read-only calendar, profile, and language.
 Administration is manual through Supabase. A web backoffice for community
 administrators is in progress in [`admin/`](admin/README.md); it is a separate
-Vite + React project where an admin account reviews and answers its communities' incidents.
+Vite + React project where an admin account answers incidents and manages the
+calendar, board, and provider directory of its communities.
 
 ## Run
 
