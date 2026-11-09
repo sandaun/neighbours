@@ -189,7 +189,9 @@ until expiry after membership revocation.
 - Review new `incidents` rows in the dashboard. Update `status` there and insert
   an `incident_updates` row with `incident_id`, body, operator display name, and
   optional status. Change the incident's status and append the update in one SQL
-  transaction when they describe the same operation.
+  transaction when they describe the same operation. Once the admin incident
+  migration below is applied, community administrators can do the same from the
+  backoffice through `admin_add_incident_update`.
 - Maintain real `community_events` rows for the app's home and calendar. Use
   timezone-aware timestamps; `ends_at` is optional and cannot precede the start.
 - Documents, receipts, and balances are manually maintained data. `paid` records
@@ -216,8 +218,9 @@ until expiry after membership revocation.
 
 All public tables have RLS. `community_members` selects only `auth.uid()`'s own
 rows, so other table policies can query membership without recursion. The
-application introduces no `SECURITY DEFINER` helpers, public RPCs, user-metadata
-authorization, or privileged app credentials. The pre-existing hosted
+application introduces no user-metadata authorization or privileged app
+credentials. Its only `SECURITY DEFINER` function and public RPC is
+`admin_add_incident_update`, described below. The pre-existing hosted
 `SECURITY DEFINER` bootstrap event-trigger function keeps its operator/service
 access and has no client EXECUTE access after the follow-up migration.
 No browser/mobile membership writes,
@@ -264,3 +267,35 @@ once. The existing incident was preserved: final counts were 31 incidents,
 uploaded. Both transactional SQL test suites passed against the hosted project;
 `npm run validate` passed 16 suites and 82 tests. Device rendering was not verified
 in this operation. No build or over-the-air update was published.
+
+## Administrator incident updates (pending deployment)
+
+Migration `20261109100000_admin_incident_updates.sql` adds
+`public.admin_add_incident_update(p_incident_id, p_body, p_status default null)`
+for the web backoffice in `admin/`. It has not been applied to the hosted project.
+
+- Only a signed-in member whose `community_members.role` is `admin` in the
+  incident's community can call it. Missing incidents and other communities'
+  incidents return the same `42501` error. Anonymous callers have no EXECUTE.
+- In one transaction it changes `incidents.status` when a different valid status
+  is given, and appends an `incident_updates` row. The body is trimmed; the author
+  is always the caller's membership display name, never client input.
+- It is `SECURITY DEFINER` with an empty pinned `search_path` because no table
+  grant can express this safely: residents already update `photo_path` through a
+  reporter policy, and permissive policies are combined, so a column grant on
+  `status` would also let reporters close their own incidents. No existing grant
+  or policy changes; direct client status edits and update inserts stay denied.
+
+`supabase/tests/admin_incident_updates.test.sql` covers the function shape and
+privileges, atomic status/update writes, trimming, author integrity, invalid input
+without partial writes, cross-community isolation, residents, a missing JWT
+subject, admin revocation, and anonymous access.
+
+On 9 November 2026 the four existing migrations and this one were applied to a
+local PostgreSQL 16 database with minimal Auth/Storage stand-ins and Supabase's
+default `public` privileges. All three transactional SQL suites passed. The new
+suite failed before the migration existed, and it detected each of six deliberate
+faults (no role check, no community check, anonymous EXECUTE, unpinned search
+path, client-supplied author, status not written). Hosted Auth, PostgREST, and
+the advisors were not exercised. Before applying remotely, run
+`supabase db push --dry-run`, then the three SQL suites and the advisors.

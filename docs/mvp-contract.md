@@ -69,7 +69,8 @@ cents. Clients cannot assign membership, role, community, or receipt ownership.
   `location`, `category`, `status` (`received`, `in-progress`, `resolved`),
   nullable `photo_path`, `reported_at`.
 - `incident_updates`: `id`, `incident_id`, `body`, `author_name`, optional
-  `status`, `created_at`. Dashboard operated, client read only.
+  `status`, `created_at`. Dashboard operated, client read only. Community
+  administrators append updates only through `admin_add_incident_update`.
 - `documents`: `id`, `community_id`, `title`, `category`
   (`minutes`, `insurance`, `rules`), `file_size_bytes`, nullable `storage_path`, `updated_at`.
 - `receipts`: `id`, `community_id`, `unit_id`, `concept`, `amount_cents`,
