@@ -62,6 +62,10 @@ Per desfer-ho: `supabase/operations/rollback_admin_backoffice.sql` (explicat a l
   les rutes serveixin `index.html`.
 - **Quan fusionar** la branca a `feature/mvp`, un cop provat.
 
+**Protecció de dades (RGPD):** llista completa a
+[`proteccio-dades.md`](proteccio-dades.md). Hi ha 4 punts imprescindibles abans de
+treballar amb dades reals.
+
 **Feina que faré jo, per ordre:**
 0. **Retocs d'interfície:** desplegables propis (Radix Select) a tot el backoffice.
 1. **Veïns:** donar d'alta i de baixa, i assignar pis. Necessita una Edge Function
