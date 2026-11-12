@@ -25,6 +25,8 @@ Fonts: [RGPD](https://eur-lex.europa.eu/eli/reg/2016/679/oj) (art. 28),
 - Fitxers privats (PDF i fotos) amb enllaços que caduquen en minuts.
 - La clau secreta de Supabase no és mai al navegador. Registre lliure desactivat.
 - Cada admin només gestiona les seves comunitats.
+- En donar d'alta un veí, la contrasenya es genera al servidor, es mostra un sol cop
+  a l'admin i no es guarda enlloc més. La clau secreta no surt mai del servidor.
 
 ## Pendent
 
@@ -41,5 +43,6 @@ Fonts: [RGPD](https://eur-lex.europa.eu/eli/reg/2016/679/oj) (art. 28),
 | 9 | **Registre d'auditoria**: qui ha fet què al backoffice | Tècnic | Abans del llançament |
 | 10 | **Còpies de seguretat** (pla Pro) i **procediment davant una fuga** (avís a l'AEPD en 72 h) | Decisió + procediment | Abans del llançament |
 | 11 | Avisar els veïns que les **fotos d'incidències** no han de mostrar persones | Text a l'app | Abans del llançament |
+| 12 | Que el veí pugui **canviar la contrasenya** que li ha passat l'admin (ara l'admin la coneix) | Tècnic | ⛔ Abans de dades reals |
 
 **Per al pilot amb dades de prova**, el que hi ha és suficient.

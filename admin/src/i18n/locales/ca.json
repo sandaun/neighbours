@@ -34,7 +34,7 @@
     "title": "Les teves comunitats",
     "subtitle_one": "Administres {{count}} comunitat.",
     "subtitle_other": "Administres {{count}} comunitats.",
-    "comingSoon": "Properament: donar d’alta veïns nous des del backoffice.",
+    "comingSoon": "Properament: organitzacions (empreses que gestionen diverses comunitats).",
     "open": "Obre {{name}}",
     "manage": "Incidències, veïns, pisos, calendari, tauló, directori, documents i rebuts",
     "sections": "Seccions de la comunitat"
@@ -247,7 +247,7 @@
     "title": "Veïns",
     "subtitle": "Qui té accés a l’app en aquesta comunitat.",
     "empty": "Encara no hi ha ningú en aquesta comunitat.",
-    "howToAdd": "Per donar d’alta un veí nou, de moment contacta amb l’equip de Neighbours. Aquí pots canviar-li el nom o el pis, o donar-lo de baixa.",
+    "howToAdd": "En afegir un veí nou se li crea el compte i et mostrem una contrasenya per passar-li. Si ja té compte (per exemple, viu en una altra comunitat), només se l’afegeix aquí.",
     "admin": "Admin",
     "you": "Tu",
     "noUnit": "Sense pis",
@@ -260,7 +260,28 @@
     "removed": "Veí donat de baixa. Ja no pot entrar a aquesta comunitat.",
     "fields": {
       "name": "Nom",
-      "unit": "Pis"
+      "unit": "Pis",
+      "email": "Correu electrònic"
+    },
+    "add": "Afegir veí",
+    "invalidEmail": "Escriu un correu vàlid.",
+    "emailHint": "Amb aquest correu entrarà a l’app.",
+    "password": "Contrasenya",
+    "copy": "Copiar correu i contrasenya",
+    "copied": "Copiat",
+    "done": "Fet",
+    "createdTitle": "Compte creat per a {{name}}",
+    "passwordOnce": "Passa-li aquestes dades per un canal privat. La contrasenya no es tornarà a mostrar.",
+    "credentialsText": "Accés a Neighbours\nCorreu: {{email}}\nContrasenya: {{password}}",
+    "linkedTitle": "{{name}} ja tenia compte",
+    "linkedBody": "L’hem afegit a aquesta comunitat. Entra a l’app amb {{email}} i la contrasenya de sempre.",
+    "createErrors": {
+      "already_member": "Aquesta persona ja és membre d’aquesta comunitat.",
+      "invalid_unit": "El pis triat no és d’aquesta comunitat.",
+      "invalid_input": "Revisa el nom i el correu.",
+      "forbidden": "No tens permís per afegir veïns en aquesta comunitat.",
+      "unauthenticated": "La sessió ha caducat. Torna a entrar.",
+      "unavailable": "No hem pogut crear el compte. Comprova la connexió i torna-ho a provar."
     }
   },
   "units": {

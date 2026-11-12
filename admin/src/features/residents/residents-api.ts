@@ -85,3 +85,54 @@ export async function removeMember(client: AdminClient, communityId: string, use
   });
   if (error) throw error;
 }
+
+export type NewResident = { email: string; displayName: string; unitId: string | null };
+export type CreatedResident = { userId: string; created: boolean; password?: string };
+
+/** Error codes returned by the admin-create-resident Edge Function. */
+export type CreateResidentErrorCode =
+  | 'already_member'
+  | 'invalid_unit'
+  | 'invalid_input'
+  | 'forbidden'
+  | 'unauthenticated'
+  | 'unavailable';
+
+export class CreateResidentError extends Error {
+  constructor(readonly code: CreateResidentErrorCode) {
+    super(code);
+  }
+}
+
+const KNOWN_CODES: CreateResidentErrorCode[] = [
+  'already_member',
+  'invalid_unit',
+  'invalid_input',
+  'forbidden',
+  'unauthenticated',
+];
+
+// Creates the account on the server when the email is new (the secret key never
+// reaches the browser), then adds it to this community as a resident.
+export async function createResident(
+  client: AdminClient,
+  communityId: string,
+  input: NewResident
+): Promise<CreatedResident> {
+  const { data, error } = await client.functions.invoke<CreatedResident>('admin-create-resident', {
+    body: {
+      communityId,
+      email: input.email.trim().toLowerCase(),
+      displayName: input.displayName.trim(),
+      unitId: input.unitId,
+    },
+  });
+  if (error) {
+    const response = (error as { context?: unknown }).context;
+    const body = response instanceof Response ? await response.json().catch(() => null) : null;
+    const code = KNOWN_CODES.find((known) => known === body?.error) ?? 'unavailable';
+    throw new CreateResidentError(code);
+  }
+  if (!data) throw new CreateResidentError('unavailable');
+  return data;
+}

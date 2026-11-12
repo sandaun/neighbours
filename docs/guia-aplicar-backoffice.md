@@ -12,6 +12,7 @@ modifiquen cap dada, i els veïns continuen exactament igual.
 | `20261109110000_admin_community_content` | Gestionar calendari, tauló i directori |
 | `20261109120000_admin_documents_receipts` | Pujar documents i rebuts amb PDF |
 | `20261110100000_admin_residents` | Veure i gestionar veïns i pisos (aplicada després, a part) |
+| `20261112100000_admin_create_resident` + Edge Function | Donar d'alta veïns nous (vegeu el pas 5b) |
 
 Necessites: Node.js, el repo clonat i accés de propietari al projecte de Supabase
 (incloent-hi la contrasenya de la base de dades: *Project Settings → Database*).
@@ -75,6 +76,18 @@ npx supabase@2.121.0 db push
 
 Respon `Y`. Després torna a fer `migration list`: les 7 han de sortir a Local i Remote.
 
+## 5b. Desplega l'Edge Function (alta de veïns)
+
+Només cal la primera vegada i quan canviï el codi de `supabase/functions/`:
+
+```sh
+npx supabase@2.121.0 functions deploy admin-create-resident --project-ref ttrgbzqedarelznbdiye --no-verify-jwt
+```
+
+`--no-verify-jwt` és correcte: la funció comprova ella mateixa qui la crida. Si
+l'ordre demana Docker, afegeix-hi `--use-api`. No cal configurar cap secret:
+Supabase dona a la funció l'adreça i la clau secreta del projecte.
+
 ## 6. Comprova la seguretat amb els tests
 
 Al dashboard de Supabase, obre **SQL Editor**. Per a cada un d'aquests fitxers de
@@ -86,6 +99,7 @@ Al dashboard de Supabase, obre **SQL Editor**. Per a cada un d'aquests fitxers d
 4. `admin_community_content.test.sql`
 5. `admin_documents_receipts.test.sql`
 6. `admin_residents.test.sql`
+7. `admin_create_resident.test.sql`
 
 Cada test crea dades de prova i **les desfà totes en acabar** (`rollback`). Si no surt
 cap error en vermell, ha passat. Si surt un error, copia'm el missatge.
@@ -154,7 +168,7 @@ backoffice i deixa els veïns com estaven. No esborra cap dada. Enganxa'l al SQL
 Editor i prem Run. Després, perquè l'historial quedi bé:
 
 ```sh
-npx supabase@2.121.0 migration repair 20261109100000 20261109110000 20261109120000 20261110100000 --status reverted
+npx supabase@2.121.0 migration repair 20261109100000 20261109110000 20261109120000 20261110100000 20261112100000 --status reverted
 ```
 
 Provat en local el 9 de novembre de 2026: el fitxer desfà els permisos i els tests

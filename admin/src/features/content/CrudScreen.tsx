@@ -39,6 +39,8 @@ type Props<Row extends { id: string }, Input> = {
   labels?: Partial<CrudLabels>;
   /** A specific message for a known failure; falls back to the generic one. */
   describeError?(error: Error, action: 'save' | 'delete'): string | null;
+  /** Called after a successful save with what the API returned. */
+  onSaved?(result: unknown, created: boolean): void;
 };
 
 type CrudLabels = {
@@ -72,6 +74,7 @@ export function CrudScreen<Row extends { id: string }, Input>({
   canModify,
   labels: customLabels,
   describeError,
+  onSaved,
 }: Props<Row, Input>) {
   const { t } = useTranslation();
   const labels: CrudLabels = {
@@ -112,9 +115,10 @@ export function CrudScreen<Row extends { id: string }, Input>({
             save.mutate(
               { id: initial?.id ?? null, input },
               {
-                onSuccess: () => {
+                onSuccess: (result) => {
                   setEditing(null);
                   setNotice('saved');
+                  onSaved?.(result, !initial);
                 },
               }
             ),

@@ -3,6 +3,8 @@
 --   20261109110000_admin_community_content
 --   20261109120000_admin_documents_receipts
 --   20261110100000_admin_residents
+--   20261112100000_admin_create_resident (also delete the Edge Function:
+--     supabase functions delete admin-create-resident)
 -- Returns clients to the resident-only permissions of the earlier migrations.
 -- It removes no data: rows and files written from the backoffice stay in place.
 -- Run as the project owner in the SQL editor, only if the backoffice must be
@@ -14,6 +16,8 @@ drop function if exists public.admin_add_incident_update(uuid, text, text);
 drop function if exists public.admin_list_members(uuid);
 drop function if exists public.admin_update_member(uuid, uuid, text, uuid);
 drop function if exists public.admin_remove_member(uuid, uuid);
+drop function if exists public.service_add_resident(uuid, uuid, uuid, text, uuid);
+drop function if exists public.service_user_id_by_email(text);
 
 drop policy if exists events_admin_insert on public.community_events;
 drop policy if exists events_admin_update on public.community_events;

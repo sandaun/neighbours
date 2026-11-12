@@ -16,6 +16,7 @@
     "jest.config.js",
     "android",
     "ios",
-    "admin"
+    "admin",
+    "supabase/functions"
   ]
 }

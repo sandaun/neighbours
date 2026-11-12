@@ -86,6 +86,10 @@ export function makeFakeClient({
     return { data: [], error: null };
   });
   const storage = { from: vi.fn(() => ({ createSignedUrl, upload, remove })) };
+  // Typed so tests can mock results: invoke(name, options) → { data, error }.
+  const functionsInvoke = vi.fn<
+    (name: string, options?: unknown) => Promise<{ data: unknown; error: unknown }>
+  >(async () => ({ data: null, error: new Error('Not mocked') }));
   const client = {
     auth,
     storage,
@@ -94,6 +98,7 @@ export function makeFakeClient({
       return builder(table);
     }),
     rpc: vi.fn(async (name: string) => rpcs[name] ?? rpc),
+    functions: { invoke: functionsInvoke },
   };
   return {
     client: client as unknown as AdminClient,
@@ -104,6 +109,7 @@ export function makeFakeClient({
     createSignedUrl,
     upload,
     remove,
+    functionsInvoke,
     setTable(table: string, value: QueryResult) {
       results[table] = value;
     },

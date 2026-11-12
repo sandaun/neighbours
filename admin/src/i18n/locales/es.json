@@ -34,7 +34,7 @@
     "title": "Tus comunidades",
     "subtitle_one": "Administras {{count}} comunidad.",
     "subtitle_other": "Administras {{count}} comunidades.",
-    "comingSoon": "Próximamente: dar de alta vecinos nuevos desde el backoffice.",
+    "comingSoon": "Próximamente: organizaciones (empresas que gestionan varias comunidades).",
     "open": "Abre {{name}}",
     "manage": "Incidencias, vecinos, pisos, calendario, tablón, directorio, documentos y recibos",
     "sections": "Secciones de la comunidad"
@@ -247,7 +247,7 @@
     "title": "Vecinos",
     "subtitle": "Quién tiene acceso a la app en esta comunidad.",
     "empty": "Todavía no hay nadie en esta comunidad.",
-    "howToAdd": "Para dar de alta a un vecino nuevo, de momento contacta con el equipo de Neighbours. Aquí puedes cambiarle el nombre o el piso, o darlo de baja.",
+    "howToAdd": "Al añadir un vecino nuevo se le crea la cuenta y te mostramos una contraseña para pasársela. Si ya tiene cuenta (por ejemplo, vive en otra comunidad), solo se le añade aquí.",
     "admin": "Admin",
     "you": "Tú",
     "noUnit": "Sin piso",
@@ -260,7 +260,28 @@
     "removed": "Vecino dado de baja. Ya no puede entrar en esta comunidad.",
     "fields": {
       "name": "Nombre",
-      "unit": "Piso"
+      "unit": "Piso",
+      "email": "Correo electrónico"
+    },
+    "add": "Añadir vecino",
+    "invalidEmail": "Escribe un correo válido.",
+    "emailHint": "Con este correo entrará en la app.",
+    "password": "Contraseña",
+    "copy": "Copiar correo y contraseña",
+    "copied": "Copiado",
+    "done": "Hecho",
+    "createdTitle": "Cuenta creada para {{name}}",
+    "passwordOnce": "Pásale estos datos por un canal privado. La contraseña no se volverá a mostrar.",
+    "credentialsText": "Acceso a Neighbours\nCorreo: {{email}}\nContraseña: {{password}}",
+    "linkedTitle": "{{name}} ya tenía cuenta",
+    "linkedBody": "Lo hemos añadido a esta comunidad. Entra en la app con {{email}} y su contraseña de siempre.",
+    "createErrors": {
+      "already_member": "Esta persona ya es miembro de esta comunidad.",
+      "invalid_unit": "El piso elegido no es de esta comunidad.",
+      "invalid_input": "Revisa el nombre y el correo.",
+      "forbidden": "No tienes permiso para añadir vecinos en esta comunidad.",
+      "unauthenticated": "La sesión ha caducado. Vuelve a entrar.",
+      "unavailable": "No hemos podido crear la cuenta. Comprueba la conexión y vuelve a intentarlo."
     }
   },
   "units": {

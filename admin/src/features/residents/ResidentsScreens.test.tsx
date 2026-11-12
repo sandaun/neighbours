@@ -91,8 +91,8 @@ test('lists residents with email, unit, and admin/you badges', async () => {
   expect(screen.getAllByText('Sense pis').length).toBeGreaterThan(0);
   expect(screen.getAllByText('Admin')).toHaveLength(2);
   expect(screen.getByText('Tu')).toBeInTheDocument();
-  expect(screen.getByText(/contacta amb l’equip de Neighbours/)).toBeInTheDocument();
-  expect(screen.queryByRole('button', { name: /^Afegir/ })).not.toBeInTheDocument();
+  expect(screen.getByText(/se li crea el compte/)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Afegir veí' })).toBeInTheDocument();
 });
 
 test('only residents other than oneself can be edited or removed', async () => {
@@ -179,4 +179,65 @@ test('explains why a unit in use cannot be deleted', async () => {
   expect(await screen.findByRole('alert')).toHaveTextContent(
     'No es pot esborrar: aquest pis té veïns o rebuts assignats'
   );
+});
+
+async function fillNewResident(email: string) {
+  await userEvent.click(await screen.findByRole('button', { name: 'Afegir veí' }));
+  const form = screen.getByRole('form', { name: 'Afegir veí' });
+  await userEvent.type(within(form).getByLabelText('Nom'), 'Laia Serra');
+  await userEvent.type(within(form).getByLabelText('Correu electrònic'), email);
+  await chooseOption(within(form).getByRole('combobox', { name: 'Pis' }), '2n 2a');
+  await userEvent.click(within(form).getByRole('button', { name: 'Desar' }));
+  return form;
+}
+
+test('adds a new resident and shows the password once', async () => {
+  const { fake } = setup('/communities/c1/residents');
+  fake.functionsInvoke.mockResolvedValueOnce({
+    data: { userId: 'user-9', created: true, password: 'Kp7m-x9Qa-3Vtz' },
+    error: null,
+  });
+  await fillNewResident(' Laia@Example.com ');
+  expect(fake.functionsInvoke).toHaveBeenCalledWith('admin-create-resident', {
+    body: { communityId: 'c1', email: 'laia@example.com', displayName: 'Laia Serra', unitId: 'u2' },
+  });
+  const panel = await screen.findByRole('region', { name: 'Compte creat per a Laia Serra' });
+  expect(within(panel).getByText('Kp7m-x9Qa-3Vtz')).toBeInTheDocument();
+  expect(within(panel).getByText('laia@example.com')).toBeInTheDocument();
+  await userEvent.click(within(panel).getByRole('button', { name: 'Fet' }));
+  expect(screen.queryByText('Kp7m-x9Qa-3Vtz')).not.toBeInTheDocument();
+});
+
+test('links an existing account without a password', async () => {
+  const { fake } = setup('/communities/c1/residents');
+  fake.functionsInvoke.mockResolvedValueOnce({
+    data: { userId: 'user-9', created: false },
+    error: null,
+  });
+  await fillNewResident('laia@example.com');
+  const panel = await screen.findByRole('region', { name: 'Laia Serra ja tenia compte' });
+  expect(within(panel).getByText(/contrasenya de sempre/)).toBeInTheDocument();
+  expect(within(panel).queryByText(/Contrasenya$/)).not.toBeInTheDocument();
+});
+
+test('validates the email before calling the server', async () => {
+  const { fake } = setup('/communities/c1/residents');
+  const form = await fillNewResident('not-an-email');
+  expect(within(form).getByText('Escriu un correu vàlid.')).toBeInTheDocument();
+  expect(fake.functionsInvoke).not.toHaveBeenCalled();
+});
+
+test('explains server rejections and keeps the form', async () => {
+  const { fake } = setup('/communities/c1/residents');
+  fake.functionsInvoke.mockResolvedValueOnce({
+    data: null,
+    error: Object.assign(new Error('Edge Function returned a non-2xx status code'), {
+      context: new Response(JSON.stringify({ error: 'already_member' }), { status: 409 }),
+    }),
+  });
+  await fillNewResident('marta@example.com');
+  expect(await screen.findByRole('alert')).toHaveTextContent(
+    'Aquesta persona ja és membre d’aquesta comunitat.'
+  );
+  expect(screen.getByRole('form', { name: 'Afegir veí' })).toBeInTheDocument();
 });

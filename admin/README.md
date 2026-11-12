@@ -45,10 +45,13 @@ update that membership in the Supabase dashboard.
   `20261109120000_admin_documents_receipts`.
 
 - **Residents and units** (per community): list residents with their email and
-  unit, rename them, move them to another unit, or remove their access (residents
-  only; admins and roles stay with the project owner). Create and edit units with
-  the balance and next charge residents see in Accounts. Requires migration
-  `20261110100000_admin_residents`.
+  unit, add new residents (the `admin-create-resident` Edge Function creates the
+  account and returns a one-time password, or links an existing account), rename
+  them, move them to another unit, or remove their access (residents only; admins
+  and roles stay with the project owner). Create and edit units with
+  the balance and next charge residents see in Accounts. Requires migrations
+  `20261110100000_admin_residents` and `20261112100000_admin_create_resident`, and
+  the deployed Edge Function.
 
 Routes are client-side (`/communities/:id/incidents`, `/events`, `/board`, `/directory`, `/documents`, `/receipts`). When hosting
 the built `dist/`, serve `index.html` for unknown paths so deep links work.
