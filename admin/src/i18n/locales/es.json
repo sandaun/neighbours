@@ -1,0 +1,310 @@
+{
+  "brand": {
+    "name": "Neighbours",
+    "area": "Backoffice"
+  },
+  "auth": {
+    "title": "Gestiona tus comunidades",
+    "subtitle": "Entra con tu cuenta de administración.",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "nombre@ejemplo.es",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Introduce la contraseña",
+    "showPassword": "Mostrar la contraseña",
+    "hidePassword": "Ocultar la contraseña",
+    "signIn": "Entrar",
+    "signingIn": "Entrando…",
+    "signInError": "No hemos podido iniciar la sesión. Comprueba el correo, la contraseña y la conexión y vuelve a intentarlo.",
+    "signOut": "Cerrar sesión",
+    "loading": "Comprobando el acceso…",
+    "errorTitle": "No hemos podido comprobar el acceso",
+    "errorBody": "Comprueba la conexión y vuelve a intentarlo.",
+    "retry": "Volver a intentarlo",
+    "noAccessTitle": "Esta cuenta no tiene permisos de administración",
+    "noAccessBody": "El backoffice es solo para administradores de comunidad. Si crees que es un error, contacta con el equipo de Neighbours.",
+    "configErrorTitle": "El backoffice no está configurado",
+    "configErrorBody": "Faltan la dirección o la clave pública de Supabase. Revisa el archivo .env.local."
+  },
+  "language": {
+    "label": "Idioma",
+    "ca": "Catalán",
+    "es": "Castellano"
+  },
+  "communities": {
+    "title": "Tus comunidades",
+    "subtitle_one": "Administras {{count}} comunidad.",
+    "subtitle_other": "Administras {{count}} comunidades.",
+    "comingSoon": "Próximamente: organizaciones (empresas que gestionan varias comunidades).",
+    "open": "Abre {{name}}",
+    "manage": "Incidencias, vecinos, pisos, calendario, tablón, directorio, documentos y recibos",
+    "sections": "Secciones de la comunidad"
+  },
+  "incidents": {
+    "title": "Incidencias",
+    "back": "Todas las comunidades",
+    "backToList": "Volver a las incidencias",
+    "subtitle": "Revisa las incidencias comunicadas por los vecinos y respóndelas.",
+    "filters": {
+      "label": "Filtra por estado",
+      "all": "Todas"
+    },
+    "statuses": {
+      "received": "Recibida",
+      "in-progress": "En gestión",
+      "resolved": "Resuelta"
+    },
+    "categories": {
+      "plumbing": "Fontanería",
+      "electrical": "Electricidad",
+      "elevator": "Ascensor",
+      "other": "Otros"
+    },
+    "empty": "Todavía no hay incidencias en esta comunidad.",
+    "emptyFilter": "No hay incidencias con este estado.",
+    "loadErrorTitle": "No hemos podido cargar las incidencias",
+    "loadErrorBody": "Comprueba la conexión y vuelve a intentarlo.",
+    "retry": "Volver a intentarlo",
+    "loading": "Cargando…",
+    "notFoundTitle": "No encontramos esta incidencia",
+    "notFoundBody": "Puede que no exista o que no sea de una comunidad que administras.",
+    "reportedAt": "Comunicada el {{date}}",
+    "category": "Categoría",
+    "location": "Ubicación",
+    "description": "Descripción",
+    "photo": "Foto de la incidencia",
+    "photoUnavailable": "No hemos podido cargar la foto.",
+    "history": "Historial",
+    "noUpdates": "Todavía no hay ninguna respuesta. El vecino verá aquí lo que publiques.",
+    "statusChanged": "Estado: {{status}}",
+    "form": {
+      "title": "Responde al vecino",
+      "body": "Mensaje",
+      "bodyPlaceholder": "p. ej. Hemos avisado al electricista; vendrá el jueves por la mañana.",
+      "bodyHint": "El vecino verá este mensaje en la app con tu nombre.",
+      "status": "Estado de la incidencia",
+      "keepStatus": "Mantener ({{status}})",
+      "submit": "Publicar respuesta",
+      "submitting": "Publicando…",
+      "success": "Respuesta publicada. El vecino ya la puede ver en la app.",
+      "error": "No hemos podido publicar la respuesta. Comprueba la conexión y vuelve a intentarlo.",
+      "validation": "Escribe un mensaje de entre 1 y 4.000 caracteres."
+    }
+  },
+  "notFound": {
+    "title": "Esta página no existe",
+    "body": "Vuelve a la lista de comunidades.",
+    "back": "Ir al inicio"
+  },
+  "crud": {
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "saving": "Guardando…",
+    "saved": "Cambios guardados. Los vecinos ya lo ven en la app.",
+    "deleted": "Eliminado. Ya no aparece en la app.",
+    "saveError": "No hemos podido guardar los cambios. Comprueba la conexión y vuelve a intentarlo.",
+    "deleteError": "No hemos podido eliminarlo. Comprueba la conexión y vuelve a intentarlo.",
+    "confirmDelete": "¿Seguro que quieres eliminar «{{name}}»? No se puede deshacer.",
+    "confirmYes": "Sí, elimínalo",
+    "editLabel": "Editar {{name}}",
+    "deleteLabel": "Eliminar {{name}}",
+    "required": "Este campo es obligatorio.",
+    "tooLong": "Máximo {{max}} caracteres."
+  },
+  "events": {
+    "title": "Calendario",
+    "subtitle": "Eventos que los vecinos ven en el inicio y en el calendario de la app.",
+    "add": "Añadir evento",
+    "edit": "Editar evento",
+    "empty": "Todavía no hay eventos.",
+    "upcoming": "Próximos",
+    "past": "Pasados",
+    "endsBeforeStart": "La hora de fin no puede ser anterior a la de inicio.",
+    "endsHint": "Opcional.",
+    "locationPlaceholder": "p. ej. Sala comunitaria",
+    "fields": {
+      "title": "Título",
+      "location": "Lugar",
+      "startsAt": "Inicio",
+      "endsAt": "Fin"
+    },
+    "views": {
+      "label": "Vista",
+      "month": "Mes",
+      "list": "Lista"
+    },
+    "calendar": {
+      "today": "Hoy",
+      "previous": "Mes anterior",
+      "next": "Mes siguiente",
+      "more": "+{{count}} más",
+      "addOn": "Añadir evento el {{date}}",
+      "noEvents": "Ningún evento este día.",
+      "count_one": "{{count}} evento",
+      "count_other": "{{count}} eventos"
+    }
+  },
+  "board": {
+    "title": "Tablón",
+    "subtitle": "Avisos y noticias para los vecinos. Puedes programar su publicación.",
+    "add": "Añadir anuncio",
+    "edit": "Editar anuncio",
+    "empty": "Todavía no hay anuncios.",
+    "scheduled": "Programado",
+    "topicHint": "En la app se puede filtrar por Parking, Jardí y Activitats.",
+    "authorHint": "Cómo aparecerá la firma en la app.",
+    "publishHint": "Déjalo vacío para publicarlo ahora. Si pones una fecha futura, los vecinos no lo verán hasta entonces.",
+    "fields": {
+      "title": "Título",
+      "topic": "Tema",
+      "author": "Firmado por",
+      "body": "Texto",
+      "publishAt": "Fecha de publicación"
+    }
+  },
+  "directory": {
+    "title": "Directorio",
+    "subtitle": "Proveedores y servicios de la comunidad, con llamada directa desde la app.",
+    "add": "Añadir contacto",
+    "edit": "Editar contacto",
+    "empty": "Todavía no hay contactos.",
+    "invalidEmail": "Escribe un correo válido.",
+    "invalidOrder": "Escribe un número entero.",
+    "orderHint": "Los números más bajos aparecen primero.",
+    "servicePlaceholder": "p. ej. Fontanería y urgencias",
+    "hoursPlaceholder": "p. ej. De lunes a viernes, 9–18 h",
+    "fields": {
+      "name": "Nombre",
+      "service": "Servicio",
+      "phone": "Teléfono",
+      "email": "Correo electrónico",
+      "hours": "Horario",
+      "order": "Orden"
+    }
+  },
+  "documents": {
+    "title": "Documentos",
+    "subtitle": "Actas, seguros y normas que los vecinos pueden consultar y descargar en la app.",
+    "add": "Añadir documento",
+    "edit": "Editar documento",
+    "empty": "Todavía no hay documentos.",
+    "updatedAt": "Actualizado el {{date}}",
+    "titlePlaceholder": "p. ej. Acta de la junta de noviembre",
+    "categories": {
+      "minutes": "Actas",
+      "insurance": "Seguros",
+      "rules": "Normas y estatutos"
+    },
+    "fields": {
+      "title": "Título",
+      "category": "Categoría"
+    }
+  },
+  "receipts": {
+    "title": "Recibos",
+    "subtitle": "Recibos de cada piso. Cada vecino solo ve los de su vivienda.",
+    "add": "Añadir recibo",
+    "edit": "Editar recibo",
+    "empty": "No hay recibos.",
+    "noUnits": "Esta comunidad todavía no tiene pisos dados de alta. Añádelos para poder crear recibos.",
+    "filterLabel": "Piso",
+    "allUnits": "Todos los pisos",
+    "noFile": "Sin PDF",
+    "invalidAmount": "Escribe un importe en euros, p. ej. 125,50.",
+    "unitLocked": "El piso no se puede cambiar. Si hace falta, elimina el recibo y crea uno nuevo.",
+    "conceptPlaceholder": "p. ej. Cuota ordinaria",
+    "periodPlaceholder": "p. ej. Noviembre 2026",
+    "statuses": {
+      "paid": "Pagado",
+      "scheduled": "Programado"
+    },
+    "fields": {
+      "unit": "Piso",
+      "concept": "Concepto",
+      "amount": "Importe (€)",
+      "issuedAt": "Fecha de emisión",
+      "period": "Periodo",
+      "status": "Estado"
+    }
+  },
+  "files": {
+    "label": "PDF (opcional)",
+    "hint": "Solo PDF, hasta 20 MB. Es privado: solo lo verán los vecinos que tengan acceso.",
+    "replaceHint": "Elige un PDF nuevo solo si quieres sustituir el actual.",
+    "current": "PDF adjunto",
+    "open": "Ver PDF",
+    "openCurrent": "Ver el PDF actual",
+    "openNamed": "Ver el PDF de {{name}}",
+    "clear": "Quitar",
+    "notPdf": "El archivo tiene que ser un PDF.",
+    "tooLarge": "El PDF no puede superar los 20 MB.",
+    "missing": "Sin PDF: los vecinos ven el documento, pero no lo pueden abrir.",
+    "openError": "No hemos podido abrir el PDF.",
+    "choose": "Elegir PDF",
+    "chooseOther": "Elegir otro PDF",
+    "none": "Ningún archivo elegido"
+  },
+  "residents": {
+    "title": "Vecinos",
+    "subtitle": "Quién tiene acceso a la app en esta comunidad.",
+    "empty": "Todavía no hay nadie en esta comunidad.",
+    "howToAdd": "Al añadir un vecino nuevo se le crea la cuenta y te mostramos una contraseña para pasársela. Si ya tiene cuenta (por ejemplo, vive en otra comunidad), solo se le añade aquí.",
+    "admin": "Admin",
+    "you": "Tú",
+    "noUnit": "Sin piso",
+    "edit": "Editar vecino",
+    "nameHint": "Cómo lo verán en la app y en el tablón.",
+    "unitHint": "Sin piso, el vecino no ve Cuentas ni recibos.",
+    "removeLabel": "Dar de baja a {{name}}",
+    "confirmRemove": "¿Seguro que quieres dar de baja a «{{name}}»? Perderá el acceso a esta comunidad. Su historial (incidencias, recibos) se mantiene.",
+    "confirmYes": "Sí, dar de baja",
+    "removed": "Vecino dado de baja. Ya no puede entrar en esta comunidad.",
+    "fields": {
+      "name": "Nombre",
+      "unit": "Piso",
+      "email": "Correo electrónico"
+    },
+    "add": "Añadir vecino",
+    "invalidEmail": "Escribe un correo válido.",
+    "emailHint": "Con este correo entrará en la app.",
+    "password": "Contraseña",
+    "copy": "Copiar correo y contraseña",
+    "copied": "Copiado",
+    "done": "Hecho",
+    "createdTitle": "Cuenta creada para {{name}}",
+    "passwordOnce": "Pásale estos datos por un canal privado. La contraseña no se volverá a mostrar.",
+    "credentialsText": "Acceso a Neighbours\nCorreo: {{email}}\nContraseña: {{password}}",
+    "linkedTitle": "{{name}} ya tenía cuenta",
+    "linkedBody": "Lo hemos añadido a esta comunidad. Entra en la app con {{email}} y su contraseña de siempre.",
+    "createErrors": {
+      "already_member": "Esta persona ya es miembro de esta comunidad.",
+      "invalid_unit": "El piso elegido no es de esta comunidad.",
+      "invalid_input": "Revisa el nombre y el correo.",
+      "forbidden": "No tienes permiso para añadir vecinos en esta comunidad.",
+      "unauthenticated": "La sesión ha caducado. Vuelve a entrar.",
+      "unavailable": "No hemos podido crear la cuenta. Comprueba la conexión y vuelve a intentarlo."
+    }
+  },
+  "units": {
+    "title": "Pisos",
+    "subtitle": "Viviendas, locales o plazas de la comunidad, con el saldo que cada vecino ve en Cuentas.",
+    "add": "Añadir piso",
+    "edit": "Editar piso",
+    "empty": "Todavía no hay pisos.",
+    "balance": "Saldo",
+    "nextCharge": "Próximo cargo: {{amount}} el {{date}}",
+    "residents_one": "{{count}} vecino",
+    "residents_other": "{{count}} vecinos",
+    "inUse": "No se puede eliminar: este piso tiene vecinos o recibos asignados. Quítalos primero.",
+    "invalidBalance": "Escribe un importe en euros, p. ej. -120,50 o 35.",
+    "balanceHint": "Negativo si el vecino debe dinero. 0 significa «al corriente».",
+    "chargeHint": "Opcional. Hay que rellenar fecha e importe a la vez.",
+    "chargePair": "Rellena la fecha y el importe del próximo cargo, o déjalos los dos vacíos.",
+    "labelPlaceholder": "p. ej. 1º 1ª",
+    "fields": {
+      "label": "Nombre del piso",
+      "balance": "Saldo (€)",
+      "chargeAt": "Fecha del próximo cargo",
+      "chargeAmount": "Importe del próximo cargo (€)"
+    }
+  }
+}

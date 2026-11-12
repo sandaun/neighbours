@@ -69,7 +69,8 @@ cents. Clients cannot assign membership, role, community, or receipt ownership.
   `location`, `category`, `status` (`received`, `in-progress`, `resolved`),
   nullable `photo_path`, `reported_at`.
 - `incident_updates`: `id`, `incident_id`, `body`, `author_name`, optional
-  `status`, `created_at`. Dashboard operated, client read only.
+  `status`, `created_at`. Dashboard operated, client read only. Community
+  administrators append updates only through `admin_add_incident_update`.
 - `documents`: `id`, `community_id`, `title`, `category`
   (`minutes`, `insurance`, `rules`), `file_size_bytes`, nullable `storage_path`, `updated_at`.
 - `receipts`: `id`, `community_id`, `unit_id`, `concept`, `amount_cents`,
@@ -78,14 +79,18 @@ cents. Clients cannot assign membership, role, community, or receipt ownership.
   nullable `ends_at`.
 
 - `board_posts`: `id`, `community_id`, `title`, `body`, `author_name`, `topic`,
-  `published_at`. Members read published posts; all client writes are denied.
+  `published_at`. Members read published posts; community admins read, create,
+  edit, and delete their communities' posts. Resident writes are denied.
 - `directory_contacts`: `id`, `community_id`, `name`, `service`, nullable `phone`,
-  `email`, `hours`, and `sort_order`. Member-only reads; operator-managed writes.
+  `email`, `hours`, and `sort_order`. Member-only reads; community admins and the
+  operator manage writes. Community admins also manage `community_events`.
 
 Private buckets: `incident-photos` and `community-documents`. Photo paths are
 `community_id/incident_id/filename`; document/receipt paths begin with
 `community_id/`. Document reads require a corresponding authorized row; receipt
 reads additionally require unit ownership (or community administrator role).
+Community admins also publish documents and receipts with their PDFs from the
+backoffice (migration `20261109120000`).
 All exposed tables and storage objects need explicit RLS and grants. Use foreign
 keys to prevent linking a unit from a different community. Membership checks must
 not recurse through their own RLS. No client status edits or administrative writes.

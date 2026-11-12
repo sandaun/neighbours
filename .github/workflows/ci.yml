@@ -35,6 +35,43 @@ jobs:
       - name: Validate source
         run: npm run validate
 
+  admin:
+    name: Backoffice
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: admin
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: admin/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate backoffice
+        run: npm run validate
+
+  edge-functions:
+    name: Edge Functions
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+      - name: Set up Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Test and type-check Edge Functions
+        run: |
+          deno test --no-lock --node-modules-dir=none supabase/functions
+          deno check --no-lock --node-modules-dir=none supabase/functions/admin-create-resident/index.ts
+
   bundle:
     name: Export bundles
     needs: quality

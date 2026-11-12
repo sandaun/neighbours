@@ -96,12 +96,14 @@ begin
   perform pg_temp.assert_denied('update public.community_members set role = ''admin''');
   perform pg_temp.assert_denied('delete from public.community_members');
   perform pg_temp.assert_denied('insert into public.communities(name) values (''Forged community'')');
-  perform pg_temp.assert_denied('update public.units set balance_cents = 999');
+  -- Admin unit writes (20261110100000) are policy-only: residents change no rows.
+  perform pg_temp.assert_no_mutation('update public.units set balance_cents = 999');
   perform pg_temp.assert_denied('update public.incidents set status = ''resolved''');
   perform pg_temp.assert_denied('update public.incidents set reporter_id = ''00000000-0000-0000-0000-000000000003''');
   perform pg_temp.assert_denied('update public.incidents set community_id = ''10000000-0000-0000-0000-000000000002''');
   perform pg_temp.assert_denied('update public.receipts set unit_id = ''20000000-0000-0000-0000-000000000003''');
-  perform pg_temp.assert_denied('update public.documents set storage_path = ''10000000-0000-0000-0000-000000000001/receipts/20000000-0000-0000-0000-000000000003/a2.pdf''');
+  -- Admin document writes (20261109120000) are policy-only: residents change no rows.
+  perform pg_temp.assert_no_mutation('update public.documents set storage_path = ''10000000-0000-0000-0000-000000000001/receipts/20000000-0000-0000-0000-000000000003/a2.pdf''');
   perform pg_temp.assert_denied('delete from public.incidents');
   perform pg_temp.assert_denied($q$insert into public.incident_updates(incident_id,body,author_name) values ('30000000-0000-0000-0000-000000000001','Forged update','Admin')$q$);
   perform pg_temp.assert_denied($q$insert into public.incidents(community_id,reporter_id,title,description,location,category) values ('10000000-0000-0000-0000-000000000002','00000000-0000-0000-0000-000000000001','Cross community','This is malicious input','Hall','other')$q$);

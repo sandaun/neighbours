@@ -1,5 +1,8 @@
 module.exports = {
   preset: 'jest-expo',
+  // admin/ has its own Vitest suite; Edge Functions run under Deno (deno test).
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/admin/', '<rootDir>/supabase/functions/'],
+  modulePathIgnorePatterns: ['<rootDir>/admin/'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },

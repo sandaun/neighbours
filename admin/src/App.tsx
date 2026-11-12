@@ -1,0 +1,69 @@
+import { useTranslation } from 'react-i18next';
+import { Navigate, Route, Routes } from 'react-router';
+
+import { AppShell } from './components/AppShell';
+import { Button } from './components/Button';
+import { NotFound } from './components/NotFound';
+import { StatusScreen } from './components/StatusScreen';
+import { useAuth } from './features/auth/AuthProvider';
+import { LoginScreen } from './features/auth/LoginScreen';
+import { CommunitiesScreen } from './features/communities/CommunitiesScreen';
+import { CommunityLayout } from './features/communities/CommunityLayout';
+import { BoardScreen } from './features/content/BoardScreen';
+import { DirectoryScreen } from './features/content/DirectoryScreen';
+import { EventsScreen } from './features/content/EventsScreen';
+import { DocumentsScreen } from './features/files/DocumentsScreen';
+import { ReceiptsScreen } from './features/files/ReceiptsScreen';
+import { ResidentsScreen } from './features/residents/ResidentsScreen';
+import { UnitsScreen } from './features/residents/UnitsScreen';
+import { IncidentDetailScreen } from './features/incidents/IncidentDetailScreen';
+import { IncidentsScreen } from './features/incidents/IncidentsScreen';
+
+export function App() {
+  const { t } = useTranslation();
+  const auth = useAuth();
+
+  switch (auth.status) {
+    case 'config-error':
+      return <StatusScreen title={t('auth.configErrorTitle')} body={t('auth.configErrorBody')} />;
+    case 'loading':
+      return <StatusScreen title={t('auth.loading')} busy />;
+    case 'error':
+      return (
+        <StatusScreen title={t('auth.errorTitle')} body={t('auth.errorBody')}>
+          <Button onClick={auth.retry}>{t('auth.retry')}</Button>
+        </StatusScreen>
+      );
+    case 'signed-out':
+      return <LoginScreen />;
+    case 'no-access':
+      return (
+        <StatusScreen title={t('auth.noAccessTitle')} body={t('auth.noAccessBody')}>
+          <Button variant="outline" onClick={() => void auth.signOut()}>
+            {t('auth.signOut')}
+          </Button>
+        </StatusScreen>
+      );
+    case 'ready':
+      return (
+        <AppShell>
+          <Routes>
+            <Route index element={<CommunitiesScreen />} />
+            <Route path="communities/:communityId" element={<CommunityLayout />}>
+              <Route index element={<Navigate to="incidents" replace />} />
+              <Route path="incidents" element={<IncidentsScreen />} />
+              <Route path="incidents/:incidentId" element={<IncidentDetailScreen />} />
+              <Route path="residents" element={<ResidentsScreen />} />
+              <Route path="units" element={<UnitsScreen />} />
+              <Route path="events" element={<EventsScreen />} />
+              <Route path="board" element={<BoardScreen />} />
+              <Route path="directory" element={<DirectoryScreen />} />
+              <Route path="documents" element={<DocumentsScreen />} />
+              <Route path="receipts" element={<ReceiptsScreen />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AppShell>
+      );
+  }
+}

@@ -1,0 +1,310 @@
+{
+  "brand": {
+    "name": "Neighbours",
+    "area": "Backoffice"
+  },
+  "auth": {
+    "title": "Gestiona les teves comunitats",
+    "subtitle": "Entra amb el teu compte d’administració.",
+    "email": "Correu electrònic",
+    "emailPlaceholder": "nom@exemple.cat",
+    "password": "Contrasenya",
+    "passwordPlaceholder": "Introdueix la contrasenya",
+    "showPassword": "Mostra la contrasenya",
+    "hidePassword": "Amaga la contrasenya",
+    "signIn": "Entrar",
+    "signingIn": "Entrant…",
+    "signInError": "No hem pogut iniciar la sessió. Comprova el correu, la contrasenya i la connexió i torna-ho a provar.",
+    "signOut": "Tancar sessió",
+    "loading": "Comprovant l’accés…",
+    "errorTitle": "No hem pogut comprovar l’accés",
+    "errorBody": "Comprova la connexió i torna-ho a provar.",
+    "retry": "Tornar-ho a provar",
+    "noAccessTitle": "Aquest compte no té permisos d’administració",
+    "noAccessBody": "El backoffice només és per a administradors de comunitat. Si creus que és un error, contacta amb l’equip de Neighbours.",
+    "configErrorTitle": "El backoffice no està configurat",
+    "configErrorBody": "Falten l’adreça o la clau pública de Supabase. Revisa el fitxer .env.local."
+  },
+  "language": {
+    "label": "Idioma",
+    "ca": "Català",
+    "es": "Castellà"
+  },
+  "communities": {
+    "title": "Les teves comunitats",
+    "subtitle_one": "Administres {{count}} comunitat.",
+    "subtitle_other": "Administres {{count}} comunitats.",
+    "comingSoon": "Properament: organitzacions (empreses que gestionen diverses comunitats).",
+    "open": "Obre {{name}}",
+    "manage": "Incidències, veïns, pisos, calendari, tauló, directori, documents i rebuts",
+    "sections": "Seccions de la comunitat"
+  },
+  "incidents": {
+    "title": "Incidències",
+    "back": "Totes les comunitats",
+    "backToList": "Tornar a les incidències",
+    "subtitle": "Revisa les incidències comunicades pels veïns i respon-les.",
+    "filters": {
+      "label": "Filtra per estat",
+      "all": "Totes"
+    },
+    "statuses": {
+      "received": "Rebuda",
+      "in-progress": "En gestió",
+      "resolved": "Resolta"
+    },
+    "categories": {
+      "plumbing": "Fontaneria",
+      "electrical": "Electricitat",
+      "elevator": "Ascensor",
+      "other": "Altres"
+    },
+    "empty": "Encara no hi ha incidències en aquesta comunitat.",
+    "emptyFilter": "No hi ha incidències amb aquest estat.",
+    "loadErrorTitle": "No hem pogut carregar les incidències",
+    "loadErrorBody": "Comprova la connexió i torna-ho a provar.",
+    "retry": "Tornar-ho a provar",
+    "loading": "Carregant…",
+    "notFoundTitle": "No trobem aquesta incidència",
+    "notFoundBody": "Pot ser que no existeixi o que no sigui d’una comunitat que administres.",
+    "reportedAt": "Comunicada el {{date}}",
+    "category": "Categoria",
+    "location": "Ubicació",
+    "description": "Descripció",
+    "photo": "Foto de la incidència",
+    "photoUnavailable": "No hem pogut carregar la foto.",
+    "history": "Historial",
+    "noUpdates": "Encara no hi ha cap resposta. El veí veurà aquí el que publiquis.",
+    "statusChanged": "Estat: {{status}}",
+    "form": {
+      "title": "Respon al veí",
+      "body": "Missatge",
+      "bodyPlaceholder": "p. ex. Hem avisat l’electricista; vindrà dijous al matí.",
+      "bodyHint": "El veí veurà aquest missatge a l’app amb el teu nom.",
+      "status": "Estat de la incidència",
+      "keepStatus": "Mantenir ({{status}})",
+      "submit": "Publicar resposta",
+      "submitting": "Publicant…",
+      "success": "Resposta publicada. El veí ja la pot veure a l’app.",
+      "error": "No hem pogut publicar la resposta. Comprova la connexió i torna-ho a provar.",
+      "validation": "Escriu un missatge d’entre 1 i 4.000 caràcters."
+    }
+  },
+  "notFound": {
+    "title": "Aquesta pàgina no existeix",
+    "body": "Torna a la llista de comunitats.",
+    "back": "Anar a l’inici"
+  },
+  "crud": {
+    "cancel": "Cancel·lar",
+    "save": "Desar",
+    "saving": "Desant…",
+    "saved": "Canvis desats. Els veïns ja ho veuen a l’app.",
+    "deleted": "Esborrat. Ja no apareix a l’app.",
+    "saveError": "No hem pogut desar els canvis. Comprova la connexió i torna-ho a provar.",
+    "deleteError": "No hem pogut esborrar-ho. Comprova la connexió i torna-ho a provar.",
+    "confirmDelete": "Segur que vols esborrar «{{name}}»? No es pot desfer.",
+    "confirmYes": "Sí, esborra",
+    "editLabel": "Editar {{name}}",
+    "deleteLabel": "Esborrar {{name}}",
+    "required": "Aquest camp és obligatori.",
+    "tooLong": "Màxim {{max}} caràcters."
+  },
+  "events": {
+    "title": "Calendari",
+    "subtitle": "Esdeveniments que els veïns veuen a l’inici i al calendari de l’app.",
+    "add": "Afegir esdeveniment",
+    "edit": "Editar esdeveniment",
+    "empty": "Encara no hi ha esdeveniments.",
+    "upcoming": "Propers",
+    "past": "Passats",
+    "endsBeforeStart": "L’hora de final no pot ser anterior a la d’inici.",
+    "endsHint": "Opcional.",
+    "locationPlaceholder": "p. ex. Sala comunitària",
+    "fields": {
+      "title": "Títol",
+      "location": "Lloc",
+      "startsAt": "Inici",
+      "endsAt": "Final"
+    },
+    "views": {
+      "label": "Vista",
+      "month": "Mes",
+      "list": "Llista"
+    },
+    "calendar": {
+      "today": "Avui",
+      "previous": "Mes anterior",
+      "next": "Mes següent",
+      "more": "+{{count}} més",
+      "addOn": "Afegir esdeveniment el {{date}}",
+      "noEvents": "Cap esdeveniment aquest dia.",
+      "count_one": "{{count}} esdeveniment",
+      "count_other": "{{count}} esdeveniments"
+    }
+  },
+  "board": {
+    "title": "Tauló",
+    "subtitle": "Avisos i notícies per als veïns. Pots programar-ne la publicació.",
+    "add": "Afegir anunci",
+    "edit": "Editar anunci",
+    "empty": "Encara no hi ha anuncis.",
+    "scheduled": "Programat",
+    "topicHint": "A l’app es pot filtrar per Parking, Jardí i Activitats.",
+    "authorHint": "Com apareixerà la signatura a l’app.",
+    "publishHint": "Deixa-ho buit per publicar-lo ara. Si poses una data futura, els veïns no el veuran fins aleshores.",
+    "fields": {
+      "title": "Títol",
+      "topic": "Tema",
+      "author": "Signat per",
+      "body": "Text",
+      "publishAt": "Data de publicació"
+    }
+  },
+  "directory": {
+    "title": "Directori",
+    "subtitle": "Proveïdors i serveis de la comunitat, amb trucada directa des de l’app.",
+    "add": "Afegir contacte",
+    "edit": "Editar contacte",
+    "empty": "Encara no hi ha contactes.",
+    "invalidEmail": "Escriu un correu vàlid.",
+    "invalidOrder": "Escriu un número enter.",
+    "orderHint": "Els números més baixos apareixen primer.",
+    "servicePlaceholder": "p. ex. Fontaneria i urgències",
+    "hoursPlaceholder": "p. ex. De dilluns a divendres, 9–18 h",
+    "fields": {
+      "name": "Nom",
+      "service": "Servei",
+      "phone": "Telèfon",
+      "email": "Correu electrònic",
+      "hours": "Horari",
+      "order": "Ordre"
+    }
+  },
+  "documents": {
+    "title": "Documents",
+    "subtitle": "Actes, assegurances i normes que els veïns poden consultar i descarregar a l’app.",
+    "add": "Afegir document",
+    "edit": "Editar document",
+    "empty": "Encara no hi ha documents.",
+    "updatedAt": "Actualitzat el {{date}}",
+    "titlePlaceholder": "p. ex. Acta de la junta de novembre",
+    "categories": {
+      "minutes": "Actes",
+      "insurance": "Assegurances",
+      "rules": "Normes i estatuts"
+    },
+    "fields": {
+      "title": "Títol",
+      "category": "Categoria"
+    }
+  },
+  "receipts": {
+    "title": "Rebuts",
+    "subtitle": "Rebuts de cada pis. Cada veí només veu els del seu habitatge.",
+    "add": "Afegir rebut",
+    "edit": "Editar rebut",
+    "empty": "No hi ha rebuts.",
+    "noUnits": "Aquesta comunitat encara no té pisos donats d’alta. Afegeix-los per poder crear rebuts.",
+    "filterLabel": "Pis",
+    "allUnits": "Tots els pisos",
+    "noFile": "Sense PDF",
+    "invalidAmount": "Escriu un import en euros, p. ex. 125,50.",
+    "unitLocked": "El pis no es pot canviar. Si cal, esborra el rebut i crea’n un de nou.",
+    "conceptPlaceholder": "p. ex. Quota ordinària",
+    "periodPlaceholder": "p. ex. Novembre 2026",
+    "statuses": {
+      "paid": "Pagat",
+      "scheduled": "Programat"
+    },
+    "fields": {
+      "unit": "Pis",
+      "concept": "Concepte",
+      "amount": "Import (€)",
+      "issuedAt": "Data d’emissió",
+      "period": "Període",
+      "status": "Estat"
+    }
+  },
+  "files": {
+    "label": "PDF (opcional)",
+    "hint": "Només PDF, fins a 20 MB. És privat: només el veuran els veïns que hi tinguin accés.",
+    "replaceHint": "Tria un PDF nou només si vols substituir l’actual.",
+    "current": "PDF adjunt",
+    "open": "Veure PDF",
+    "openCurrent": "Veure el PDF actual",
+    "openNamed": "Veure el PDF de {{name}}",
+    "clear": "Treure",
+    "notPdf": "El fitxer ha de ser un PDF.",
+    "tooLarge": "El PDF no pot superar els 20 MB.",
+    "missing": "Sense PDF: els veïns veuen el document, però no el poden obrir.",
+    "openError": "No hem pogut obrir el PDF.",
+    "choose": "Triar PDF",
+    "chooseOther": "Triar un altre PDF",
+    "none": "Cap fitxer triat"
+  },
+  "residents": {
+    "title": "Veïns",
+    "subtitle": "Qui té accés a l’app en aquesta comunitat.",
+    "empty": "Encara no hi ha ningú en aquesta comunitat.",
+    "howToAdd": "En afegir un veí nou se li crea el compte i et mostrem una contrasenya per passar-li. Si ja té compte (per exemple, viu en una altra comunitat), només se l’afegeix aquí.",
+    "admin": "Admin",
+    "you": "Tu",
+    "noUnit": "Sense pis",
+    "edit": "Editar veí",
+    "nameHint": "Com el veuran a l’app i al tauló.",
+    "unitHint": "Sense pis, el veí no veu Comptes ni rebuts.",
+    "removeLabel": "Donar de baixa {{name}}",
+    "confirmRemove": "Segur que vols donar de baixa «{{name}}»? Perdrà l’accés a aquesta comunitat. El seu historial (incidències, rebuts) es manté.",
+    "confirmYes": "Sí, dona de baixa",
+    "removed": "Veí donat de baixa. Ja no pot entrar a aquesta comunitat.",
+    "fields": {
+      "name": "Nom",
+      "unit": "Pis",
+      "email": "Correu electrònic"
+    },
+    "add": "Afegir veí",
+    "invalidEmail": "Escriu un correu vàlid.",
+    "emailHint": "Amb aquest correu entrarà a l’app.",
+    "password": "Contrasenya",
+    "copy": "Copiar correu i contrasenya",
+    "copied": "Copiat",
+    "done": "Fet",
+    "createdTitle": "Compte creat per a {{name}}",
+    "passwordOnce": "Passa-li aquestes dades per un canal privat. La contrasenya no es tornarà a mostrar.",
+    "credentialsText": "Accés a Neighbours\nCorreu: {{email}}\nContrasenya: {{password}}",
+    "linkedTitle": "{{name}} ja tenia compte",
+    "linkedBody": "L’hem afegit a aquesta comunitat. Entra a l’app amb {{email}} i la contrasenya de sempre.",
+    "createErrors": {
+      "already_member": "Aquesta persona ja és membre d’aquesta comunitat.",
+      "invalid_unit": "El pis triat no és d’aquesta comunitat.",
+      "invalid_input": "Revisa el nom i el correu.",
+      "forbidden": "No tens permís per afegir veïns en aquesta comunitat.",
+      "unauthenticated": "La sessió ha caducat. Torna a entrar.",
+      "unavailable": "No hem pogut crear el compte. Comprova la connexió i torna-ho a provar."
+    }
+  },
+  "units": {
+    "title": "Pisos",
+    "subtitle": "Habitatges, locals o places de la comunitat, amb el saldo que cada veí veu a Comptes.",
+    "add": "Afegir pis",
+    "edit": "Editar pis",
+    "empty": "Encara no hi ha pisos.",
+    "balance": "Saldo",
+    "nextCharge": "Proper càrrec: {{amount}} el {{date}}",
+    "residents_one": "{{count}} veí",
+    "residents_other": "{{count}} veïns",
+    "inUse": "No es pot esborrar: aquest pis té veïns o rebuts assignats. Treu-los primer.",
+    "invalidBalance": "Escriu un import en euros, p. ex. -120,50 o 35.",
+    "balanceHint": "Negatiu si el veí deu diners. 0 vol dir «al corrent».",
+    "chargeHint": "Opcional. Cal omplir data i import alhora.",
+    "chargePair": "Omple la data i l’import del proper càrrec, o deixa’ls tots dos buits.",
+    "labelPlaceholder": "p. ex. 1r 1a",
+    "fields": {
+      "label": "Nom del pis",
+      "balance": "Saldo (€)",
+      "chargeAt": "Data del proper càrrec",
+      "chargeAmount": "Import del proper càrrec (€)"
+    }
+  }
+}
