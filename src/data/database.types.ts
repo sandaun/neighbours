@@ -1,4 +1,4 @@
-// Schema snapshot including the admin incident update function migration.
+// Schema snapshot including the admin residents migration.
 // Regenerate against the linked project after applying the migration.
 type Relationship = {
   foreignKeyName: string;
@@ -145,6 +145,28 @@ export type Database = {
       admin_add_incident_update: {
         Args: { p_incident_id: string; p_body: string; p_status?: IncidentRow['status'] };
         Returns: IncidentUpdateRow;
+      };
+      admin_list_members: {
+        Args: { p_community_id: string };
+        Returns: (Pick<
+          MembershipRow,
+          'user_id' | 'display_name' | 'unit_id' | 'role' | 'created_at'
+        > & {
+          email: string;
+        })[];
+      };
+      admin_update_member: {
+        Args: {
+          p_community_id: string;
+          p_user_id: string;
+          p_display_name: string;
+          p_unit_id: string | null;
+        };
+        Returns: undefined;
+      };
+      admin_remove_member: {
+        Args: { p_community_id: string; p_user_id: string };
+        Returns: undefined;
       };
     };
     Enums: { [_ in never]: never };

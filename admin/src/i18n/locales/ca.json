@@ -34,9 +34,9 @@
     "title": "Les teves comunitats",
     "subtitle_one": "Administres {{count}} comunitat.",
     "subtitle_other": "Administres {{count}} comunitats.",
-    "comingSoon": "Properament: gestió de veïns i pisos.",
+    "comingSoon": "Properament: donar d’alta veïns nous des del backoffice.",
     "open": "Obre {{name}}",
-    "manage": "Incidències, calendari, tauló, directori, documents i rebuts",
+    "manage": "Incidències, veïns, pisos, calendari, tauló, directori, documents i rebuts",
     "sections": "Seccions de la comunitat"
   },
   "incidents": {
@@ -242,5 +242,48 @@
     "choose": "Triar PDF",
     "chooseOther": "Triar un altre PDF",
     "none": "Cap fitxer triat"
+  },
+  "residents": {
+    "title": "Veïns",
+    "subtitle": "Qui té accés a l’app en aquesta comunitat.",
+    "empty": "Encara no hi ha ningú en aquesta comunitat.",
+    "howToAdd": "Per donar d’alta un veí nou, de moment contacta amb l’equip de Neighbours. Aquí pots canviar-li el nom o el pis, o donar-lo de baixa.",
+    "admin": "Admin",
+    "you": "Tu",
+    "noUnit": "Sense pis",
+    "edit": "Editar veí",
+    "nameHint": "Com el veuran a l’app i al tauló.",
+    "unitHint": "Sense pis, el veí no veu Comptes ni rebuts.",
+    "removeLabel": "Donar de baixa {{name}}",
+    "confirmRemove": "Segur que vols donar de baixa «{{name}}»? Perdrà l’accés a aquesta comunitat. El seu historial (incidències, rebuts) es manté.",
+    "confirmYes": "Sí, dona de baixa",
+    "removed": "Veí donat de baixa. Ja no pot entrar a aquesta comunitat.",
+    "fields": {
+      "name": "Nom",
+      "unit": "Pis"
+    }
+  },
+  "units": {
+    "title": "Pisos",
+    "subtitle": "Habitatges, locals o places de la comunitat, amb el saldo que cada veí veu a Comptes.",
+    "add": "Afegir pis",
+    "edit": "Editar pis",
+    "empty": "Encara no hi ha pisos.",
+    "balance": "Saldo",
+    "nextCharge": "Proper càrrec: {{amount}} el {{date}}",
+    "residents_one": "{{count}} veí",
+    "residents_other": "{{count}} veïns",
+    "inUse": "No es pot esborrar: aquest pis té veïns o rebuts assignats. Treu-los primer.",
+    "invalidBalance": "Escriu un import en euros, p. ex. -120,50 o 35.",
+    "balanceHint": "Negatiu si el veí deu diners. 0 vol dir «al corrent».",
+    "chargeHint": "Opcional. Cal omplir data i import alhora.",
+    "chargePair": "Omple la data i l’import del proper càrrec, o deixa’ls tots dos buits.",
+    "labelPlaceholder": "p. ex. 1r 1a",
+    "fields": {
+      "label": "Nom del pis",
+      "balance": "Saldo (€)",
+      "chargeAt": "Data del proper càrrec",
+      "chargeAmount": "Import del proper càrrec (€)"
+    }
   }
 }

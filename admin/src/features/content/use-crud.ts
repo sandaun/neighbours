@@ -6,9 +6,9 @@ import { useClient } from '@/lib/use-client';
 export type CrudApi<Row, Input> = {
   key: string;
   list(client: AdminClient, communityId: string): Promise<Row[]>;
-  create(client: AdminClient, communityId: string, input: Input): Promise<Row>;
-  update(client: AdminClient, id: string, input: Input, communityId: string): Promise<Row>;
-  remove(client: AdminClient, row: Row): Promise<unknown>;
+  create(client: AdminClient, communityId: string, input: Input): Promise<unknown>;
+  update(client: AdminClient, id: string, input: Input, communityId: string): Promise<unknown>;
+  remove(client: AdminClient, row: Row, communityId: string): Promise<unknown>;
 };
 
 export function useCrud<Row, Input>(api: CrudApi<Row, Input>, communityId: string) {
@@ -24,7 +24,7 @@ export function useCrud<Row, Input>(api: CrudApi<Row, Input>, communityId: strin
     onSuccess: invalidate,
   });
   const remove = useMutation({
-    mutationFn: (row: Row) => api.remove(client, row),
+    mutationFn: (row: Row) => api.remove(client, row, communityId),
     onSuccess: invalidate,
   });
   return { list, save, remove };

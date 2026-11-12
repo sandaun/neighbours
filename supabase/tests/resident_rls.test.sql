@@ -96,7 +96,8 @@ begin
   perform pg_temp.assert_denied('update public.community_members set role = ''admin''');
   perform pg_temp.assert_denied('delete from public.community_members');
   perform pg_temp.assert_denied('insert into public.communities(name) values (''Forged community'')');
-  perform pg_temp.assert_denied('update public.units set balance_cents = 999');
+  -- Admin unit writes (20261110100000) are policy-only: residents change no rows.
+  perform pg_temp.assert_no_mutation('update public.units set balance_cents = 999');
   perform pg_temp.assert_denied('update public.incidents set status = ''resolved''');
   perform pg_temp.assert_denied('update public.incidents set reporter_id = ''00000000-0000-0000-0000-000000000003''');
   perform pg_temp.assert_denied('update public.incidents set community_id = ''10000000-0000-0000-0000-000000000002''');

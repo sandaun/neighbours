@@ -154,16 +154,6 @@ export async function deleteDocument(client: AdminClient, row: DocumentRow) {
   return deleted;
 }
 
-export async function listUnits(client: AdminClient, communityId: string): Promise<Unit[]> {
-  const { data, error } = await client
-    .from('units')
-    .select('id, label')
-    .eq('community_id', communityId)
-    .order('label', { ascending: true });
-  if (error) throw error;
-  return data;
-}
-
 export async function listReceipts(client: AdminClient, communityId: string) {
   const { data, error } = await client
     .from('receipts')

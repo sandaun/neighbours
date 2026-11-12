@@ -34,9 +34,9 @@
     "title": "Tus comunidades",
     "subtitle_one": "Administras {{count}} comunidad.",
     "subtitle_other": "Administras {{count}} comunidades.",
-    "comingSoon": "Próximamente: gestión de vecinos y pisos.",
+    "comingSoon": "Próximamente: dar de alta vecinos nuevos desde el backoffice.",
     "open": "Abre {{name}}",
-    "manage": "Incidencias, calendario, tablón, directorio, documentos y recibos",
+    "manage": "Incidencias, vecinos, pisos, calendario, tablón, directorio, documentos y recibos",
     "sections": "Secciones de la comunidad"
   },
   "incidents": {
@@ -242,5 +242,48 @@
     "choose": "Elegir PDF",
     "chooseOther": "Elegir otro PDF",
     "none": "Ningún archivo elegido"
+  },
+  "residents": {
+    "title": "Vecinos",
+    "subtitle": "Quién tiene acceso a la app en esta comunidad.",
+    "empty": "Todavía no hay nadie en esta comunidad.",
+    "howToAdd": "Para dar de alta a un vecino nuevo, de momento contacta con el equipo de Neighbours. Aquí puedes cambiarle el nombre o el piso, o darlo de baja.",
+    "admin": "Admin",
+    "you": "Tú",
+    "noUnit": "Sin piso",
+    "edit": "Editar vecino",
+    "nameHint": "Cómo lo verán en la app y en el tablón.",
+    "unitHint": "Sin piso, el vecino no ve Cuentas ni recibos.",
+    "removeLabel": "Dar de baja a {{name}}",
+    "confirmRemove": "¿Seguro que quieres dar de baja a «{{name}}»? Perderá el acceso a esta comunidad. Su historial (incidencias, recibos) se mantiene.",
+    "confirmYes": "Sí, dar de baja",
+    "removed": "Vecino dado de baja. Ya no puede entrar en esta comunidad.",
+    "fields": {
+      "name": "Nombre",
+      "unit": "Piso"
+    }
+  },
+  "units": {
+    "title": "Pisos",
+    "subtitle": "Viviendas, locales o plazas de la comunidad, con el saldo que cada vecino ve en Cuentas.",
+    "add": "Añadir piso",
+    "edit": "Editar piso",
+    "empty": "Todavía no hay pisos.",
+    "balance": "Saldo",
+    "nextCharge": "Próximo cargo: {{amount}} el {{date}}",
+    "residents_one": "{{count}} vecino",
+    "residents_other": "{{count}} vecinos",
+    "inUse": "No se puede eliminar: este piso tiene vecinos o recibos asignados. Quítalos primero.",
+    "invalidBalance": "Escribe un importe en euros, p. ej. -120,50 o 35.",
+    "balanceHint": "Negativo si el vecino debe dinero. 0 significa «al corriente».",
+    "chargeHint": "Opcional. Hay que rellenar fecha e importe a la vez.",
+    "chargePair": "Rellena la fecha y el importe del próximo cargo, o déjalos los dos vacíos.",
+    "labelPlaceholder": "p. ej. 1º 1ª",
+    "fields": {
+      "label": "Nombre del piso",
+      "balance": "Saldo (€)",
+      "chargeAt": "Fecha del próximo cargo",
+      "chargeAmount": "Importe del próximo cargo (€)"
+    }
   }
 }

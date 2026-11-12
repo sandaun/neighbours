@@ -8,6 +8,8 @@ import { useAuth } from '@/features/auth/AuthProvider';
 
 const tabs = [
   { path: 'incidents', label: 'incidents.title' },
+  { path: 'residents', label: 'residents.title' },
+  { path: 'units', label: 'units.title' },
   { path: 'events', label: 'events.title' },
   { path: 'board', label: 'board.title' },
   { path: 'directory', label: 'directory.title' },

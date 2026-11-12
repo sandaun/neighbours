@@ -14,6 +14,8 @@ import { DirectoryScreen } from './features/content/DirectoryScreen';
 import { EventsScreen } from './features/content/EventsScreen';
 import { DocumentsScreen } from './features/files/DocumentsScreen';
 import { ReceiptsScreen } from './features/files/ReceiptsScreen';
+import { ResidentsScreen } from './features/residents/ResidentsScreen';
+import { UnitsScreen } from './features/residents/UnitsScreen';
 import { IncidentDetailScreen } from './features/incidents/IncidentDetailScreen';
 import { IncidentsScreen } from './features/incidents/IncidentsScreen';
 
@@ -51,6 +53,8 @@ export function App() {
               <Route index element={<Navigate to="incidents" replace />} />
               <Route path="incidents" element={<IncidentsScreen />} />
               <Route path="incidents/:incidentId" element={<IncidentDetailScreen />} />
+              <Route path="residents" element={<ResidentsScreen />} />
+              <Route path="units" element={<UnitsScreen />} />
               <Route path="events" element={<EventsScreen />} />
               <Route path="board" element={<BoardScreen />} />
               <Route path="directory" element={<DirectoryScreen />} />

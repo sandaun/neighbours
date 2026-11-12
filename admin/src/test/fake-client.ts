@@ -32,6 +32,7 @@ export function makeFakeClient({
   rpc = { data: null, error: null },
   signedUrl = { data: { signedUrl: 'https://files.example/photo.jpg' }, error: null },
   uploadResult = { data: { path: 'uploaded' }, error: null },
+  rpcs = {},
 }: {
   session?: Session | null;
   memberships?: QueryResult;
@@ -39,6 +40,8 @@ export function makeFakeClient({
   rpc?: QueryResult;
   signedUrl?: QueryResult;
   uploadResult?: QueryResult;
+  /** Per-function results; functions not listed fall back to `rpc`. */
+  rpcs?: Record<string, QueryResult>;
 } = {}) {
   const calls: Call[] = [];
   const results: Record<string, QueryResult> = { community_members: memberships, ...tables };
@@ -90,7 +93,7 @@ export function makeFakeClient({
       calls.push({ table, method: 'from', args: [table] });
       return builder(table);
     }),
-    rpc: vi.fn(async () => rpc),
+    rpc: vi.fn(async (name: string) => rpcs[name] ?? rpc),
   };
   return {
     client: client as unknown as AdminClient,

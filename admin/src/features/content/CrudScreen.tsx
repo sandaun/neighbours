@@ -31,6 +31,21 @@ type Props<Row extends { id: string }, Input> = {
   toolbar?: ReactNode;
   /** Replaces the default list, e.g. with a calendar. Forms then open above it. */
   renderCollection?(rows: Row[], actions: CollectionActions<Row>): ReactNode;
+  /** Hide the add button (e.g. accounts are created elsewhere). Defaults to true. */
+  allowCreate?: boolean;
+  /** Rows that cannot be edited or deleted from here. */
+  canModify?(row: Row): boolean;
+  /** Wording for screens where "delete" means something else, like removing access. */
+  labels?: Partial<CrudLabels>;
+  /** A specific message for a known failure; falls back to the generic one. */
+  describeError?(error: Error, action: 'save' | 'delete'): string | null;
+};
+
+type CrudLabels = {
+  deleteLabel(name: string): string;
+  confirmDelete(name: string): string;
+  confirmYes: string;
+  deleted: string;
 };
 
 export type CollectionActions<Row> = {
@@ -53,8 +68,22 @@ export function CrudScreen<Row extends { id: string }, Input>({
   sections,
   toolbar,
   renderCollection,
+  allowCreate = true,
+  canModify,
+  labels: customLabels,
+  describeError,
 }: Props<Row, Input>) {
   const { t } = useTranslation();
+  const labels: CrudLabels = {
+    deleteLabel: (name) => t('crud.deleteLabel', { name }),
+    confirmDelete: (name) => t('crud.confirmDelete', { name }),
+    confirmYes: t('crud.confirmYes'),
+    deleted: t('crud.deleted'),
+    ...customLabels,
+  };
+  const errorText = (error: Error | null, action: 'save' | 'delete') =>
+    (error && describeError?.(error, action)) ||
+    t(action === 'save' ? 'crud.saveError' : 'crud.deleteError');
   const { list, save, remove } = useCrud(api, communityId);
   const [editing, setEditing] = useState<string | null>(null);
   const [confirming, setConfirming] = useState<string | null>(null);
@@ -92,7 +121,7 @@ export function CrudScreen<Row extends { id: string }, Input>({
         })}
         {save.isError && (
           <p role="alert" className="rounded-md bg-danger/10 px-3 py-2 text-sm text-danger">
-            {t('crud.saveError')}
+            {errorText(save.error, 'save')}
           </p>
         )}
       </FormSlot>
@@ -110,7 +139,7 @@ export function CrudScreen<Row extends { id: string }, Input>({
         <div className="min-w-0 flex-1">{renderItem(row)}</div>
         {confirming === row.id ? (
           <div className="flex flex-col gap-2 sm:items-end">
-            <p className="text-sm text-ink">{t('crud.confirmDelete', { name })}</p>
+            <p className="text-sm text-ink">{labels.confirmDelete(name)}</p>
             <div className="flex gap-2">
               <Button variant="outline" onClick={() => setConfirming(null)}>
                 {t('crud.cancel')}
@@ -127,11 +156,11 @@ export function CrudScreen<Row extends { id: string }, Input>({
                   })
                 }
               >
-                {t('crud.confirmYes')}
+                {labels.confirmYes}
               </Button>
             </div>
           </div>
-        ) : (
+        ) : canModify && !canModify(row) ? null : (
           <div className="flex shrink-0 gap-1">
             <Button
               variant="ghost"
@@ -144,7 +173,7 @@ export function CrudScreen<Row extends { id: string }, Input>({
             <Button
               variant="ghost"
               className="px-3 hover:text-danger"
-              aria-label={t('crud.deleteLabel', { name })}
+              aria-label={labels.deleteLabel(name)}
               onClick={() => {
                 setConfirming(row.id);
                 setEditing(null);
@@ -169,7 +198,7 @@ export function CrudScreen<Row extends { id: string }, Input>({
           <h1 className="font-display text-3xl text-ink">{title}</h1>
           <p className="text-ink-soft">{subtitle}</p>
         </div>
-        {editing !== 'new' && (
+        {allowCreate && editing !== 'new' && (
           <Button onClick={() => startEditing('new')} disabled={!list.isSuccess}>
             <Plus aria-hidden size={16} />
             {addLabel}
@@ -182,12 +211,12 @@ export function CrudScreen<Row extends { id: string }, Input>({
           role="status"
           className="rounded-md bg-secondary/20 px-3 py-2 text-sm text-secondary-txt"
         >
-          {t(notice === 'saved' ? 'crud.saved' : 'crud.deleted')}
+          {notice === 'saved' ? t('crud.saved') : labels.deleted}
         </p>
       )}
       {remove.isError && (
         <p role="alert" className="rounded-md bg-danger/10 px-3 py-2 text-sm text-danger">
-          {t('crud.deleteError')}
+          {errorText(remove.error, 'delete')}
         </p>
       )}
 

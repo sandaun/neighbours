@@ -11,6 +11,7 @@ modifiquen cap dada, i els veïns continuen exactament igual.
 | `20261109100000_admin_incident_updates` | Respondre incidències i canviar-ne l'estat |
 | `20261109110000_admin_community_content` | Gestionar calendari, tauló i directori |
 | `20261109120000_admin_documents_receipts` | Pujar documents i rebuts amb PDF |
+| `20261110100000_admin_residents` | Veure i gestionar veïns i pisos (aplicada després, a part) |
 
 Necessites: Node.js, el repo clonat i accés de propietari al projecte de Supabase
 (incloent-hi la contrasenya de la base de dades: *Project Settings → Database*).
@@ -84,6 +85,7 @@ Al dashboard de Supabase, obre **SQL Editor**. Per a cada un d'aquests fitxers d
 3. `admin_incident_updates.test.sql`
 4. `admin_community_content.test.sql`
 5. `admin_documents_receipts.test.sql`
+6. `admin_residents.test.sql`
 
 Cada test crea dades de prova i **les desfà totes en acabar** (`rollback`). Si no surt
 cap error en vermell, ha passat. Si surt un error, copia'm el missatge.
@@ -152,7 +154,7 @@ backoffice i deixa els veïns com estaven. No esborra cap dada. Enganxa'l al SQL
 Editor i prem Run. Després, perquè l'historial quedi bé:
 
 ```sh
-npx supabase@2.121.0 migration repair 20261109100000 20261109110000 20261109120000 --status reverted
+npx supabase@2.121.0 migration repair 20261109100000 20261109110000 20261109120000 20261110100000 --status reverted
 ```
 
 Provat en local el 9 de novembre de 2026: el fitxer desfà els permisos i els tests

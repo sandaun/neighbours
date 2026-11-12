@@ -16,6 +16,7 @@ els mateixos colors que l'app. L'app dels veïns no canvia.
 | Calendari, tauló, directori | Crear, editar i esborrar; programar anuncis | `20261109110000` | `e1dd53a` |
 | Documents i rebuts | Pujar PDFs privats, substituir-los, obrir-los, esborrar-los | `20261109120000` | `e943fc1` |
 | Guia i desfer | Guia d'aplicació i SQL per desfer-ho tot | — | `bd42300` |
+| Veïns i pisos (part 1) | Veure els veïns (amb email), canviar-los el nom o el pis, donar-los de baixa; crear i editar pisos amb saldo i proper càrrec | `20261110100000` ⏳ pendent d'aplicar | (aquest commit) |
 
 **Seguretat:** cada admin només pot tocar les seves comunitats; els veïns continuen
 només llegint. Ho garanteix la base de dades (RLS), no la web.
@@ -67,10 +68,12 @@ Per desfer-ho: `supabase/operations/rollback_admin_backoffice.sql` (explicat a l
 treballar amb dades reals.
 
 **Feina que faré jo, per ordre:**
-0. **Retocs d'interfície:** desplegables propis (Radix Select) a tot el backoffice.
-1. **Veïns:** donar d'alta i de baixa, i assignar pis. Necessita una Edge Function
-   que també s'haurà de desplegar.
-2. **Pisos i saldos:** editar el saldo i el proper càrrec que el veí veu a Comptes.
+1. **Veïns, part 2:** donar d'alta veïns nous (crear el compte). Necessita una Edge
+   Function que també s'haurà de desplegar. Inclou anonimitzar un veí que marxa
+   (vegeu [`proteccio-dades.md`](proteccio-dades.md)).
+2. **Organitzacions:** que una empresa (p. ex. Carbonell) gestioni totes les seves
+   comunitats sense fer admin cada treballador una per una. Els rols d'admin, de
+   moment, els posa el propietari del projecte.
 3. **Qui ha comunicat cada incidència:** ara l'admin no pot veure els noms dels veïns.
 4. Votacions i reserves (encara no existeixen a la base de dades).
 5. Millores: doble factor (MFA) per als admins, fitxer JavaScript més petit i tests

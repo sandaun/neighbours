@@ -7,13 +7,13 @@ import {
   createReceipt,
   deleteReceipt,
   listReceipts,
-  listUnits,
   type ReceiptInput,
   type ReceiptRow,
   type Unit,
   updateReceipt,
 } from './files-api';
 import { ErrorState, LoadingState } from '@/components/QueryState';
+import { listUnits } from '@/features/residents/residents-api';
 import { lengthError, TextField } from '@/components/Field';
 import { Select } from '@/components/Select';
 import { CrudScreen, FormCard, type FormProps } from '@/features/content/CrudScreen';
