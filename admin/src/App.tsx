@@ -8,6 +8,7 @@ import { StatusScreen } from './components/StatusScreen';
 import { useAuth } from './features/auth/AuthProvider';
 import { LoginScreen } from './features/auth/LoginScreen';
 import { CommunitiesScreen } from './features/communities/CommunitiesScreen';
+import { CommunityDetailsScreen } from './features/communities/CommunityDetailsScreen';
 import { CommunityLayout } from './features/communities/CommunityLayout';
 import { BoardScreen } from './features/content/BoardScreen';
 import { DirectoryScreen } from './features/content/DirectoryScreen';
@@ -60,6 +61,7 @@ export function App() {
               <Route path="directory" element={<DirectoryScreen />} />
               <Route path="documents" element={<DocumentsScreen />} />
               <Route path="receipts" element={<ReceiptsScreen />} />
+              <Route path="details" element={<CommunityDetailsScreen />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

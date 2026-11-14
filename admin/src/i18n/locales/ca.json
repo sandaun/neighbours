@@ -36,7 +36,14 @@
     "comingSoon": "Properament: organitzacions (empreses que gestionen diverses comunitats).",
     "open": "Obre {{name}}",
     "manage": "Incidències, veïns, pisos, calendari, tauló, directori, documents i rebuts",
-    "sections": "Seccions de la comunitat"
+    "sections": "Seccions de la comunitat",
+    "details": {
+      "title": "Dades de la comunitat",
+      "name": "Nom de la comunitat",
+      "street": "Carrer i número",
+      "municipality": "Municipi",
+      "saved": "Dades de la comunitat desades."
+    }
   },
   "incidents": {
     "title": "Incidències",

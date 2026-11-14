@@ -36,7 +36,14 @@
     "comingSoon": "Próximamente: organizaciones (empresas que gestionan varias comunidades).",
     "open": "Abre {{name}}",
     "manage": "Incidencias, vecinos, pisos, calendario, tablón, directorio, documentos y recibos",
-    "sections": "Secciones de la comunidad"
+    "sections": "Secciones de la comunidad",
+    "details": {
+      "title": "Datos de la comunidad",
+      "name": "Nombre de la comunidad",
+      "street": "Calle y número",
+      "municipality": "Municipio",
+      "saved": "Datos de la comunidad guardados."
+    }
   },
   "incidents": {
     "title": "Incidencias",

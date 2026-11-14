@@ -15,6 +15,7 @@ export function makeAuth(overrides: Partial<AuthContextValue> = {}): AuthContext
     error: null,
     signIn: vi.fn(async () => {}),
     signOut: vi.fn(async () => {}),
+    updateCommunityName: vi.fn(),
     retry: vi.fn(),
     ...overrides,
   };

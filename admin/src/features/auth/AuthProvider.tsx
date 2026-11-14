@@ -15,6 +15,7 @@ export type AuthContextValue = {
   error: Error | null;
   signIn(email: string, password: string): Promise<void>;
   signOut(): Promise<void>;
+  updateCommunityName(communityId: string, name: string): void;
   retry(): void;
 };
 
@@ -134,6 +135,25 @@ export function AuthProvider({
     setAttempt((value) => value + 1);
   }, []);
 
+  const updateCommunityName = useCallback(
+    (communityId: string, name: string) => {
+      setCommunitiesState((state) => {
+        if (!state || state.userId !== userId) return state;
+        return {
+          ...state,
+          communities: state.communities
+            .map((community) =>
+              community.communityId === communityId
+                ? { ...community, communityName: name }
+                : community
+            )
+            .sort((a, b) => a.communityName.localeCompare(b.communityName)),
+        };
+      });
+    },
+    [userId]
+  );
+
   const current = communitiesState?.userId === userId ? communitiesState : null;
   const error = runtime.error ?? authError ?? current?.error ?? null;
   const status: AuthStatus = runtime.error
@@ -162,6 +182,7 @@ export function AuthProvider({
         error,
         signIn,
         signOut,
+        updateCommunityName,
         retry,
       }}
     >
