@@ -15,7 +15,7 @@ type ScreenHeaderProps = {
 };
 
 /**
- * Branded hero for Home and a quieter content header for primary sections.
+ * Branded hero and a quieter content header for primary sections.
  */
 export function ScreenHeader({
   overline,

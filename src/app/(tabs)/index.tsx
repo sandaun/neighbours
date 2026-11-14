@@ -1,32 +1,55 @@
+import { Image } from 'expo-image';
+import { useIsFocused, useScrollToTop } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RefreshControl, Text, View } from 'react-native';
+import { RefreshControl, ScrollView, Text, View, type ScrollViewInstance } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { appDataSource } from '@/data';
-import {
-  Avatar,
-  Button,
-  Card,
-  ErrorState,
-  LoadingState,
-  CollapsibleScreen,
-  SectionHeader,
-} from '@/design-system';
+import { Avatar, Button, Card, ErrorState, LoadingState, SectionHeader } from '@/design-system';
+import { useAuth } from '@/features/auth/AuthProvider';
 import { IncidentCard } from '@/features/incidents/IncidentCard';
 import { useDataResource } from '@/hooks/use-data-resource';
 import { formatEventDate } from '@/utils/formatters';
 
 export default function HomeScreen() {
   const { t, i18n } = useTranslation();
+  const { membership } = useAuth();
   const resource = useDataResource(appDataSource.getHome);
+  const insets = useSafeAreaInsets();
+  const isFocused = useIsFocused();
+  const scrollRef = useRef<ScrollViewInstance>(null);
+  useScrollToTop(scrollRef);
+
   const locale = i18n.resolvedLanguage ?? 'ca';
   const communityName =
-    resource.status === 'success' ? resource.data.communityName : t('home.communityName');
+    resource.data?.communityName ?? membership?.communityName ?? t('home.communityName');
 
   return (
-    <View className="flex-1 bg-bg dark:bg-bg-dark">
-      <CollapsibleScreen
-        header={{ overline: t('home.overline'), title: communityName }}
-        contentContainerClassName="px-5 pb-8"
+    <View className="flex-1 bg-bg dark:bg-bg-dark" style={{ paddingTop: insets.top }}>
+      {isFocused ? <StatusBar style="auto" /> : null}
+      <View className="flex-row items-center gap-3 px-5 pb-1 pt-3">
+        <Image
+          source={require('@/assets/images/finquify-symbol.png')}
+          style={{ width: 28, height: 28 }}
+          contentFit="contain"
+          accessible={false}
+        />
+        <Text
+          accessibilityRole="header"
+          className="flex-1 font-label text-[23px] leading-[30px] text-ink dark:text-ink-dark"
+          numberOfLines={2}
+        >
+          {communityName}
+        </Text>
+      </View>
+      <ScrollView
+        ref={scrollRef}
+        className="flex-1"
+        contentInsetAdjustmentBehavior="never"
+        contentContainerClassName="px-5"
+        contentContainerStyle={{ paddingBottom: insets.bottom + 32 }}
         refreshControl={
           <RefreshControl
             refreshing={resource.refreshing && resource.status !== 'loading'}
@@ -100,7 +123,7 @@ export default function HomeScreen() {
             </View>
           </>
         ) : null}
-      </CollapsibleScreen>
+      </ScrollView>
     </View>
   );
 }
