@@ -19,7 +19,6 @@
     "notFoundSubtitle": "Torna a Més i selecciona una altra opció."
   },
   "incidents": {
-    "subtitle": "Segueix les incidències de la comunitat i el seu estat.",
     "status": {
       "received": "Rebuda",
       "inProgress": "En gestió",
@@ -111,7 +110,6 @@
   },
   "more": {
     "title": "Més",
-    "subtitle": "Tots els serveis de la teva comunitat, en un sol lloc.",
     "openHint": "Obre {{name}}",
     "sections": {
       "participation": "Participació",

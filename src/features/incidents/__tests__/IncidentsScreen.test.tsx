@@ -53,7 +53,7 @@ jest.mock('@/design-system', () => {
   return {
     Button: jest.requireActual('@/design-system/Button').Button,
     Chip: jest.requireActual('@/design-system/Chip').Chip,
-    CollapsibleScreen: ({ children }: { children: ReactNode }) => <View>{children}</View>,
+    TabScreen: ({ children }: { children: ReactNode }) => <View>{children}</View>,
     SectionHeader: () => null,
     EmptyState: ({ title }: { title: string }) => <Text>{title}</Text>,
     LoadingState: () => null,

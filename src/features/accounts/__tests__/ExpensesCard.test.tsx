@@ -61,7 +61,7 @@ jest.mock('@/design-system', () => {
     Card: jest.requireActual('@/design-system/Card').Card,
     Button: jest.requireActual('@/design-system/Button').Button,
     SectionHeader: jest.requireActual('@/design-system/SectionHeader').SectionHeader,
-    CollapsibleScreen: ({ children }: { children: ReactNode }) => <View>{children}</View>,
+    TabScreen: ({ children }: { children: ReactNode }) => <View>{children}</View>,
     EmptyState: ({ title }: { title: string }) => <Text>{title}</Text>,
     ErrorState: ({ title }: { title: string }) => <Text>{title}</Text>,
     LoadingState: ({ label }: { label: string }) => <Text>{label}</Text>,
