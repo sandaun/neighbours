@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 
 import type { MoreModuleKey } from '@/data';
-import { ListItem, CollapsibleScreen, SectionHeader } from '@/design-system';
+import { ListItem, SectionHeader, TabScreen } from '@/design-system';
 import { useTheme } from '@/hooks/use-theme';
 
 type Destination = {
@@ -109,32 +109,27 @@ export default function MoreScreen() {
   const { t } = useTranslation();
 
   return (
-    <View className="flex-1 bg-bg dark:bg-bg-dark">
-      <CollapsibleScreen
-        header={{ subtitle: t('more.subtitle'), title: t('more.title'), variant: 'section' }}
-        contentContainerClassName="px-5 pb-12"
-      >
-        <SectionHeader title={t('more.sections.participation')} />
-        <View className="flex-row flex-wrap justify-between gap-y-3">
-          {PARTICIPATION_DESTINATIONS.map((destination) => (
-            <DestinationTile destination={destination} key={destination.key} />
-          ))}
-        </View>
+    <TabScreen title={t('more.title')} contentContainerClassName="px-5 pb-12">
+      <SectionHeader title={t('more.sections.participation')} />
+      <View className="flex-row flex-wrap justify-between gap-y-3">
+        {PARTICIPATION_DESTINATIONS.map((destination) => (
+          <DestinationTile destination={destination} key={destination.key} />
+        ))}
+      </View>
 
-        <SectionHeader title={t('more.sections.services')} />
-        <View className="gap-2">
-          {SERVICE_DESTINATIONS.map((destination) => (
-            <DestinationRow destination={destination} key={destination.key} />
-          ))}
-        </View>
+      <SectionHeader title={t('more.sections.services')} />
+      <View className="gap-2">
+        {SERVICE_DESTINATIONS.map((destination) => (
+          <DestinationRow destination={destination} key={destination.key} />
+        ))}
+      </View>
 
-        <SectionHeader title={t('more.sections.settings')} />
-        <View className="gap-2">
-          {SETTINGS_DESTINATIONS.map((destination) => (
-            <DestinationRow destination={destination} key={destination.key} />
-          ))}
-        </View>
-      </CollapsibleScreen>
-    </View>
+      <SectionHeader title={t('more.sections.settings')} />
+      <View className="gap-2">
+        {SETTINGS_DESTINATIONS.map((destination) => (
+          <DestinationRow destination={destination} key={destination.key} />
+        ))}
+      </View>
+    </TabScreen>
   );
 }

@@ -13,8 +13,8 @@ import {
   EmptyState,
   ErrorState,
   LoadingState,
-  CollapsibleScreen,
   SectionHeader,
+  TabScreen,
 } from '@/design-system';
 import { IncidentCard } from '@/features/incidents/IncidentCard';
 import { useDataResource } from '@/hooks/use-data-resource';
@@ -37,12 +37,8 @@ export default function IncidentsScreen() {
 
   return (
     <View className="flex-1 bg-bg dark:bg-bg-dark">
-      <CollapsibleScreen
-        header={{
-          subtitle: t('incidents.subtitle'),
-          title: t('tabs.incidents'),
-          variant: 'section',
-        }}
+      <TabScreen
+        title={t('tabs.incidents')}
         contentContainerClassName="px-5 pb-24"
         refreshControl={
           <RefreshControl refreshing={resource.refreshing} onRefresh={resource.reload} />
@@ -92,7 +88,7 @@ export default function IncidentsScreen() {
             </View>
           </>
         ) : null}
-      </CollapsibleScreen>
+      </TabScreen>
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={t('incidentFlow.create')}

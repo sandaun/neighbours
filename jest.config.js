@@ -4,6 +4,7 @@ module.exports = {
   testPathIgnorePatterns: ['/node_modules/', '<rootDir>/admin/', '<rootDir>/supabase/functions/'],
   modulePathIgnorePatterns: ['<rootDir>/admin/'],
   moduleNameMapper: {
+    '^@/assets/(.*)$': '<rootDir>/assets/$1',
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   collectCoverageFrom: [

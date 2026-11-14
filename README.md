@@ -1,4 +1,4 @@
-# Neighbours
+# Finquify
 
 Resident community app built with Expo SDK 58, React Native, TypeScript, and the
 existing NativeWind design system. The MVP covers manually provisioned email/password access,

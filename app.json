@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "neighbours",
+    "name": "Finquify",
     "slug": "neighbours",
     "owner": "orbita-labs",
     "version": "1.0.0",
@@ -9,15 +9,14 @@
     "scheme": "neighbours",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon",
       "infoPlist": {}
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#2857EC",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "monochromeImage": "./assets/images/android-icon-foreground.png"
       },
       "predictiveBackGestureEnabled": false
     },
@@ -30,7 +29,7 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#2857EC",
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
@@ -40,7 +39,7 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Allow Neighbours to select an incident photo.",
+          "photosPermission": "Allow Finquify to select an incident photo.",
           "cameraPermission": false,
           "microphonePermission": false
         }

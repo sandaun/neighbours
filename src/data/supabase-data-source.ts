@@ -162,6 +162,8 @@ export function createSupabaseDataSource(
       if (incidentResult.error) throw incidentResult.error;
       return {
         communityName: communityResult.data.name,
+        communityAddressLine: communityResult.data.address_line ?? null,
+        communityMunicipality: communityResult.data.municipality ?? null,
         incidents: incidentResult.data.map(toIncident),
         events: communityEvents
           .filter((event) => new Date(event.ends_at ?? event.starts_at).getTime() >= Date.now())

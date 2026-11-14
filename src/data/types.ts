@@ -55,6 +55,8 @@ export type BoardPost = {
 
 export type HomeData = {
   communityName: string;
+  communityAddressLine: string | null;
+  communityMunicipality: string | null;
   incidents: Incident[];
   events: CommunityEvent[];
   boardPosts: BoardPost[];

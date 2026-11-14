@@ -1,4 +1,4 @@
-# Neighbours backoffice
+# Finquify backoffice
 
 Web backoffice for community administrators, built with Vite, React, TypeScript,
 and Tailwind CSS. It uses the same Supabase project, schema types, and design
@@ -61,6 +61,11 @@ the built `dist/`, serve `index.html` for unknown paths so deep links work.
 ```sh
 npm run validate   # ESLint, TypeScript, Vitest, production build
 ```
+
+## Pilot follow-ups
+
+See [Pilot follow-ups](../docs/pilot-follow-ups.md) for deferred community and
+resident fields and the data protection work before using real resident data.
 
 ## Boundaries with the resident app
 
