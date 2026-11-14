@@ -62,6 +62,11 @@ the built `dist/`, serve `index.html` for unknown paths so deep links work.
 npm run validate   # ESLint, TypeScript, Vitest, production build
 ```
 
+## Pilot follow-ups
+
+See [Pilot follow-ups](../docs/pilot-follow-ups.md) for deferred community and
+resident fields and the data protection work before using real resident data.
+
 ## Boundaries with the resident app
 
 - No imports from the app's `src/` except the type-only `@shared/database`

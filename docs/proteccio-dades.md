@@ -13,7 +13,7 @@ d'incidències (hi poden sortir persones) i missatges.
 | Paper (RGPD) | Qui | Què implica |
 |---|---|---|
 | Responsable del tractament | La comunitat de propietaris (via l'administrador de finques) | Decideix per a què es fan servir les dades |
-| Encarregat del tractament | Neighbours | Contracte d'encarregat amb cada comunitat (art. 28) |
+| Encarregat del tractament | Finquify | Contracte d'encarregat amb cada comunitat (art. 28) |
 | Subencarregat | Supabase | DPA signat; dades preferiblement a la UE |
 
 Fonts: [RGPD](https://eur-lex.europa.eu/eli/reg/2016/679/oj) (art. 28),
