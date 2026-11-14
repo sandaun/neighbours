@@ -31,7 +31,11 @@
         {
           "backgroundColor": "#2857EC",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 76
+          "imageWidth": 96,
+          "ios": {
+            "image": "./assets/images/splash-lockup.png",
+            "imageWidth": 220
+          }
         }
       ],
       "expo-localization",

@@ -1,4 +1,6 @@
 import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,6 +14,13 @@ export function AuthNavigator() {
   const auth = useAuth();
   const { t } = useTranslation();
   const colors = useTheme();
+
+  // Keep the native splash up until the session is resolved, so it hands off
+  // straight to login/home instead of flashing the loading screen.
+  useEffect(() => {
+    if (auth.status !== 'loading') SplashScreen.hide();
+  }, [auth.status]);
+
   if (auth.status === 'loading')
     return (
       <SafeAreaView className="flex-1 justify-center bg-bg dark:bg-bg-dark">

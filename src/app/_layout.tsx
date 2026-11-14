@@ -21,11 +21,11 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useColorScheme } from 'react-native';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { AuthProvider } from '@/features/auth/AuthProvider';
 import { AuthNavigator } from '@/features/auth/AuthNavigator';
 
 SplashScreen.preventAutoHideAsync();
+SplashScreen.setOptions({ duration: 300, fade: true });
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -49,7 +49,6 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
       <AuthProvider>
         <AuthNavigator />
       </AuthProvider>
