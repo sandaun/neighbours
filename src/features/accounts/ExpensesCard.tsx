@@ -50,7 +50,7 @@ export function ExpensesCard() {
       <View className="gap-1">
         <Text
           accessibilityRole="header"
-          className="font-display-semi text-[22px] leading-[28px] text-ink dark:text-ink-dark"
+          className="font-body-semi text-[15px] leading-[22px] text-ink dark:text-ink-dark"
         >
           {t('accounts.expenses.title')}
         </Text>

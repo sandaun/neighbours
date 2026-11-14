@@ -26,7 +26,7 @@ export function IncidentCard({ incident }: { incident: Incident }) {
     >
       <Card className="gap-2">
         <View className="flex-row items-start justify-between gap-3">
-          <Text className="flex-1 font-display-semi text-[20px] leading-[26px] text-ink dark:text-ink-dark">
+          <Text className="flex-1 font-body-semi text-[15px] leading-[22px] text-ink dark:text-ink-dark">
             {incident.title}
           </Text>
           <StatusBadge status={incident.status} label={t(STATUS_LABEL_KEYS[incident.status])} />
