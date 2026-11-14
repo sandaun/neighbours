@@ -1,4 +1,4 @@
-# Neighbours backoffice
+# Finquify backoffice
 
 Web backoffice for community administrators, built with Vite, React, TypeScript,
 and Tailwind CSS. It uses the same Supabase project, schema types, and design

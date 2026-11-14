@@ -1,5 +1,6 @@
-import { Eye, EyeOff } from 'lucide-react-native';
+import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
+import { Eye, EyeOff } from 'lucide-react-native';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -80,19 +81,14 @@ export default function LoginScreen() {
           }}
         >
           <View className="w-full flex-1" style={{ maxWidth: 440 }}>
-            <View className="flex-row items-center gap-3">
-              <View
-                accessibilityElementsHidden
-                importantForAccessibility="no-hide-descendants"
-                className="h-10 w-10 items-center justify-center rounded-md bg-primary"
-                style={{ borderCurve: 'continuous' }}
-              >
-                <Text className="font-display text-[23px] leading-[30px] text-primary-on">N</Text>
-              </View>
-              <Text className="font-label text-[13px] uppercase tracking-[2px] text-primary dark:text-primary-darkmode">
-                Neighbours
-              </Text>
-            </View>
+            <Image
+              source={require('@/assets/images/finquify-login.png')}
+              style={{ width: 202, height: 54 }}
+              contentFit="contain"
+              accessible
+              accessibilityRole="image"
+              accessibilityLabel="Finquify"
+            />
 
             <View style={{ paddingTop: compact ? 28 : 44 }}>
               <Text

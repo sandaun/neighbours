@@ -1,6 +1,5 @@
 {
   "brand": {
-    "name": "Neighbours",
     "area": "Backoffice"
   },
   "auth": {
@@ -21,7 +20,7 @@
     "errorBody": "Comprueba la conexión y vuelve a intentarlo.",
     "retry": "Volver a intentarlo",
     "noAccessTitle": "Esta cuenta no tiene permisos de administración",
-    "noAccessBody": "El backoffice es solo para administradores de comunidad. Si crees que es un error, contacta con el equipo de Neighbours.",
+    "noAccessBody": "El backoffice es solo para administradores de comunidad. Si crees que es un error, contacta con el equipo de Finquify.",
     "configErrorTitle": "El backoffice no está configurado",
     "configErrorBody": "Faltan la dirección o la clave pública de Supabase. Revisa el archivo .env.local."
   },
@@ -272,7 +271,7 @@
     "done": "Hecho",
     "createdTitle": "Cuenta creada para {{name}}",
     "passwordOnce": "Pásale estos datos por un canal privado. La contraseña no se volverá a mostrar.",
-    "credentialsText": "Acceso a Neighbours\nCorreo: {{email}}\nContraseña: {{password}}",
+    "credentialsText": "Acceso a Finquify\nCorreo: {{email}}\nContraseña: {{password}}",
     "linkedTitle": "{{name}} ya tenía cuenta",
     "linkedBody": "Lo hemos añadido a esta comunidad. Entra en la app con {{email}} y su contraseña de siempre.",
     "createErrors": {
