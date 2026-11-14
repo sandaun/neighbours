@@ -3,6 +3,8 @@ import { getSupabase } from '@/lib/supabase';
 export type Membership = {
   communityId: string;
   communityName: string;
+  communityAddressLine: string | null;
+  communityMunicipality: string | null;
   userId: string;
   unitId: string | null;
   unitLabel: string | null;
@@ -23,7 +25,7 @@ export async function loadMembership(userId: string): Promise<Membership | null>
   const { data, error } = await client
     .from('community_members')
     .select(
-      'community_id, user_id, unit_id, display_name, role, communities!inner(name), units(label)'
+      'community_id, user_id, unit_id, display_name, role, communities!inner(*), units(label)'
     )
     .eq('user_id', userId)
     .order('created_at', { ascending: true })
@@ -35,6 +37,9 @@ export async function loadMembership(userId: string): Promise<Membership | null>
   return {
     communityId: data.community_id,
     communityName: data.communities.name,
+    // `*` and `?? null` keep sign-in working before the address migration is applied.
+    communityAddressLine: data.communities.address_line ?? null,
+    communityMunicipality: data.communities.municipality ?? null,
     userId: data.user_id,
     unitId: data.unit_id,
     unitLabel: data.units?.label ?? null,

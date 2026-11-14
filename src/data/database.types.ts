@@ -14,7 +14,13 @@ type Table<Row, RequiredInsert extends keyof Row, Relationships extends Relation
   Relationships: Relationships;
 };
 
-export type CommunityRow = { id: string; name: string; created_at: string };
+export type CommunityRow = {
+  id: string;
+  name: string;
+  address_line: string | null;
+  municipality: string | null;
+  created_at: string;
+};
 export type UnitRow = {
   id: string;
   community_id: string;

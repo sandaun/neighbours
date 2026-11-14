@@ -32,6 +32,8 @@ function makeSession(id: string): Session {
 const resident: Membership = {
   communityId: 'home',
   communityName: 'Home',
+  communityAddressLine: null,
+  communityMunicipality: null,
   userId: 'first',
   unitId: '1',
   unitLabel: '1A',

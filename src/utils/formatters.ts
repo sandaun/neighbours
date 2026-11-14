@@ -22,3 +22,40 @@ export function formatEventDate(value: string, locale: string): string {
     minute: '2-digit',
   }).format(new Date(value));
 }
+
+/** Full address, e.g. "Carrer del Mar, 14 · Sitges". */
+export function formatCommunityAddress(
+  addressLine: string | null,
+  municipality: string | null
+): string | null {
+  const parts = [addressLine, municipality].filter((part): part is string => Boolean(part));
+  return parts.length > 0 ? parts.join(' · ') : null;
+}
+
+function normalizeForComparison(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .trim();
+}
+
+/**
+ * Line shown under the community name: the municipality alone when the name
+ * already contains the street and number, otherwise the full address.
+ */
+export function formatCommunityCaption(
+  name: string,
+  addressLine: string | null,
+  municipality: string | null
+): string | null {
+  if (addressLine) {
+    const normalizedName = ` ${normalizeForComparison(name)} `;
+    const normalizedLine = normalizeForComparison(addressLine);
+    if (normalizedLine && normalizedName.includes(` ${normalizedLine} `)) {
+      return municipality;
+    }
+  }
+  return formatCommunityAddress(addressLine, municipality);
+}

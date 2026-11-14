@@ -54,6 +54,8 @@ const parkingPost: BoardPost = {
 
 const home: HomeData = {
   communityName: 'Carrer del Mar 14',
+  communityAddressLine: 'Carrer del Mar, 14',
+  communityMunicipality: 'Sitges',
   incidents: incidents.slice(0, 2),
   events: [
     {

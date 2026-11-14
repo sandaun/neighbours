@@ -5,6 +5,7 @@ import { ScrollView, Text, View } from 'react-native';
 import { useAuth } from './AuthProvider';
 import { Button, Card } from '@/design-system';
 import { isDemoMode } from '@/lib/app-config';
+import { formatCommunityAddress } from '@/utils/formatters';
 
 export function ProfileContent() {
   const { t } = useTranslation();
@@ -14,6 +15,12 @@ export function ProfileContent() {
     [t('auth.name'), membership?.displayName],
     [t('auth.email'), session?.user.email],
     [t('auth.community'), membership?.communityName],
+    [
+      t('auth.address'),
+      membership
+        ? formatCommunityAddress(membership.communityAddressLine, membership.communityMunicipality)
+        : null,
+    ],
     [t('auth.unit'), membership?.unitLabel],
   ];
   return (

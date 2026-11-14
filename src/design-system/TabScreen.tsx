@@ -17,6 +17,8 @@ type TabScreenProps = {
   title: string;
   /** Element shown before the title, such as the brand mark on Home. */
   leading?: ReactNode;
+  /** Small line under the title, such as the community address on Home. */
+  caption?: string | null;
   /** Context line rendered at the top of the content, so it scrolls away. */
   subtitle?: string;
   children: ReactNode;
@@ -24,10 +26,11 @@ type TabScreenProps = {
   refreshControl?: ScrollViewProps['refreshControl'];
 };
 
-/** Tab screen with a fixed one-line title bar and a hairline once content scrolls. */
+/** Tab screen with a fixed title bar and a hairline once content scrolls. */
 export function TabScreen({
   title,
   leading,
+  caption,
   subtitle,
   children,
   contentContainerClassName,
@@ -53,13 +56,23 @@ export function TabScreen({
       {isFocused ? <StatusBar style="auto" /> : null}
       <View className="flex-row items-center gap-3 px-5 pb-3 pt-3">
         {leading}
-        <Text
-          accessibilityRole="header"
-          className="flex-1 font-label text-[23px] leading-[30px] text-ink dark:text-ink-dark"
-          numberOfLines={1}
-        >
-          {title}
-        </Text>
+        <View className="flex-1">
+          <Text
+            accessibilityRole="header"
+            className="font-label text-[23px] leading-[30px] text-ink dark:text-ink-dark"
+            numberOfLines={1}
+          >
+            {title}
+          </Text>
+          {caption ? (
+            <Text
+              className="font-body text-[13px] leading-[18px] text-ink-soft dark:text-ink-dark-soft"
+              numberOfLines={1}
+            >
+              {caption}
+            </Text>
+          ) : null}
+        </View>
         <Animated.View
           pointerEvents="none"
           style={[styles.hairline, { backgroundColor: colors.outline }, hairlineStyle]}

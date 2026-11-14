@@ -15,7 +15,7 @@ import {
 import { useAuth } from '@/features/auth/AuthProvider';
 import { IncidentCard } from '@/features/incidents/IncidentCard';
 import { useDataResource } from '@/hooks/use-data-resource';
-import { formatEventDate } from '@/utils/formatters';
+import { formatCommunityCaption, formatEventDate } from '@/utils/formatters';
 
 export default function HomeScreen() {
   const { t, i18n } = useTranslation();
@@ -23,12 +23,20 @@ export default function HomeScreen() {
   const resource = useDataResource(appDataSource.getHome);
 
   const locale = i18n.resolvedLanguage ?? 'ca';
-  const communityName =
-    resource.data?.communityName ?? membership?.communityName ?? t('home.communityName');
+  const community = resource.data ?? membership;
+  const communityName = community?.communityName ?? t('home.communityName');
+  const communityCaption = community
+    ? formatCommunityCaption(
+        community.communityName,
+        community.communityAddressLine,
+        community.communityMunicipality
+      )
+    : null;
 
   return (
     <TabScreen
       title={communityName}
+      caption={communityCaption}
       leading={
         <Image
           source={require('@/assets/images/finquify-symbol.png')}
